@@ -64,14 +64,23 @@ int NumRandom(){
 void printfTablasProcesos(){
 	
 if(cabeza==NULL){
-	printf("No hay procesos creados");
+	printf("No hay procesos creados\n");
 	return;
 	}
 	proceso *nuevo = cabeza;
-	for(int i = 0; i < nuevo->cantidadPaginas;i++){
-		printf("pagina %d, marco asignado %d, cargado %d\n", nuevo->tablaPaginas[i].indicePagina, nuevo->tablaPaginas[i].marcoAsignado, nuevo->tablaPaginas[i].cargada);
-		
+	printf("----------------------------------------\n");
+	while(nuevo != NULL){
+		printf("| proceso de %d (KB)|\n",nuevo->size);
+		for(int i = 0; i < nuevo->cantidadPaginas;i++){
+		printf("|pagina %d, marco asignado %d, cargado %d\n", nuevo->tablaPaginas[i].indicePagina, nuevo->tablaPaginas[i].marcoAsignado, nuevo->tablaPaginas[i].cargada);
 		}
+		printf("----------------------------------------\n");
+
+		
+	nuevo = nuevo->siguiente;
+	}
+	
+	
 		
 	
 	}

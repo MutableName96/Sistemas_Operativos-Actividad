@@ -383,6 +383,7 @@ Es por eso que decimos que que un programa es una coleccion de segmentos ademas 
 ```C
 
 
+
 ```
     
 
