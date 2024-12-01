@@ -365,6 +365,17 @@ Es por eso que decimos que que un programa es una coleccion de segmentos ademas 
 
 ![Ejemplo Segmentacion](img/segmentacion.png)
 
+
+#### Ventajas y Desventajas
+
+| **Técnica**    | **Ventajas**                                                                                          | **Desventajas**                                                                                         |
+|-----------------|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| **Paginación**  | - Elimina la fragmentación externa .<br>- Aprovecha bien la memoria.<br>- No necesita que los datos estén en posiciones seguidas en la memoria. | - Puede haber desperdicio de espacio dentro de las páginas.<br>- El sistema necesita usar recursos para traducir las direcciones y manejar tablas de páginas. |
+| **Segmentación**| - Se adapta a la estructura del programa.<br>- Solo usa el espacio necesario.<br>- Bueno para programas grandes y organizados. | - Puede haber fragmentación externa (espacios pequeños e inutilizables).<br>- Es complicado manejar los cálculos y las tablas.<br>- No es tan eficiente con segmentos pequeños. |
+
+<br>
+
+
 ---
 
 **2.- Escribe un programa que simule una tabla de páginas para procesos con acceso aleatorio a memoria virtual.**
