@@ -63,6 +63,16 @@ int NumRandom(){
 	
 void printfTablasProcesos(){
 	
+if(cabeza==NULL){
+	printf("No hay procesos creados");
+	return;
+	}
+	proceso *nuevo = cabeza;
+	do{
+		printf
+	}while(true);
+	
+	
 	}
 	
 void printfMemFisica(){
