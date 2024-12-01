@@ -723,13 +723,16 @@ int main()
   return 0 ;
  }
 
+```
+    
+## 3.4 Administración de memoria virtual
 
+**1.-  Escribe un código que implemente el algoritmo de reemplazo de página "Least Recently Used" (LRU)**
 
+```C
 
 
 ```
-    
-
 
 
 
