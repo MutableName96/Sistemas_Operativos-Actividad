@@ -99,8 +99,6 @@ En mi opinion el algortimo mas eficiente y optimo seria el **OPT** porque veo ma
 **1.- Escribe un programa en C o Python que simule la administración de memoria mediante particiones fijas.**
 
 
-
-
 ```c
 
 #include <stdio.h>
@@ -337,6 +335,43 @@ int main()
 ### Fin
 
 ## 3.3 Organización de memoria virtual
+
+**1.-Investiga y explica el concepto de "paginación" y "segmentación". ¿Cuáles son las ventajas y desventajas de cada técnica?**
+
+#### Paginacion
+
+La paginación es una técnica de gestión de memoria utilizada por los sistemas operativos para permitir que los procesos utilicen más memoria de la que físicamente está disponible en la memoria RAM. Esta técnica divide tanto la memoria principal como la memoria virtual en bloques de tamaño fijo llamados páginas y marcos de página, respectivamente. De esta forma, Los procesos son divididos en en paginas que no necesitan estar almacenadas de manera contigua en la memoria, lo que facilita el uso eficiente de la memoria física aunque no es visible para el programador.
+
+Esta informacion es guardada en tablas de paginas que estan cargadas en memoria fisica que contiene el numero de pagina y su contenido que no es mas que el marco que corresponde a esa pagina es decir existe una asociaciones entre los números de página y los marcos de página y a su vez se maneja una lista de marcos libres
+
+Esto basicamente hace que eliminamos la posibilidad de que haya fragmentacion externa el usar los marcos para almacenar cualquier pagina pero no excluye a la fragmentacion interna ya que puede pasar que no se llegue a ocupar el 100% de una pagina y como hay que recordar el tamaño de pagina es equivalente al del marco de pagina.
+
+![Ejemplo Paginacion](img/paginacion.png)
+
+
+
+
+#### Segmentacion
+
+La segmentacion es otra tecnica de gestion de memoria que se utiliza en los SO funciona de la siguiente forma en memoria se divide en segmentos de tamaños variables.Los segmentos son unidades logicas como:
+
+* Codigo: Programa principal, funciones
+
+* Datos: Variables globales
+
+* Stack: Para retorno de las llamadas a funciones, paso de parametros y variables locales
+
+Es por eso que decimos que que un programa es una coleccion de segmentos ademas el esquema de manejo de memoria que es visible para el programador esto significa que el programador puede identificar y trabajar directamente con las diferentes segmentos del programa. En la segmentación, cada segmento tiene su propio identificador conocido como base que contiene la direccion fisicas de los segmentos y límites donde se especifica el tamaño de ese segmento esto es guardado en una tabla de segmento que mapea de forma bi-dimensional direcciones fisicas. Y el sistema de segmentación mapea estos segmentos en la memoria física. Cabe recalcar que no existe una relación simple entre las direcciones lógicas y las direcciones físicas en la segmentación.
+
+![Ejemplo Segmentacion](img/segmentacion.png)
+
+---
+
+**2.- Escribe un programa que simule una tabla de páginas para procesos con acceso aleatorio a memoria virtual.**
+
+```C
+
+```
     
 
 
