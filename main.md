@@ -28,7 +28,7 @@ Se origina cuando hay sufiiente memoria teorica pero esta esta distribuida en pe
 
 - Algoritmo LRU (Least Recencly Used):
 
-    es un algoritmo de reemplazo de páginas que se basa en el principio de que las páginas que han sido utilizadas recientemente tienen más probabilidades de ser utilizadas nuevamente. Aunque su rendimiento es casi óptimo, su implementación en la práctica puede ser costosa. Hay dos métodos principales de implementación:
+    Es un algoritmo de reemplazo de páginas que se basa en el principio de que las páginas que han sido utilizadas recientemente tienen más probabilidades de ser utilizadas nuevamente. Aunque su rendimiento es casi óptimo, su implementación en la práctica puede ser costosa. Hay dos métodos principales de implementación:
 
     * Metodo de lista enlazada
     * Metodo basado en Hardware
@@ -48,11 +48,40 @@ Se origina cuando hay sufiiente memoria teorica pero esta esta distribuida en pe
 
 - Algortimo LFU (Last Frequently Used):
 
+    Este algoritmo mantiene un contador del número de referencias que se han hecho para cada página. Se reemplaza la página con el menor recuento. La razón para esta selección es que una página que se usa activamente debe tener un alto número de referencias. Este algoritmo tiene problemas cuando una página se usa mucho en la fase inicial de un proceso, pero después ya no se utiliza. Como se usó bastantes veces, tiene un recuento alto y permanece en memoria aunque ya no se necesite. Una solución consiste en desplazar los recuentos un bit a la derecha a intervalos regulares, formando un recuento promedio de utilización que disminuye exponencialmente.
+
 - Algoritmo NFU (Not Frequently Used): 
+
+    El algoritmo NFU (Not Frequently Used) es un método de reemplazo de páginas que selecciona la página con menor frecuencia de uso acumulada para ser reemplazada. Cada página tiene asociado un contador, que inicialmente se establece en 0 y se incrementa en cada intervalo de tiempo si la página ha sido referenciada. Cuando es necesario reemplazar una página, se elige aquella con el contador más bajo.
+
+    Este enfoque tiene el problema de que no considera cuándo se utilizaron las páginas, lo que puede llevar a priorizar páginas frecuentemente usadas en el pasado pero que ya no son relevantes en el presente.
 
 - Algortimo MFU (Most Frequently Used):
 
+    Selecciona para su reemplazo la página con el mayor número de referencias acumuladas. Este enfoque se basa en la idea de que una página que ha sido referenciada con mucha frecuencia probablemente ya no sea tan relevante para el sistema, en contraste con una página con pocas referencias, que puede estar comenzando a ser utilizada. MFU supone que las páginas más referenciadas ya cumplieron su utilidad y pueden ser reemplazadas.
+
+
+
 - Algortimo NRU (Not Recently Used):
+
+    Es un método que utiliza los bits de referencia (R) y modificación (M) presentes en las tablas de páginas para clasificar las páginas en memoria y determinar cuál reemplazar cuando ocurre un fallo de página. El bit R indica si una página ha sido referenciada recientemente, mientras que el bit M señala si ha sido modificada. Estos bits suelen ser configurados automáticamente por el hardware, aunque también pueden ser simulados por software. En este caso, el sistema operativo marca inicialmente las páginas como no presentes, lo que genera fallos de página al acceder a ellas. En respuesta, se activan los bits R y M según corresponda, y se ajustan los permisos de la página.
+    
+    El algoritmo NRU opera dividiendo las páginas en memoria en cuatro clases, basadas en los valores de los bits R y M:
+
+    | Clase   | Referenciada (R)   | Modificada (M)   | Descripción                              |
+    |:-------:|:------------------:|:----------------:|:----------------------------------------:|
+    |   0     |        0           |       0          | No referenciada y no modificada          | 
+    |   1     |        0           |       1          | No referenciada, pero modificada         |
+    |   2     |        1           |       0          | Referenciada, pero no modificada         |
+    |   3     |        1           |       1          | Referenciada y modificada                |
+
+
+## 3.2 Memoria real
+
+**1.- Escribe un programa en C o Python que simule la administración de memoria mediante particiones fijas.**
+
+
+
 
 ```c
 int main(){
