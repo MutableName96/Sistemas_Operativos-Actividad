@@ -37,6 +37,7 @@ typedef struct MarcoMem{
  ****************************************/
 #define SizeMemoryFisic 64 
 #define SizePage 4
+
 int totalMarcos = SizeMemoryFisic / SizePage;
 MarcoMem memoriaFisica[SizeMemoryFisic/SizePage];
 	
@@ -57,14 +58,25 @@ void printfTablasProcesos(){
 	
 void printfMemFisica(){
 	for(int i = 0; i < totalMarcos;i++){
-		printf("Numero de Marco: %d ", memoriaFisica[i].numeroMarco);
+		printf("|Numero de Marco|: %d ", memoriaFisica[i].numeroMarco);
 		printf("-> Libre \n");
 		
 		}
 	
 	}
+
+int numeroPaginas(int * tam){
+	int totpagina = 0;
+	totpagina = (int)ceil( *tam / SizePage);
 	
-void CrearProceso(){
+	return totpagina;
+	}
+	
+void crearProceso(){
+	int tam = 0;
+	printf("Elige el tamaño del proceso (KB): ");
+	scanf("%d",&tam);
+	printf("%d \n",numeroPaginas(&tam));
 	}
 	
 	
@@ -91,6 +103,7 @@ int main()
 		scanf("%d",&opc);
 		switch(opc){
 			case 1:
+				crearProceso();
 			
 				break;
 				
