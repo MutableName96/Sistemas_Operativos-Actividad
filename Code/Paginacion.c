@@ -22,6 +22,7 @@ typedef struct pagina{
 	}pagina;
 	
 typedef struct proceso{
+	int PID;
 	int cantidadPaginas;
 	int size;
 	TablePage *tablaPaginas;
@@ -42,6 +43,7 @@ typedef struct MarcoMem{
 #define SizePage 4
 
 int totalMarcos = SizeMemoryFisic / SizePage;
+int contProceso = 1;
 MarcoMem memoriaFisica[SizeMemoryFisic/SizePage];
 
 proceso *cabeza = NULL;
@@ -50,16 +52,7 @@ proceso *cabeza = NULL;
 /****************************************
  *         		Funciones               *
  ****************************************/
- 
-int NumRandom(){
-	int marco;
-	do{
-		marco = rand() %totalMarcos;
-	}while(memoriaFisica[marco].paginaAsignada != -1);
-	
-	return marco;
-	
-	}
+
 	
 void printfTablasProcesos(){
 	
@@ -70,25 +63,23 @@ if(cabeza==NULL){
 	proceso *nuevo = cabeza;
 	printf("----------------------------------------\n");
 	while(nuevo != NULL){
-		printf("| proceso de %d (KB)|\n",nuevo->size);
+		printf("| PID: %d | Tamaño Proceso: %d (KB) | Paginas: %d |\n\n",nuevo->PID, nuevo->size, nuevo->cantidadPaginas);
 		for(int i = 0; i < nuevo->cantidadPaginas;i++){
-		printf("|pagina %d, marco asignado %d, cargado %d\n", nuevo->tablaPaginas[i].indicePagina, nuevo->tablaPaginas[i].marcoAsignado, nuevo->tablaPaginas[i].cargada);
+		printf("| pagina %d | Marco asignado %d | Cargado %d |\n", nuevo->tablaPaginas[i].indicePagina, nuevo->tablaPaginas[i].marcoAsignado, nuevo->tablaPaginas[i].cargada);
 		}
 		printf("----------------------------------------\n");
 
 		
 	nuevo = nuevo->siguiente;
 	}
-	
-	
-		
-	
 	}
 	
 void printfMemFisica(){
 	for(int i = 0; i < totalMarcos;i++){
-		printf("|Numero de Marco|: %d ", memoriaFisica[i].numeroMarco);
-		printf("-> Libre \n");
+		printf("| Numero de Marco |: %d ", memoriaFisica[i].numeroMarco);
+		if(memoriaFisica[i].paginaAsignada==-1){
+			printf("-> Libre \n");
+			}
 		
 		}
 	
@@ -107,6 +98,7 @@ void crearProceso(){
 	printf("Elige el tamaño del proceso (KB): ");
 	scanf("%d",&tam);
 	proceso *nuevoProceso = (proceso*)malloc(sizeof(proceso));
+	nuevoProceso->PID=contProceso;
 	nuevoProceso->size=tam;
 	nuevoProceso->cantidadPaginas=numeroPaginas(&tam);
 	nuevoProceso->tablaPaginas = (TablePage*)malloc(sizeof(TablePage) * nuevoProceso->cantidadPaginas);
@@ -120,20 +112,99 @@ void crearProceso(){
 		}
 		nuevoProceso->siguiente=cabeza;
 		cabeza = nuevoProceso;
+		contProceso++;
 	}
 	
+void asignarPaginas() {
+	
+    if(cabeza == NULL) {
+        printf("No hay procesos creados.\n");
+        return;
+    }
+
+    printf("Seleccione el proceso para asignar páginas:\n");
+
+    proceso *temp = cabeza;
+    while(temp != NULL) {
+        printf("| ID: %d | Tamaño: %d KB | Páginas: %d |\n", temp->PID, temp->size, temp->cantidadPaginas);
+        temp = temp->siguiente;
+    }
+
+    printf("Ingresa el ID del proceso: ");
+    int idProceso;
+    scanf("%d", &idProceso);
+
+    proceso *temp2 = cabeza;
+    while(temp2 != NULL) {
+        if(temp2->PID == idProceso) {
+            printf("Proceso encontrado: ID: %d\n", temp2->PID);
+
+            for(int i = 0; i < temp2->cantidadPaginas; i++) {
+                printf("| Página %d | Marco asignado: %d | Cargado: %d |\n", 
+                       temp2->tablaPaginas[i].indicePagina, 
+                       temp2->tablaPaginas[i].marcoAsignado, 
+                       temp2->tablaPaginas[i].cargada);
+            }
+
+            int opc = 0;
+            do {
+                int pagselecion;
+                printf("Selecciona el número de página a cargar en memoria: ");
+                scanf("%d", &pagselecion);
+                
+                if(pagselecion < 0 || pagselecion >= temp2->cantidadPaginas) {
+                    printf("Página inválida.\n");
+                    return;
+                }
+
+                int marcoLibre = -1;
+                NumRandom();
+                
+                
+
+                if(marcoLibre == -1) {
+                    printf("No hay marcos libres en memoria real.\n");
+                    return;
+                }
+
+                memoriaFisica[marcoLibre].paginaAsignada = temp2->tablaPaginas[pagselecion].indicePagina;
+                temp2->tablaPaginas[pagselecion].marcoAsignado = marcoLibre;
+                temp2->tablaPaginas[pagselecion].cargada = 1;
+
+                printf("Página %d asignada al marco %d.\n", pagselecion, marcoLibre);
+
+                printf("1.- Asignar otra página\n");
+                printf("0.- Salir\n");
+                scanf("%d", &opc);
+            } while(opc != 0);
+
+            return;
+        }
+        temp2 = temp2->siguiente;
+    }
+
+    printf("Proceso no encontrado.\n");
+}
+
+void eliminarPaginas(){
+	}
+
 	
 
 
 
 int main()
 {
+	srand(time(NULL));
 	//Inicializar Memoria Fisica
+	
 	for(int i = 0; i < totalMarcos ;i++){
 			memoriaFisica[i].numeroMarco = i;
 			memoriaFisica[i].paginaAsignada = -1;
 		}
+		
 	int opc = 0;
+	
 	do{
 		printf("------------- Menu -------------\n");
 		printf("1.- Crear Proceso\n");
@@ -147,15 +218,14 @@ int main()
 		switch(opc){
 			case 1:
 				crearProceso();
-			
 				break;
 				
 			case 2:
-			
+				asignarPaginas();
 				break;
 				
 			case 3:
-			
+				eliminarPaginas();
 				break;
 				
 			case 4:
@@ -173,25 +243,9 @@ int main()
 			default:
 			printf("Opcion invalida");
 				
-			
 			}
-		
-		
-		
-		
-		
+			
 	}while(true);
-
-	
-
-	
-
-
-	srand(time(NULL));
-	printf("%d",NumRandom());
-
-	
-
     
   return 0 ;
  }
