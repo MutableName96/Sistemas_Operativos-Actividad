@@ -51,8 +51,6 @@ int contadorUso = 0;
 MarcoMem memoriaFisica[SizeMemoryFisic/SizePage];
 
 proceso *cabeza = NULL;
-
-
 	
 /****************************************
  *         		Funciones               *
@@ -79,7 +77,6 @@ if(cabeza==NULL){
 	}
 	}
 	
-	
 void printfMemFisica() {
     printf("-- Memoria Fisica --\n");
         for (int i = 0; i < totalMarcos; i++) {
@@ -104,12 +101,6 @@ void printfMemFisica() {
         }
     }
 }
-
-
-
-
-
-
 
 int numeroPaginas(int * tam){
 	int totpagina = 0;
