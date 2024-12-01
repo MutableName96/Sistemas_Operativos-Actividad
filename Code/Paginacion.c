@@ -68,10 +68,11 @@ if(cabeza==NULL){
 	return;
 	}
 	proceso *nuevo = cabeza;
-	do{
-		printf
-	}while(true);
-	
+	for(int i = 0; i < nuevo->cantidadPaginas;i++){
+		printf("pagina %d, marco asignado %d, cargado %d\n", nuevo->tablaPaginas[i].indicePagina, nuevo->tablaPaginas[i].marcoAsignado, nuevo->tablaPaginas[i].cargada);
+		
+		}
+		
 	
 	}
 	
@@ -123,7 +124,6 @@ int main()
 			memoriaFisica[i].numeroMarco = i;
 			memoriaFisica[i].paginaAsignada = -1;
 		}
-	printfMemFisica();
 	int opc = 0;
 	do{
 		printf("------------- Menu -------------\n");
@@ -150,11 +150,11 @@ int main()
 				break;
 				
 			case 4:
-			
+				printfTablasProcesos();
 				break;
 				
 			case 5:
-			
+				printfMemFisica();
 				
 				break;
 			case 6:
