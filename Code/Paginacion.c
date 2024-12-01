@@ -56,8 +56,48 @@ int totalMlibres = SizeMemoryFisic/SizePage;
 /****************************************
  *         		Funciones               *
  ****************************************/
- 
+//Random generate
+//----------------------------------------- 
+ void inicializarMlibres(){
+	for(int i = 0; i<totalMarcos;i++){
+		Mlibres[i] = i;
+		
+		}
+	
+	}
+	
+int asignarMlibre() {
+    if(totalMlibres == 0) {
+        printf("No hay marcos libres.\n");
+        return -1;
+    }
 
+    int iRandom = rand() % totalMlibres;
+    int marco = Mlibres[iRandom];
+
+    for(int i = iRandom; i < totalMlibres - 1; i++) {
+        Mlibres[i] = Mlibres[i + 1];
+    }
+    totalMlibres--;
+    return marco;
+}
+	
+void printfMLibres(){
+	printf("Marcos libres:\n ");
+	for(int i = 0; i<totalMlibres;i++){
+		printf("%d",Mlibres[i]);
+		}
+		printf("\n");
+	
+	}
+int verificarMarco(int marco) {
+    if (marco >= 0 && marco < totalMarcos && memoriaFisica[marco].paginaAsignada != -1) {
+        return 1; 
+    }
+    return 0;  
+}
+
+//------------------------------------------
 	
 void printfTablasProcesos(){
 	
@@ -80,15 +120,18 @@ if(cabeza==NULL){
 	}
 	
 void printfMemFisica(){
-	for(int i = 0; i < totalMarcos;i++){
-		printf("| Numero de Marco |: %d ", memoriaFisica[i].numeroMarco);
-		if(memoriaFisica[i].paginaAsignada==-1){
-			printf("-> Libre \n");
-			}
-		
-		}
-	
-	}
+    printf("Memoria Física:\n");
+    for(int i = 0; i < totalMarcos; i++) {
+        if(memoriaFisica[i].paginaAsignada == -1) {
+            printf("| Marco %d | Libre\n", memoriaFisica[i].numeroMarco);
+        } else {
+            printf("| Marco %d | Asignado a Página %d\n", memoriaFisica[i].numeroMarco, memoriaFisica[i].paginaAsignada);
+        }
+    }
+    printf("\n");
+}
+
+
 
 int numeroPaginas(int * tam){
 	int totpagina = 0;
@@ -121,8 +164,7 @@ void crearProceso(){
 	}
 	
 void asignarPaginas() {
-	
-    if(cabeza == NULL) {
+    if (cabeza == NULL) {
         printf("No hay procesos creados.\n");
         return;
     }
@@ -130,7 +172,7 @@ void asignarPaginas() {
     printf("Seleccione el proceso para asignar páginas:\n");
 
     proceso *temp = cabeza;
-    while(temp != NULL) {
+    while (temp != NULL) {
         printf("| ID: %d | Tamaño: %d KB | Páginas: %d |\n", temp->PID, temp->size, temp->cantidadPaginas);
         temp = temp->siguiente;
     }
@@ -140,48 +182,60 @@ void asignarPaginas() {
     scanf("%d", &idProceso);
 
     proceso *temp2 = cabeza;
-    while(temp2 != NULL) {
-        if(temp2->PID == idProceso) {
+    while (temp2 != NULL) {
+        if (temp2->PID == idProceso) {
             printf("Proceso encontrado: ID: %d\n", temp2->PID);
 
-            for(int i = 0; i < temp2->cantidadPaginas; i++) {
+            for (int i = 0; i < temp2->cantidadPaginas; i++) {
                 printf("| Página %d | Marco asignado: %d | Cargado: %d |\n", 
-                       temp2->tablaPaginas[i].indicePagina, 
-                       temp2->tablaPaginas[i].marcoAsignado, 
-                       temp2->tablaPaginas[i].cargada);
+                        temp2->tablaPaginas[i].indicePagina, 
+                        temp2->tablaPaginas[i].marcoAsignado, 
+                        temp2->tablaPaginas[i].cargada);
             }
 
             int opc = 0;
             do {
-                int pagselecion;
+                int pagseleccion;
                 printf("Selecciona el número de página a cargar en memoria: ");
-                scanf("%d", &pagselecion);
+                scanf("%d", &pagseleccion);
                 
-                if(pagselecion < 0 || pagselecion >= temp2->cantidadPaginas) {
+                if (pagseleccion < 0 || pagseleccion >= temp2->cantidadPaginas) {
                     printf("Página inválida.\n");
                     return;
                 }
 
-                int marcoLibre = -1;
-                NumRandom();
-                
-                
+                if (temp2->tablaPaginas[pagseleccion].marcoAsignado != -1) {
+                    printf("Página ya asignada a un marco.\n");
+                    return;
+                }
 
-                if(marcoLibre == -1) {
+                int marcoLibre = asignarMlibre();
+                if (marcoLibre == -1) {
                     printf("No hay marcos libres en memoria real.\n");
                     return;
                 }
 
-                memoriaFisica[marcoLibre].paginaAsignada = temp2->tablaPaginas[pagselecion].indicePagina;
-                temp2->tablaPaginas[pagselecion].marcoAsignado = marcoLibre;
-                temp2->tablaPaginas[pagselecion].cargada = 1;
+                // Verificar si el marco está ocupado
+                while (verificarMarco(marcoLibre)) {
+                    printf("El marco %d ya está ocupado. Asignando otro marco.\n", marcoLibre);
+                    marcoLibre = asignarMlibre();
+                    if (marcoLibre == -1) {
+                        printf("No hay marcos libres disponibles.\n");
+                        return;
+                    }
+                }
 
-                printf("Página %d asignada al marco %d.\n", pagselecion, marcoLibre);
+                // Asignar el marco y actualizar la memoria
+                memoriaFisica[marcoLibre].paginaAsignada = temp2->tablaPaginas[pagseleccion].indicePagina;
+                temp2->tablaPaginas[pagseleccion].marcoAsignado = marcoLibre;
+                temp2->tablaPaginas[pagseleccion].cargada = 1;
+
+                printf("Página %d asignada al marco %d.\n", pagseleccion, marcoLibre);
 
                 printf("1.- Asignar otra página\n");
                 printf("0.- Salir\n");
                 scanf("%d", &opc);
-            } while(opc != 0);
+            } while (opc != 0);
 
             return;
         }
@@ -191,40 +245,12 @@ void asignarPaginas() {
     printf("Proceso no encontrado.\n");
 }
 
+
+
 void eliminarPaginas(){
 	}
 	
-void inicializarMlibres(){
-	for(int i = 0; i<totalMarcos;i++){
-		Mlibres[i] = i;
-		
-		}
-	
-	}
-	
-int asignarMlibre(){
-	if(totalMlibres==0){
-		printf("No hay marcos libres");
-		return -1;
-		}
-	int iRandom = rand() % totalMlibres;
-	int marco = marcosfree[iRandom];
-	for(int i = iRandom; i < totalMlibres;i++){
-		Mlibres[i] = Mlibres[i+1];
-		}
-		totalMlibres--;
-		return marco;
-		
-	}
-	
-void printfMLibres(){
-	printf("Marcos libres:\n ");
-	for(int i = 0; i<totalMlibres;i++){
-		printf("%d",Mlibres[i]);
-		}
-		printf("\n");
-	
-	}
+
 	
 
 
