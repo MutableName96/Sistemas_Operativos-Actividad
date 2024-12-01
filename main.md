@@ -304,7 +304,23 @@ int main()
 **2. Diseña un algoritmo para calcular qué procesos pueden ser asignados a un sistema con memoria real limitada utilizando el algoritmo de "primera cabida"**
 
 
-```
+### Inicio
+
+    1.- Leer el Id del proceso
+
+    2.- Leer el tamaño del proceso
+
+    3.- Recorrer todas las particiones de memoria y verificar si la particion esta libre y tiene espacio para asignar ese proceso
+
+    4.- Encuanto ecuentre una particion adecuada asignar el proceso a esa particion marcando la particion con el id del proceso
+
+    6.- Si no se econtro alguna particion adecuada mostrar mesaje indicando que no hay espacio y terminar
+  
+### Fin
+
+## 3.3 Organización de memoria virtual
+    
+
 
 
 
