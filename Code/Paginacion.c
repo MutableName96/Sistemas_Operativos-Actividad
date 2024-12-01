@@ -48,10 +48,15 @@ MarcoMem memoriaFisica[SizeMemoryFisic/SizePage];
 
 proceso *cabeza = NULL;
 
+int Mlibres[SizeMemoryFisic/SizePage];
+int totalMlibres = SizeMemoryFisic/SizePage;
+
+
 	
 /****************************************
  *         		Funciones               *
  ****************************************/
+ 
 
 	
 void printfTablasProcesos(){
@@ -188,6 +193,40 @@ void asignarPaginas() {
 
 void eliminarPaginas(){
 	}
+	
+void inicializarMlibres(){
+	for(int i = 0; i<totalMarcos;i++){
+		Mlibres[i] = i;
+		
+		}
+	
+	}
+	
+int asignarMlibre(){
+	if(totalMlibres==0){
+		printf("No hay marcos libres");
+		return -1;
+		}
+	int iRandom = rand() % totalMlibres;
+	int marco = marcosfree[iRandom];
+	for(int i = iRandom; i < totalMlibres;i++){
+		Mlibres[i] = Mlibres[i+1];
+		}
+		totalMlibres--;
+		return marco;
+		
+	}
+	
+void printfMLibres(){
+	printf("Marcos libres:\n ");
+	for(int i = 0; i<totalMlibres;i++){
+		printf("%d",Mlibres[i]);
+		}
+		printf("\n");
+	
+	}
+	
+
 
 	
 
