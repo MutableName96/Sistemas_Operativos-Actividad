@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h> 
+#include <math.h>
 #include <stdbool.h>
 
 /****************************************
@@ -9,7 +9,7 @@
  ****************************************/
  
 typedef struct TablePage{
-	int indice;
+	int indicePagina;
 	int marcoAsignado;
 	int cargada;
 	
@@ -24,6 +24,8 @@ typedef struct pagina{
 typedef struct proceso{
 	int cantidadPaginas;
 	int size;
+	TablePage *tablaPaginas;
+	struct proceso *siguiente;
 	
 	}proceso;
 	
@@ -35,20 +37,27 @@ typedef struct MarcoMem{
 /****************************************
  *        Variables Globales            *
  ****************************************/
+ 
 #define SizeMemoryFisic 64 
 #define SizePage 4
 
 int totalMarcos = SizeMemoryFisic / SizePage;
 MarcoMem memoriaFisica[SizeMemoryFisic/SizePage];
+
+proceso *cabeza = NULL;
+
 	
 /****************************************
  *         		Funciones               *
  ****************************************/
  
-
-
 int NumRandom(){
-	return (rand() %totalMarcos);
+	int marco;
+	do{
+		marco = rand() %totalMarcos;
+	}while(memoriaFisica[marco].paginaAsignada != -1);
+	
+	return marco;
 	
 	}
 	
@@ -67,16 +76,30 @@ void printfMemFisica(){
 
 int numeroPaginas(int * tam){
 	int totpagina = 0;
-	totpagina = (int)ceil( *tam / SizePage);
+	totpagina = (int)ceil((float)*tam / SizePage);
 	
 	return totpagina;
 	}
 	
 void crearProceso(){
+	//crear nuevo proceso y inicializar sus atributos
 	int tam = 0;
 	printf("Elige el tamaño del proceso (KB): ");
 	scanf("%d",&tam);
-	printf("%d \n",numeroPaginas(&tam));
+	proceso *nuevoProceso = (proceso*)malloc(sizeof(proceso));
+	nuevoProceso->size=tam;
+	nuevoProceso->cantidadPaginas=numeroPaginas(&tam);
+	nuevoProceso->tablaPaginas = (TablePage*)malloc(sizeof(TablePage) * nuevoProceso->cantidadPaginas);
+	
+	//inizializar la tabla de paginacion del proceso
+	for(int i = 0; i<nuevoProceso->cantidadPaginas;i++){
+		nuevoProceso->tablaPaginas[i].indicePagina = i;
+		nuevoProceso->tablaPaginas[i].cargada = 0;
+		nuevoProceso->tablaPaginas[i].marcoAsignado= -1;
+		
+		}
+		nuevoProceso->siguiente=cabeza;
+		cabeza = nuevoProceso;
 	}
 	
 	
@@ -85,6 +108,7 @@ void crearProceso(){
 
 int main()
 {
+	//Inicializar Memoria Fisica
 	for(int i = 0; i < totalMarcos ;i++){
 			memoriaFisica[i].numeroMarco = i;
 			memoriaFisica[i].paginaAsignada = -1;
