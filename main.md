@@ -74,7 +74,25 @@ Se origina cuando hay sufiiente memoria teorica pero esta esta distribuida en pe
     |   1     |        0           |       1          | No referenciada, pero modificada         |
     |   2     |        1           |       0          | Referenciada, pero no modificada         |
     |   3     |        1           |       1          | Referenciada y modificada                |
+---
 
+### - Tabla de Comparativa de los algoritmos
+
+| **Algoritmo**             | **Ventajas**                                    | **Desventajas**                                    |
+|---------------------------|-------------------------------------------------|----------------------------------------------------|
+| **FIFO**                  | - Sencillo. <br> - Bajo coste de implementación. | - Baja eficiencia. <br> - Anomalía de Belady.      |
+| **Óptimo (OPT)**          | - Rendimiento casi óptimo. <br> - Minima fallos. | - Imposible de implementar en SO de proposito general. <br> - Solo efectivo en patrones consistentes. |
+| **LRU**                   | - Cercano al óptimo. <br> - Buen desempeño en estadísticas. | - Costoso de implementar. <br> - Decrece con acceso a matrices grandes. |
+| **Segunda Oportunidad**   | - Mejora FIFO. <br> - Menor complejidad que LRU. | - Menos eficiente que LRU. <br> - Genera fallos si las referencias no son secuenciales. |
+| **Reloj (Clock)**         | - Más eficiente que Segunda Oportunidad. <br> - No requiere mover páginas. | - Menos eficiente que LRU en algunos casos. <br> - Manejo costoso de bits de referencia. |
+| **LFU**                   | - Mantiene páginas poco referenciadas. <br> - Bueno para uso a largo plazo. | - No se adapta a patrones cambiantes. <br> - Páginas desactualizadas pueden no ser reemplazadas. |
+| **NFU**                   | - Más simple que LFU. <br> - Contadores sencillos. | - No considera el tiempo de acceso. <br> - Puede priorizar páginas no útiles. |
+| **MFU**                   | - Reemplaza las más referenciadas. <br> - Útil en procesos de uso inicial alto. | - Supone que las más referenciadas no son útiles. <br> - Puede eliminar páginas útiles. |
+| **NRU**                   | - Fácil de implementar en hardware. <br> - Usa clasificación de páginas. | - No tan eficiente como LRU en algunos patrones. <br> - El uso de clases puede no ser ideal. |
+
+
+#### ¿Cual considero el mas optimo?
+En mi opinion el algortimo mas eficiente y optimo seria el **OPT** porque veo mas eficiente poder determinar que pagina es mejor remplazar ya que esto siempre cambiaria la pagina que no se usara en un futuro aunque lamentablemente esto es muy dificil de inplementar al punto de que se considera imposible de implementar en SO de proposito general por la cualidad de ver hacia al futuro que este algoritmo usa pero de ser en un futuro posible seria el mas optimo.
 
 ## 3.2 Memoria real
 
