@@ -2,13 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h> 
-
-/****************************************
- *        Variables Globales            *
- ****************************************/
- 
- 
-
+#include <stdbool.h>
 
 /****************************************
  *         		Struct's                *
@@ -32,17 +26,28 @@ typedef struct proceso{
 	int size;
 	
 	}proceso;
+	
 typedef struct MarcoMem{
 	int numeroMarco;
-	int Asignado;
+	int paginaAsignada;
 	}MarcoMem;
+	
+/****************************************
+ *        Variables Globales            *
+ ****************************************/
+#define SizeMemoryFisic 64 
+#define SizePage 4
+int totalMarcos = SizeMemoryFisic / SizePage;
+MarcoMem memoriaFisica[SizeMemoryFisic/SizePage];
 	
 /****************************************
  *         		Funciones               *
  ****************************************/
+ 
+
 
 int NumRandom(){
-	return (rand() %5);
+	return (rand() %totalMarcos);
 	
 	}
 	
@@ -51,10 +56,15 @@ void printfTablasProcesos(){
 	}
 	
 void printfMemFisica(){
+	for(int i = 0; i < totalMarcos;i++){
+		printf("Numero de Marco: %d ", memoriaFisica[i].numeroMarco);
+		printf("-> Libre \n");
+		
+		}
 	
 	}
-void CrearProceso{
 	
+void CrearProceso(){
 	}
 	
 	
@@ -63,13 +73,64 @@ void CrearProceso{
 
 int main()
 {
-	
+	for(int i = 0; i < totalMarcos ;i++){
+			memoriaFisica[i].numeroMarco = i;
+			memoriaFisica[i].paginaAsignada = -1;
+		}
+	printfMemFisica();
+	int opc = 0;
+	do{
+		printf("------------- Menu -------------\n");
+		printf("1.- Crear Proceso\n");
+		printf("2.- Asignar Paginas\n");
+		printf("3.- Liberar Paginas\n");
+		printf("4.- Mostrar procesos\n");
+		printf("5.- Mostrar Memoria Fisica\n");
+		printf("6.- Salir\n");
+		printf("--------------------------------\n");
+		scanf("%d",&opc);
+		switch(opc){
+			case 1:
+			
+				break;
+				
+			case 2:
+			
+				break;
+				
+			case 3:
+			
+				break;
+				
+			case 4:
+			
+				break;
+				
+			case 5:
+			
+				
+				break;
+			case 6:
+				return 0;
+				break;
+				
+			default:
+			printf("Opcion invalida");
+				
+			
+			}
+		
+		
+		
+		
+		
+	}while(true);
 
 	
 
-    
-  return 0 ;
- }
+	
+
+
 	srand(time(NULL));
 	printf("%d",NumRandom());
 
