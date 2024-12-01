@@ -1083,8 +1083,8 @@ Las direcciones identifican unívocamente una ubicación en la memoria. Tenemos 
 
 
 
-![Direccion Paginaccion](img/adressLogicPag01.png.png)
-![Direccion Segmentacion](img/paginacion.png)
+![Direccion Logica Paginaccion](img/adressLogicPag01.png)
+![Direccion Logica Paginaccion](img/adressLogicPag02.png)
 
 
 
