@@ -1068,6 +1068,24 @@ int main()
 
 
 ```
+---
+**2.- Diseña un diagrama que represente el proceso de traducción de direcciones virtuales a físicas en un sistema con memoria virtual.**
+
+Las direcciones identifican unívocamente una ubicación en la memoria. Tenemos dos tipos de direcciones que son la dirección lógica o virtual y la dirección física. La dirección lógica se utiliza como referencia para acceder a la dirección física.
+
+- Direcciones logicas paginacion
+
+* Las direcciones logicas se componen de:
+    * Numero de pagina(p): Se usa como un indice en la tabla de paginas que contiene la direccion base de cada pagina en memoria fisica.
+
+    * Desplazamiento(d): Combinado con la direccion base define la direccion fisica que se envia a la unidad de manejo de memoria (mmu).
+
+
+
+
+![Direccion Paginaccion](img/adressLogicPag01.png.png)
+![Direccion Segmentacion](img/paginacion.png)
+
 
 
 
