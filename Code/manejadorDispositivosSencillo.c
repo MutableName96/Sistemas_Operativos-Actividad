@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-
+//los sleeps son como para simular los movimientos mecanicos que hace la impresora
 bool printerStatus = false; //f->close t->open
 char printerData[256]; // buffer
 
@@ -43,6 +43,11 @@ void writeBuffer(){
 void closePrinter(){
 	if(printerStatus){
 		printerStatus=false;
+		printf("Cerrando...\n");
+		sleep(2);
+		printf("Espere...\n");
+		sleep(1);
+		printf("Cerrada\n");
 	} else{
 		printf("Ya esta cerrada \n");
 		
