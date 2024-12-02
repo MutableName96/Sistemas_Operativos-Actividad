@@ -10,40 +10,82 @@ char printerData[256]; // buffer
 void open(){
 	if(!printerStatus){
 		printerStatus = true;
+		printf("Abriendo...\n");
+		sleep(1);
 	} else{
-		printf("La impresora esta abierta");
+		printf("La impresora esta abierta\n");
 		
 		}
 }
 
 void readBuffer(){
 	if(printerStatus){
-		printf("leyendo...");
-		sleep(0.5);	
-		printf("%s",printerData);
+		printf("leyendo...\n");
+		sleep(1);
+		printf("Contenido del buffer: %s\n",printerData);
 	} else{
-		printf("La impresora esta cerrada");
+		printf("La impresora esta cerrada\n");
 		
 		}
 }
 
 void writeBuffer(){
+	if(printerStatus){
+		printf("Introduce el texto a imprimir: \n");
+		getchar();
+		fgets(printerData, sizeof(printerData), stdin);
+		printf("Datos cargados\n");
+	} else{
+		printf("La impresora esta cerrada \n");
+	}
 }
 	
-void closePrintf(){
+void closePrinter(){
 	if(printerStatus){
 		printerStatus=false;
 	} else{
-		printf("Ya esta cerrada");
+		printf("Ya esta cerrada \n");
 		
-		}
+	}
 		
 }
 
 int main(){
+	int x = 0;
 	
-	fgets(printerData,sizeof(printerData),stdin);
-	printf("%s",printerData);
-	read();
+	do{
+		printf("1. Abrir Impresora\n");
+		printf("2. Leer buffer de datos\n");
+		printf("3. Escribir buffer de datos\n");
+		printf("4. Cerrar Impresora\n");
+		printf("5. Exit\n");
+		printf("Selecciona una opción: ");
+		scanf("%d",&x);
+		getchar();
+		
+		switch(x){
+			case 1:
+				open();
+                break;
+            case 2:
+				readBuffer();
+                break;
+            case 3:
+                writeBuffer();
+                break;
+            case 4:
+				closePrinter();
+                break;
+            case 5:
+				printf("Saliendo... Adiós.\n");
+				return 0 ; 
+				break;
+            default:
+                printf("Opción no válida. Por favor, elige una opción válida.\n");
+			
+			}
+				
+	}while(true);
+	
 	return 0;
 	}
