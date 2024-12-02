@@ -1,6 +1,8 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <unistd.h>
+
 
 #define MemoryRam 10
 #define Swap 20
@@ -49,32 +51,81 @@ void swapping(){
 						return;
 					}
 				}
-				printf("No hay espacio en swap");
-			
+				printf("No hay espacio en Swap para el proceso %d\n", memoria[i].PID);
+				return;
 			
 			}
 		}
+		printf("No hay procesos en ram para mover.\n");
 	
 	}
 
-void asignarProceso(){
-	bool bandera = false;
+void asignarParticiones(){
+	bool flag =false;
 	int pid;
-	int size;
-	int sump = 0;
-	int temp = 0;
+    int size;
+    int rest;
+    
+	printf("Id de proceso: ");
+    scanf("%d", &pid);
+
+    if(pidExiste(pid)){
+        printf("Este pid ya existe o no es valido");
+        printf("\n");
+        return;
+    }
+
+    printf("Tamaño del proceso(MB): ");
+    scanf("%d", &size);
+
+    for(int i = 0; i < MemoryRam; i++){
+        if(memoriallena() == true){
+            printf("Memoria llena"); 
+            printf("Realizando swap...\n");
+            sleep(1);
+            swapping();
+        }
+	}
+			
 	
-	printf("Id proceso: ");
-	scanf("%d",&pid);
-	if(pidExiste(pid)){
-		printf("Este pid ya existe o no es valido\n");
-		return;
+
+void liberarEspacio(){
+	int opc=0;
+	bool bandera=false;
+	printf("Seleciona el proceso a eliminar: ");
+	scanf("%d",&opc);
+	for(int i = 0;i < tamañoP; i++){
+		if(opc==memoria[i].PID){
+			memoria[i].PID=-1;
+			printf("Proceso con PID %d eliminado de la partición %d.\n", opc, i + 1);
+			bandera=true;
+            break;
+		
+		}	
+	}
+	if (!bandera) {
+        printf("No se encontró un proceso con PID %d.\n", opc);
+    }
+}
+	
+void mostrarMemoria(){
+	bool p = true;
+	for(int i = 0;i < tamañoP; i++){
+		if(memoria[i].PID !=-1){
+			printf("PID: %d NumeroParticion: %d TamañoParticion:(%dMB)\n",memoria[i].PID,i+1,memoria[i].tamaño);
+			p=false;
+			}else if(memoria[i].tamaño>0){
+				printf("Particion: %d libre\n",i+1);
+
+				}
+			
 		}
-	printf("Tamaño proceso(MB): ");
-	scanf("%d",&size);
 	
-	
-	
+
+		if(p){
+			printf("No hay procesos que mostrar\n");
+			Hayprocesos=false;
+			}
 	}
 	
 
@@ -100,7 +151,7 @@ int main()
 				break;
 				
 			case 2:
-			asignarProceso();
+			asignarEspacio();
 			
 				break;
 				
