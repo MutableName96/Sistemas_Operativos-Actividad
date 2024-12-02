@@ -1526,10 +1526,11 @@ Estas interrupciones permiten al sistema operativo y a los programas controlar y
 5. Reanudación de la Ejecución del Proceso: El procesador continúa ejecutando el proceso interrumpido desde donde lo dejó.
 
 #### Pseucodigo
+##### Inicio
 ```Pseucodigo
 
 ```
-
+##### Fin
 ---
 
 **2.- Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.**
