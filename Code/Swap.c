@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define tMem 10
+#define MemoryRam 10
+#define Swap 20
 
 
 bool Hayprocesos=true;
@@ -13,14 +14,14 @@ typedef struct proceso{
 	int tamaño;
 	}proceso;
 
-	proceso memoria[tMem];
+	proceso memoria[MemoryRam];
 
 void asignarParticiones(){
 	int sump = 0;
 	int temp = 0;
 	int c = -1;
 	
-	if(tamañoP>tMem){
+	if(tamañoP>MemoryRam){
 		printf("Las particiones exceden el espacio del disco\n");
 		return;
 		}
@@ -29,7 +30,7 @@ void asignarParticiones(){
 		c++;
 
 		
-		if (sump >= tMem) { 
+		if (sump >= MemoryRam) { 
             printf("Memoria full, no es posible asignar mas particiones\n");
             tamañoP = c;
             break;
@@ -39,9 +40,9 @@ void asignarParticiones(){
             printf("Tamaño de la partición %d (MB): ", (i + 1));
             scanf("%d", &temp);
 
-            if (sump + temp > tMem) {
-                printf("Error: La partición excede el tamaño total de memoria (%d MB).\n", tMem);
-                printf("Espacio disponible restante: %d MB.\n", tMem - sump);
+            if (sump + temp > MemoryRam) {
+                printf("Error: La partición excede el tamaño total de memoria (%d MB).\n", MemoryRam);
+                printf("Espacio disponible restante: %d MB.\n", MemoryRam - sump);
             } else {
 				memoria[i].PID = -1;
                 memoria[i].tamaño = temp;
