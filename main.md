@@ -1073,18 +1073,39 @@ int main()
 
 Las direcciones identifican unívocamente una ubicación en la memoria. Tenemos dos tipos de direcciones que son la dirección lógica o virtual y la dirección física. La dirección lógica se utiliza como referencia para acceder a la dirección física.
 
-- Direcciones logicas paginacion
+- Direcciones logicas
 
 * Las direcciones logicas se componen de:
     * Numero de pagina(p): Se usa como un indice en la tabla de paginas que contiene la direccion base de cada pagina en memoria fisica.
 
     * Desplazamiento(d): Combinado con la direccion base define la direccion fisica que se envia a la unidad de manejo de memoria (mmu).
 
-
-
-
 ![Direccion Logica Paginaccion](img/adressLogicPag01.png)
 ![Direccion Logica Paginaccion](img/adressLogicPag02.png)
+
+Este ejemplo fue hecho usando de ejemplo la paginacion pero el procedimiento es exactamente igual con la segmentacion para traducir las direcciones logicas a fisicas lo unico que varia es que se debe verificar que el desplzamiento no exceda el tamaño del segmento referenciado en la direccion
+
+* En paginación, las direcciones virtuales se dividen en dos partes: el número de página (que actúa como índice en la tabla de páginas) y el desplazamiento dentro de la página. La traducción se realiza buscando el número de página en la tabla de páginas y combinando el contenido de la tabla que contiene marcos de pagina juntandolo con el desplazamiento.
+
+* En segmentación, las direcciones lógicas se dividen en dos partes: el número de segmento y el desplazamiento dentro del segmento. La diferencia principal es que en segmentación no hay un tamaño fijo para cada segmento, ya que el tamaño de los segmentos puede variar. Entonces, al traducir una dirección lógica a física, además de buscar la base del segmento en la tabla de segmentos, también debes verificar que el desplazamiento no exceda el tamaño del segmento referido en la dirección.
+
+### Integracion
+
+**1.- Analiza un sistema operativo moderno (por ejemplo, Linux o Windows) e identifica cómo administra la memoria virtual.**
+
+Ubuntu es un sistema operativo basado en Linux, que gestiona la memoria virtual a través de paginación y el uso de un espacio de intercambio llamado swap o swapping pa los amigos. Las páginas son de 4 KB aunque es posible aumentarla a paginas grandes, y se utiliza la Unidad de Gestión de Memoria (MMU) pn resumen, Ubuntu administra la memoria virtual con paginación y swap para optimizar el uso de la memoria, pero el uso excesivo de swap puede reducir el rendimiento. La memoria se maneja de forma eficiente gracias a la MMU, pero es importante tener suficiente RAM para evitar un rendimiento lento debido al uso frecuente de swap.ara traducir las direcciones virtuales a físicas igual que windows. Cada proceso tiene su propio espacio de direcciones virtuales, y cuando necesita acceder a una dirección que no está en la memoria RAM, se produce el famoso fallo de pagina si la página no está en la RAM y pues como no esta el SO procede a cargarla desde el disco que comunmente se usa el swap, lo que puede hacer que el sistema se vuelva más lento ya que las velocidades del disco son mas lentas que la ram.
+
+El sistema usa un archivo o partición de swap para almacenar páginas que no se usan activamente. Si la RAM se llena, Ubuntu mueve las páginas a swap, liberando memoria para otros procesos. Aunque el swap ayuda a evitar que el sistema se quede sin memoria, usarlo constantemente puede afectar el rendimiento.
+
+Ubuntu también permite configurar el parámetro swappiness, que determina cuánta memoria debe ser movida al swap. Por ejemplo, un valor de swappiness de 60 significa que Ubuntu comenzará a usar el swap cuando la RAM esté al 60% de su capacidad.
+
+---
+
+**2.- Realiza una simulación en cualquier lenguaje de programación que emule el swapping de procesos en memoria virtual.**
+```C
+
+```
+
 
 
 
