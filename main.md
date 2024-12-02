@@ -1403,7 +1403,7 @@ Estas interrupciones permiten al sistema operativo y a los programas controlar y
     * Internas: Se generan cuando un dispositivo de entrada o salida necesita atención del procesador.
 
     * Externas: se generan por eventos internos del procesador, como divisiones por cero, desbordamiento de memoria o errores de hardware
-    
+
 * Interrupciones por Software
     * Interrupciones del Sistema Operativo: Se utilizan para solicitar servicios del sistema operativo, como la impresión de un archivo o la asignación de memoria.
 
@@ -1414,16 +1414,22 @@ Estas interrupciones permiten al sistema operativo y a los programas controlar y
 
 #### Proceso de Gestión de Interrupciones por E/S
 
-1. Detección de la Interrupción
-2. Guardado del Contexto
-3. Ejecución de la ISR (Rutina de Servicio de Interrupción)
-4. Restauración del Contexto
-5. Reanudación de la Ejecución del Proceso
+1. Detección de la Interrupción: El procesador detecta una señal de interrupción de un dispositivo de E/S
 
+2. Guardado del Contexto: El sistema guarda el estado del procesador (registros, contador de programa) antes de interrumpir el proceso actual.
 
+3. Ejecución de la ISR (Rutina de Servicio de Interrupción): El procesador salta a la Rutina de Servicio de Interrupción (ISR) correspondiente al dispositivo que generó la interrupción. La ISR procesa la solicitud del dispositivo (lectura/escritura).
+
+4. Restauración del Contexto: El sistema restaura el estado del procesador para reanudar el proceso que fue interrumpido.
+
+5. Reanudación de la Ejecución del Proceso: El procesador continúa ejecutando el proceso interrumpido desde donde lo dejó.
+
+#### Pseucodigo
 ```Pseucodigo
 
 ```
+
+---
 
 **2.- Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.**
 
@@ -1434,6 +1440,28 @@ Estas interrupciones permiten al sistema operativo y a los programas controlar y
 
 ## 4.3 Estructuras de datos para manejo de dispositivos
 
+**Investiga y explica qué es una cola de E/S. Diseña una simulación de una cola con prioridad.**
+
+#### Cola de E/S
+
+Una cola de E/S es una estructura de datos que organiza las solicitudes de entrada/salida en un sistema operativo de manera similar a una fila en un banco, donde las solicitudes se procesan en el orden en que llegan, siguiendo generalmente el principio FIFO (Primero en Entrar, Primero en Salir). Estas solicitudes pueden ser de diversos tipos, como:
+
+* Lectura de datos desde disco
+
+* Escritura de datos a un archivo
+
+* Envio de datos a travez de la red
+
+Las solicitudes en la cola se envían a los controladores de dispositivos correspondientes para su ejecución.
+
+#### Cola de E/S con Prioridad
+
+En sistemas donde ciertas tareas tienen mayor urgencia, como en sistemas en tiempo real, se utilizan colas de E/S con prioridad. Cada solicitud tiene asignada una prioridad, y las solicitudes con mayor prioridad se procesan primero, independientemente de cuándo llegaron.
+
+```C
+
+
+```
 ## 4.4 Operaciones de Entrada/Salida
 
 
