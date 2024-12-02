@@ -1445,7 +1445,7 @@ Estas interrupciones permiten al sistema operativo y a los programas controlar y
 
 ## 4.3 Estructuras de datos para manejo de dispositivos
 
-**Investiga y explica qué es una cola de E/S. Diseña una simulación de una cola con prioridad.**
+**1.- Investiga y explica qué es una cola de E/S. Diseña una simulación de una cola con prioridad.**
 
 #### Cola de E/S
 
@@ -1464,10 +1464,174 @@ Las solicitudes en la cola se envían a los controladores de dispositivos corres
 En sistemas donde ciertas tareas tienen mayor urgencia, como en sistemas en tiempo real, se utilizan colas de E/S con prioridad. Cada solicitud tiene asignada una prioridad, y las solicitudes con mayor prioridad se procesan primero, independientemente de cuándo llegaron.
 
 ```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+typedef struct nodito{
+    int id;
+    int nivel_prioridad;
+    struct nodito *siguiente;
+} nodito;
+
+int obtener_prioridad() {
+    return (rand() % 5);
+}
+
+nodito* crear_nuevo_proceso() {
+    static int id_proceso = 1;
+    nodito* nuevo = (nodito*)malloc(sizeof(nodito));
+    if (nuevo == NULL) {
+        printf("Error al asignar memoria.\n");
+        exit(1);
+    }
+    nuevo->id = id_proceso++;
+    nuevo->nivel_prioridad = obtener_prioridad();
+    nuevo->siguiente = NULL;
+    return nuevo;
+}
+
+void agregar_proceso(nodito** cabeza) {
+    nodito* nuevo = crear_nuevo_proceso();
+    
+    if (*cabeza == NULL) {
+        *cabeza = nuevo;
+    } else {
+        nodito* temp = *cabeza;
+        while (temp->siguiente != NULL) {
+            temp = temp->siguiente;
+        }
+        temp->siguiente = nuevo;
+    }
+}
+
+void mostrar_procesos(nodito* cabeza) {
+    nodito* temp = cabeza;
+    while (temp != NULL) {
+        printf("Proceso %d con prioridad %d -> ", temp->id, temp->nivel_prioridad);
+        temp = temp->siguiente;
+    }
+    printf("NULL\n");
+}
+
+void procesar_con_prioridad(nodito** cabeza) {
+    if (*cabeza == NULL) {
+        printf("No hay procesos para atender.\n");
+        return;
+    }
+
+    nodito* temp = *cabeza;
+    nodito* proceso_max = temp;
+    nodito* anterior_max = NULL;
+    nodito* anterior = NULL;
+
+    while (temp != NULL) {
+        if (temp->nivel_prioridad > proceso_max->nivel_prioridad) {
+            proceso_max = temp;
+            anterior_max = anterior;
+        }
+        anterior = temp;
+        temp = temp->siguiente;
+    }
+
+    printf("Atendiendo proceso %d con prioridad %d\n", proceso_max->id, proceso_max->nivel_prioridad);
+
+    if (anterior_max == NULL) {
+        *cabeza = proceso_max->siguiente;
+    } else {
+        anterior_max->siguiente = proceso_max->siguiente;
+    }
+
+    free(proceso_max);
+}
+
+void mostrar_menu() {
+    printf("1. Crear nuevo proceso\n");
+    printf("2. Atender proceso con prioridad más alta\n");
+    printf("3. Ver todos los procesos\n");
+    printf("4. Salir\n");
+    printf("Selecciona una opción: ");
+}
+
+int main() {
+    srand(time(NULL));
+    nodito* cabeza = NULL;
+    int opcion = 0;
+
+    do {
+        mostrar_menu();
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                agregar_proceso(&cabeza);
+                break;
+            case 2:
+                procesar_con_prioridad(&cabeza);
+                break;
+            case 3:
+                mostrar_procesos(cabeza);
+                break;
+            case 4:
+                printf("Saliendo... Adiós.\n");
+                break;
+            default:
+                printf("Opción no válida. Por favor, elige una opción válida.\n");
+        }
+    } while (opcion != 4);
+
+    return 0;
+}
+
 
 
 ```
+---
+
+**2.- Escribe un programa que simule las operaciones de un manejador dedispositivos utilizando una tabla de estructuras.**
+```C
+
+```
+
+
 ## 4.4 Operaciones de Entrada/Salida
+
+**1.- Diseña un flujo que describa el proceso de lectura de un archivo desde un disco magnético. Acompáñalo con un programa básico que simule el proceso.**
+
+#### Flujo
+```
+
+```
+#### Programa
+```C
+
+```
+---
+**2.- Implementa un programa en Python, C o java que realice operaciones de entrada/salida asíncronas usando archivos.**
+```C
+
+```
+
+### Integracion
+
+**1.- Escribe un programa que implemente el algoritmo de planificación de discos "Elevator (SCAN)".**
+```C
+
+```
+**2.- Diseña un sistema que maneje múltiples dispositivos simulados (disco duro, impresora, teclado) y muestra cómo se realiza la comunicación entre ellos.**
+```C
+
+```
+
+### Avanzados
+
+**1. Explica cómo los sistemas operativos modernos optimizan las operaciones de entrada/salida con el uso de memoria caché**
+
+La memoria caché es de las memorias de acceso mas rápido que una computadora tiene a su desposicion ya que es la mas cercana al microprocesador porque normalmente se encuentra dentro de este. Los sistemas operativos modernos utilizan cachés para almacenar temporalmente los datos más frecuentemente solicitados o recientemente utilizados siendo los mas comunes instrucciones de manejo de E/S, drivers, paginas de memoria virtual, proxy E/S, archivos etc... aunque  la mayoria de instrucciones estandar estan en la BIOS. Esto reduce la latencia y mejora la eficiencia de las operaciones de E/S y manejadores de hardware, ya que los datos pueden ser accedidos más rápidamente desde la caché en lugar de tener que acceder al disco duro o la memoria secundaria, que tiene tiempos de acceso más lentos. Gracias a la cache podemos evitar realizar costosos accesos a dispositivos de almacenamiento, acelerando así la ejecución de procesos.
+
+
+
+
 
 
 
