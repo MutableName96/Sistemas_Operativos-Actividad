@@ -60,7 +60,7 @@ void swapping(){
 	
 	}
 
-void asignarParticiones(){
+void asignarEspacio(){
 	bool flag =false;
 	int pid;
     int size;
@@ -79,55 +79,29 @@ void asignarParticiones(){
     scanf("%d", &size);
 
     for(int i = 0; i < MemoryRam; i++){
-        if(memoriallena() == true){
+        if(memoriallena()){
             printf("Memoria llena"); 
             printf("Realizando swap...\n");
             sleep(1);
             swapping();
         }
-	}
-			
-	
-
-void liberarEspacio(){
-	int opc=0;
-	bool bandera=false;
-	printf("Seleciona el proceso a eliminar: ");
-	scanf("%d",&opc);
-	for(int i = 0;i < tamañoP; i++){
-		if(opc==memoria[i].PID){
-			memoria[i].PID=-1;
-			printf("Proceso con PID %d eliminado de la partición %d.\n", opc, i + 1);
-			bandera=true;
-            break;
-		
-		}	
-	}
-	if (!bandera) {
-        printf("No se encontró un proceso con PID %d.\n", opc);
-    }
-}
-	
-void mostrarMemoria(){
-	bool p = true;
-	for(int i = 0;i < tamañoP; i++){
-		if(memoria[i].PID !=-1){
-			printf("PID: %d NumeroParticion: %d TamañoParticion:(%dMB)\n",memoria[i].PID,i+1,memoria[i].tamaño);
-			p=false;
-			}else if(memoria[i].tamaño>0){
-				printf("Particion: %d libre\n",i+1);
-
-				}
-			
-		}
-	
-
-		if(p){
-			printf("No hay procesos que mostrar\n");
-			Hayprocesos=false;
+        if(memoria[i].PID ==-1 && memoria[i].tamaño >= size){
+			memoria[i].PID = pid;
+			printf("\nProceso %d asignado a la partición %d\n", pid, i + 1);
+			rest = (memoria[i].tamaño) - size;
+            printf("Memoria desperdiciada: %d (MB)\n", rest);
+             flag = true;
+             break;
 			}
 	}
 	
+	if(flag == 0){
+        printf("No hay particiones que puedan contener el proceso\n");
+        printf("\n");
+    }
+    printf("\n");
+}
+			
 
 int main()
 {
@@ -146,7 +120,7 @@ int main()
 			case 1:
 			printf("Seleccione el Maximo de particion: ");
 			scanf("%d",&tamañoP);
-				asignarParticiones(tamañoP);
+				asignarEspacio(tamañoP);
 			
 				break;
 				
