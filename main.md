@@ -1385,12 +1385,52 @@ Ejemplos: Teclados, ratones, impresoras, módems, terminales serie.
 | Uso típico            | Almacenamiento de archivos, sistemas operativos | Interacción con el usuario, comunicaciones |
 
 --- 
-**2.- Realiza una simulación en cualquier lenguaje de programación que emule el swapping de procesos en memoria virtual**
+**2.- Diseña un programa que implemente un manejador de dispositivos sencillo para un dispositivo virtual de entrada.**
+
 ```C
 
 ```
 
 ## 4.2 Mecanismos y funciones de los manejadores de dispositivos
+**1.- Investiga qué es la interrupción por E/S y cómo la administra el sistema operativo. Escribe un ejemplo en pseudocódigo  simular este proceso**
+
+Las interrupciones por E/S son señales enviadas por los dispositivos de entrada/salida (E/S) al procesador para solicitar atención inmediata. En lugar de esperar a que el procesador termine con sus tareas actuales, los dispositivos de E/S interrumpen su ejecución para que el procesador pueda atender la solicitud.
+
+Estas interrupciones permiten al sistema operativo y a los programas controlar y responder a eventos externos de manera eficiente.
+
+#### Tipos Interrupciones
+* Interrupciones por Hardware
+    * Internas: Se generan cuando un dispositivo de entrada o salida necesita atención del procesador.
+
+    * Externas: se generan por eventos internos del procesador, como divisiones por cero, desbordamiento de memoria o errores de hardware
+    
+* Interrupciones por Software
+    * Interrupciones del Sistema Operativo: Se utilizan para solicitar servicios del sistema operativo, como la impresión de un archivo o la asignación de memoria.
+
+    * Interrupciones de software: Son generadas por programas en ejecución para solicitar servicios del sistema operativo, como la apertura de un archivo o la comunicación con un dispositivo externo.
+
+* Interrupciones por tiempo
+* Interrupciones por excepcion
+
+#### Proceso de Gestión de Interrupciones por E/S
+
+1. Detección de la Interrupción
+2. Guardado del Contexto
+3. Ejecución de la ISR (Rutina de Servicio de Interrupción)
+4. Restauración del Contexto
+5. Reanudación de la Ejecución del Proceso
+
+
+```Pseucodigo
+
+```
+
+**2.- Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.**
+
+```C
+
+```
+###
 
 ## 4.3 Estructuras de datos para manejo de dispositivos
 
