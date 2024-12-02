@@ -1329,6 +1329,66 @@ int main()
 # Administración de Entrada/Salida
 
 ## 4.1 Dispositivos y manejadores de dispositivos
+**1.- Explica la diferencia entre dispositivos de bloque y dispositivos de carácter. Da un ejemplo de cada uno.**
+
+
+Los dispositivos de bloque y de carácter son dos categorías fundamentales en las que se clasifican los dispositivos de almacenamiento y entrada/salida en un sistema informático. La principal diferencia entre ellos radica en la forma en que organizan y acceden a los datos.
+
+### Dispositivos de Bloque
+Los dispositivos de bloque almacenan datos en unidades fijas de tamaño, llamadas bloques. Cada bloque tiene una dirección única, lo que permite acceder a cualquier parte del dispositivo de manera aleatoria.
+
+El sistema operativo divide el dispositivo en bloques de tamaño fijo, y cada bloque tiene una dirección lógica que se utiliza para acceder a los datos. El controlador del dispositivo es el encargado de traducir esta dirección lógica en una dirección física en el dispositivo, permitiendo así la correcta localización y acceso a los datos almacenados.
+
+#### Caracteristicas
+
+* Acceso aleatorio: Se puede leer o escribir cualquier bloque sin tener que pasar por los anteriores.
+* Estructura: Los datos se organizan en una estructura jerárquica, lo que facilita la gestión y búsqueda de 
+información.
+
+#### Ejemplos:
+
+Ejemplos: Discos duros (HDD), unidades de estado sólido (SSD), unidades USB flash, discos ópticos (CD, DVD, Blu-ray).
+
+#### Ventajas:
+* Alto rendimiento para operaciones de lectura y escritura aleatoria
+
+* Estructura de datos eficiente para almacenar grandes cantidades de información
+
+* Ideal para sistemas de archivos y bases de datos
+
+### Dispositivos de Carácter
+
+En contraste, los dispositivos de carácter no almacenan datos en bloques, sino que los manejan como un flujo continuo de caracteres. No permiten el acceso aleatorio a los datos, ya que no se estructuran en bloques direccionables. Los dispositivos de carácter son típicamente utilizados para la entrada o salida de datos en tiempo real, donde la secuencia de los datos es más importante que el acceso directo a partes específicas de ellos.
+
+##### Características:
+* Acceso secuencial: Los datos se leen o escriben de forma secuencial, uno tras otro
+
+* Estructura: No tienen una estructura de bloques, por lo que no se puede acceder directamente a una parte específica del dispositivo
+
+#### Ejemplos:
+
+Ejemplos: Teclados, ratones, impresoras, módems, terminales serie.
+
+#### Ventajas:
+* Simpleza en la implementación.
+
+* Adecuados para dispositivos de entrada/salida interactivos.
+
+#### Comparativa
+
+| Característica        | Dispositivos de Bloque       | Dispositivos de Carácter     |
+|-----------------------|------------------------------|------------------------------|
+| Unidad de acceso      | Bloque                       | Carácter                     |
+| Acceso a datos        | Aleatorio                    | Secuencial                   |
+| Estructura de datos   | Jerárquica                   | Lineal                       |
+| Ejemplos              | Discos duros, SSD, USB flash | Teclados, ratones, impresoras |
+| Uso típico            | Almacenamiento de archivos, sistemas operativos | Interacción con el usuario, comunicaciones |
+
+--- 
+**2.- Realiza una simulación en cualquier lenguaje de programación que emule el swapping de procesos en memoria virtual**
+```C
+
+```
 
 ## 4.2 Mecanismos y funciones de los manejadores de dispositivos
 
