@@ -74,6 +74,9 @@ Se origina cuando hay sufiiente memoria teorica pero esta esta distribuida en pe
     |   1     |        0           |       1          | No referenciada, pero modificada         |
     |   2     |        1           |       0          | Referenciada, pero no modificada         |
     |   3     |        1           |       1          | Referenciada y modificada                |
+
+- Algoritmo WSClock
+    El algoritmo WSClock es una mejora sobre el algoritmo de reemplazo de páginas basado en el reloj, y se utiliza para gestionar la memoria de manera eficiente en sistemas con manejo de páginas, especialmente en sistemas con acceso a discos. Usa la manecilla para revisar las páginas en memoria, evaluando su acceso y estado de modificación. Si una página no se utiliza recientemente y es limpia, se reemplaza. Si está sucia, se planifica su escritura a disco. Además, se limita el número de escrituras a disco para evitar sobrecargar el sistema.
 ---
 
 ### - Tabla de Comparativa de los algoritmos
@@ -81,7 +84,7 @@ Se origina cuando hay sufiiente memoria teorica pero esta esta distribuida en pe
 | **Algoritmo**             | **Ventajas**                                    | **Desventajas**                                    |
 |---------------------------|-------------------------------------------------|----------------------------------------------------|
 | **FIFO**                  | - Sencillo. <br> - Bajo coste de implementación. | - Baja eficiencia. <br> - Anomalía de Belady.      |
-| **Óptimo (OPT)**          | - Rendimiento casi óptimo. <br> - Minima fallos. | - Imposible de implementar en SO de proposito general. <br> - Solo efectivo en patrones consistentes. |
+| **Óptimo (OPT)**          | - Rendimiento casi óptimo. <br> - Mínima cantidad de fallos. | - Imposible de implementar en SO de propósito general. <br> - Solo efectivo en patrones consistentes. |
 | **LRU**                   | - Cercano al óptimo. <br> - Buen desempeño en estadísticas. | - Costoso de implementar. <br> - Decrece con acceso a matrices grandes. |
 | **Segunda Oportunidad**   | - Mejora FIFO. <br> - Menor complejidad que LRU. | - Menos eficiente que LRU. <br> - Genera fallos si las referencias no son secuenciales. |
 | **Reloj (Clock)**         | - Más eficiente que Segunda Oportunidad. <br> - No requiere mover páginas. | - Menos eficiente que LRU en algunos casos. <br> - Manejo costoso de bits de referencia. |
@@ -89,6 +92,8 @@ Se origina cuando hay sufiiente memoria teorica pero esta esta distribuida en pe
 | **NFU**                   | - Más simple que LFU. <br> - Contadores sencillos. | - No considera el tiempo de acceso. <br> - Puede priorizar páginas no útiles. |
 | **MFU**                   | - Reemplaza las más referenciadas. <br> - Útil en procesos de uso inicial alto. | - Supone que las más referenciadas no son útiles. <br> - Puede eliminar páginas útiles. |
 | **NRU**                   | - Fácil de implementar en hardware. <br> - Usa clasificación de páginas. | - No tan eficiente como LRU en algunos patrones. <br> - El uso de clases puede no ser ideal. |
+| **WSClock**               | - Simplicidad y buen rendimiento. <br> - Utiliza tanto el reloj como el conjunto de trabajo. <br> - Menor tráfico de disco. | - Menos eficiente que LRU en patrones con acceso irregular. <br> - Requiere una implementación de escritura a disco para páginas sucias. |
+
 
 
 #### ¿Cual considero el mas optimo?
