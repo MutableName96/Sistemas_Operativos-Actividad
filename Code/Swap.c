@@ -15,8 +15,33 @@ typedef struct proceso{
 	}proceso;
 
 	proceso memoria[MemoryRam];
+	proceso swap[Swap];
+	
+	
+	
+void swapping(){
+	for(int i = 0; i < MemoryRam; i++ ){
+		if(memoria[i].PID !=-1){
+			
+			for(int j = 0; j < MemoryRam;j++){
+				if(swap[j].PID == -1){
+						swap[j] = memoria[i]
+						memoria[i].PID = -1
+						printf("Proceso %d movido a Swap\n", swap[j].PID);
+						return;
+					}
+				}
+				printf("No hay espacio en swap");
+			
+			
+			}
+		}
+	
+	}
 
 void asignarParticiones(){
+	int pid
+	int size
 	int sump = 0;
 	int temp = 0;
 	int c = -1;
