@@ -1631,6 +1631,23 @@ La memoria caché es de las memorias de acceso mas rápido que una computadora t
 
 
 
+---
+<div align="center">
+
+# Sistemas Operativos   ISC
+
+### Docente: Jesus Eduardo Alacaraz Chavez
+
+### Alumno: López Martínez Antonio
+
+### Numero Control: 22121322
+
+</div>
+
+---
+
+### Comments: Hacer esto fue una tortura 
+
 
 
 
