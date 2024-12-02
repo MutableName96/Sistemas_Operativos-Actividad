@@ -1497,6 +1497,8 @@ int main(){
 
 Las interrupciones por E/S son señales enviadas por los dispositivos de entrada/salida (E/S) al procesador para solicitar atención inmediata. En lugar de esperar a que el procesador termine con sus tareas actuales, los dispositivos de E/S interrumpen su ejecución para que el procesador pueda atender la solicitud.
 
+Con objeto de eliminar la necesidad de interrogar continuamente al disposi­tivo, una alternativa es el empleo de las interrupciones. En este caso, cuando el procesador da una orden de E/S a la controladora puede continuar con otro tra­bajo, ya que ésta le notificará mediante una interrupción del fin de la operación de E/S.
+
 Estas interrupciones permiten al sistema operativo y a los programas controlar y responder a eventos externos de manera eficiente.
 
 #### Tipos Interrupciones
