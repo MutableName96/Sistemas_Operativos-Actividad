@@ -1531,6 +1531,51 @@ Estas interrupciones permiten al sistema operativo y a los programas controlar y
 ##### Inicio
 ```Pseucodigo
 
+  definir dispositivo de e/s
+  definir tabla de estados de dispositivos
+
+  iniciar el sistema operativo
+
+  // usuario solicita una operación de e/s
+  funcion solicitarES():
+      // se solicita que el dispositivo realice una operación
+      imprimir "solicitud de e/s iniciada..."
+      cambiar el estado del dispositivo a "en proceso"
+      almacenar información sobre la operación en la tabla de estados
+      iniciar operación de e/s en el dispositivo
+
+  // el manejador de dispositivos verifica si el dispositivo está libre
+  funcion driverDevice():
+      si el dispositivo está ocupado:
+          imprimir "el dispositivo está ocupado. esperando..."
+          esperar hasta que la operación termine
+      si no:
+          imprimir "el dispositivo está libre. iniciando operación de e/s..."
+          cambiar estado del dispositivo a "en proceso"
+          iniciar la operación de e/s en el dispositivo
+
+  // simulamos la operación de e/s que tarda cierto tiempo
+      solicitares();
+      imprimir "operación de e/s en proceso..."
+      simular el tiempo de la operación
+      cambiar estado del dispositivo a "completado"
+      imprimir "operación de e/s completada."
+
+  // el sistema operativo maneja la interrupción cuando la operación de e/s termina de cargar
+  funcion driverDevice():
+      si el dispositivo ha completado la operación:
+          imprimir "interrupción recibida: operación de e/s completada."
+          devolver control al proceso original
+          cambiar estado a "espera"
+
+  // simulamos la interrupcion del SO
+  funcion SO():
+      // verificar drivers
+      si interrupcion está activa:
+          manejar interrupcion
+      si no:
+          ejecutar otra tarea del sistema operativo
+
 ```
 ##### Fin
 ---
@@ -1538,6 +1583,84 @@ Estas interrupciones permiten al sistema operativo y a los programas controlar y
 **2.- Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.**
 
 ```C
+#include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h>
+
+/****************************************
+ *         		Struct's                *
+ ****************************************/
+typedef struct Device{
+	bool interrupcion;
+	}Device;
+
+typedef struct TablaEstadosDispositivos{
+	int estado; // 0 -> espera 1-> ocupado/p en proceso 2-> completado
+	int parameters; //parametros especiales
+	}TablaEstadosDispositivos;
+
+/****************************************
+ *        Variables Globales            *
+ ****************************************/
+Device maus;
+TablaEstadosDispositivos tablaEstados;
+bool interrupcionActiva = false;
+
+/****************************************
+ *         		Funciones               *
+ ****************************************/
+ void ES();
+ void atenderES();
+ 
+ void driverDevice(Device dispositivo){
+	 while (tablaEstados.estado==1){
+		 printf("Dispositivo ocupado\n");
+		 sleep(1);
+		 printf("Espere...\n");
+		 sleep(2);
+		 tablaEstados.estado=0;
+		 }
+		 
+	if(tablaEstados.estado==0){
+		tablaEstados.estado=1;
+		printf("info: device libre\n");
+		ES();
+		atenderES();
+	
+	}	 
+	 
+}
+
+void ES(){
+	printf("Iniciando operación de E/S...\n");
+    sleep(2);
+    tablaEstados.estado = 2;
+    printf("Operación de E/S cargada en la tabla de estados.\n");
+}
+
+void atenderES(){
+	if(tablaEstados.estado == 2){
+		printf("interrupcion\n");
+		printf("atendiendo interrupcion\n");
+		tablaEstados.estado = 0;
+		}
+	
+}
+
+
+int main(){
+	
+	maus.interrupcion = false;
+    tablaEstados.estado = 1; 
+    tablaEstados.parameters = 0;
+    while(true){
+		printf("\n");
+		driverDevice(maus);
+		sleep(3);
+		}
+	
+	return 0;
+}
 
 ```
 ###
