@@ -33,7 +33,10 @@ void openPrinter();
 void writePrinterBuffer(const char *data);
 void closePrinter();
 void readPrinterBuffer();
-
+void initSistema();
+void writeToDisk();
+void readFromKeyboard();
+void readFromDisk();
 
 void openPrinter() {
     if (!impresora.status) {
@@ -83,8 +86,39 @@ void closePrinter() {
     }
 }
 
+void readFromKeyboard() {
+    printf("Escribe algo: ");
+    fgets(teclado.input, 256, stdin);
+    
+}
+
+void writeToDisk() {
+    strcpy(discoDuro.data, teclado.input);
+    printf("Datos escritos en el disco duro: %s\n", discoDuro.data);
+}
+
+void readFromDisk() {
+    strcpy(impresora.buffer, discoDuro.data);
+    printf("Datos leídos del disco duro para impresión: %s\n", impresora.buffer);
+}
+
+void initSistema() {
+    memset(&discoDuro, 0, sizeof(discoDuro));
+    memset(&impresora, 0, sizeof(impresora));
+    memset(&teclado, 0, sizeof(teclado));
+    impresora.status = false;
+}
 
 int main() {
-	
+    initSistema();
+    
+    openPrinter();
+    readFromKeyboard();
+    writeToDisk();
+    readFromDisk();
+    writePrinterBuffer(impresora.buffer);
+    readPrinterBuffer();
+    closePrinter();
+
     return 0;
 }

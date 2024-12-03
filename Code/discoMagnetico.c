@@ -99,7 +99,7 @@ void transferirDatos() {
     sleep(3);
     for (int i = 0; i < Bloque; i++) {
         printf("Bloque %d: ", i + 1);
-        for (int j = 0; j < 50; j++) { 
+        for (int j = 0; j < 50; j++) { //impresion
             printf("%d ", buffer[i][j]);
         }
         printf("\n");
@@ -119,5 +119,13 @@ void terminar() {
 
 
 int main(){
-	
-	}
+	for (int i = 0; i < Bloque; i++) {
+			for (int j = 0; j < SizeBloque; j++) {
+				archivo.bloques[i][j] = (char)(i * SizeBloque + j);
+			}
+		}
+		archivo.pista = 10;
+
+		solicitarLectura();
+		return 0;
+}

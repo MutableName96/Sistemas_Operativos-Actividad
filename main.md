@@ -1971,22 +1971,467 @@ Las condiciones para que un disco pueda encontrar un archivo dependen de la estr
 
 #### Programa
 ```C
+#include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <unistd.h>
+
+ /****************************************
+ *        Variables Globales            *
+ ****************************************/
+ # define Bloque 5
+ # define SizeBloque 1024
+ 
+
+ char buffer[Bloque][SizeBloque];
+ 
+/****************************************
+ *              Struct's                *
+ ****************************************/
+ typedef struct CabezaL{
+	 int pista;
+	 bool usado;
+	 
+	}CabezaL;
+	
+	CabezaL cabeza = {0,false};
+
+typedef struct Archivo{
+	char bloques[Bloque][SizeBloque];
+	int pista;
+	
+	}Archivo;
+
+	Archivo archivo;
+
+ 
+ /****************************************
+ *              Funciones               *
+ ****************************************/
+void terminar();
+void buscarArchivo();
+void posicionarCabeza(int pista);
+void leerDatos();
+void rotarDisco();
+void transferirDatos();
+
+void solicitarLectura() {
+    if (cabeza.usado) {
+        printf("La cabeza de lectura ya esta ocupada. No se puede realizar la operación.\n");
+        printf("\n");
+        return;
+    }
+
+    printf("Solicitud de lectura recibida.\n");
+    sleep(1);
+    printf("espere....\n");
+    sleep(2);
+    cabeza.usado = true;
+    buscarArchivo();
+}
+
+void buscarArchivo() {
+    printf("Buscando archivo en el disco...\n");
+    sleep(5);
+    printf("Archivo encontrado en la pista %d.\n", archivo.pista);
+    posicionarCabeza(archivo.pista);
+}
+
+void posicionarCabeza(int pista) {
+    printf("Posicionando cabeza de lectura a la pista %d...\n", pista);
+    sleep(3);
+    cabeza.pista = pista;
+    printf("posicionada en la pista %d \n", pista);
+    sleep(1);
+    printf("Cabeza lista pa leer %d \n", pista);
+    rotarDisco();
+}
+
+void rotarDisco() {
+    printf("Esperando el sector adecuado...\n");
+    sleep(2.5);
+    printf("Sector adecuado encontrado\n");
+    leerDatos();
+}
+
+void leerDatos() {
+    printf("Leyendo datos delarchivo...\n");
+    printf("espere....\n");
+    sleep(2);
+    for (int i = 0; i < Bloque ; i++) {
+        for (int j = 0; j < SizeBloque; j++) {
+            buffer[i][j] = archivo.bloques[i][j];
+        }
+    }
+    printf("Datos leídos y almacenados en el buffer\n");
+    transferirDatos();
+}
+
+void transferirDatos() {
+    printf("Transfiriendo datos...\n");
+    sleep(3);
+    for (int i = 0; i < Bloque; i++) {
+        printf("Bloque %d: ", i + 1);
+        for (int j = 0; j < 50; j++) { //impresion
+            printf("%d ", buffer[i][j]);
+        }
+        printf("\n");
+    }
+    terminar();
+}
+
+void terminar() {
+    printf("Operacion finalizada...\n");
+    cabeza.usado = false;
+    printf("Recursos liberados\n");
+}
+
+
+
+
+
+
+int main(){
+	for (int i = 0; i < Bloque; i++) {
+			for (int j = 0; j < SizeBloque; j++) {
+				archivo.bloques[i][j] = (char)(i * SizeBloque + j);
+			}
+		}
+		archivo.pista = 10;
+
+		solicitarLectura();
+		return 0;
+}
+
 
 ```
+
 ---
+
 **2.- Implementa un programa en Python, C o java que realice operaciones de entrada/salida asíncronas usando archivos.**
+
 ```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <string.h>
+#include <unistd.h>
+
+/****************************************
+ *              Struct's                *
+ ****************************************/
+typedef struct AsyncIO {
+    char *fileName;
+    char *data;
+} AsyncIO;
+
+/****************************************
+ *        Variables Globales            *
+ ****************************************/
+pthread_t readThread, writeThread;
+
+/****************************************
+ *              Funciones               *
+ ****************************************/
+void *readFile(void *arg) {
+    AsyncIO *io = (AsyncIO *)arg;
+    FILE *file = fopen(io->fileName, "r");
+    if (file == NULL) {
+        perror("No se pudo abrir el archivo para leer");
+        return NULL;
+    }
+
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), file)) {
+        printf("Leyendo: %s", buffer);
+    }
+
+    fclose(file);
+    return NULL;
+}
+
+void *writeFile(void *arg) {
+    AsyncIO *io = (AsyncIO *)arg;
+    FILE *file = fopen(io->fileName, "w");
+    if (file == NULL) {
+        perror("No se pudo abrir el archivo para escribir");
+        return NULL;
+    }
+
+    fprintf(file, "%s", io->data);
+    printf("Escribiendo: %s\n", io->data);
+    
+    fclose(file);
+    return NULL;
+}
+
+int main() {
+    AsyncIO io;
+    io.fileName = "async_file.txt";
+    io.data = "Ya quiero dormir\n";
+
+    pthread_create(&writeThread, NULL, writeFile, &io);
+    pthread_join(writeThread, NULL);
+
+    pthread_create(&readThread, NULL, readFile, &io);
+    pthread_join(readThread, NULL);
+
+    return 0;
+}
+
 
 ```
 
 ### Integracion
 
 **1.- Escribe un programa que implemente el algoritmo de planificación de discos "Elevator (SCAN)".**
+
+El algoritmo SCAN procesa solicitudes en una sola dirección hasta alcanzar el final del recorrido. Una vez completado el recorrido ascendente, se invierte la dirección y se procesan las solicitudes en sentido descendente.
 ```C
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <time.h>
+
+/****************************************
+ *              Struct's                *
+ ****************************************/
+typedef struct Request {
+    int track;
+    bool handled;
+} Request;
+
+typedef struct Disk {
+    int *tracks;
+    int numTracks;
+} Disk;
+
+/****************************************
+ *        Variables Globales            *
+ ****************************************/
+Disk disco;
+Request *requests;
+int numRequests;
+int currentTrack;
+int direction; // -1 left 1 rigth
+
+/****************************************
+ *              Funciones               *
+ ****************************************/
+void scan();
+int findNextRequest();
+void initRequests(int *reqTracks, int numReq);
+void initDisk(int *tracks, int numTracks);
+void handleRequest(int index);
+
+void scan() {
+    printf("Iniciando planificación SCAN (Elevator)...\n");
+    while (true) {
+        int nextRequest = findNextRequest();
+        if (nextRequest == -1) {
+            if (direction == 1 && currentTrack == disco.numTracks - 1) {
+                direction = -1;
+            } else if (direction == -1 && currentTrack == 0) {
+                direction = 1;
+            } else {
+                break;
+            }
+        } else {
+            handleRequest(nextRequest);
+        }
+    }
+    printf("Planificación completada.\n");
+}
+
+int findNextRequest() {
+    int nextIndex = -1;
+    int minDistance = __INT_MAX__;
+    for (int i = 0; i < numRequests; i++) {
+        if (!requests[i].handled) {
+            int distance = requests[i].track - currentTrack;
+            if ((direction == 1 && distance >= 0) || (direction == -1 && distance <= 0)) {
+                distance = abs(distance);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nextIndex = i;
+                }
+            }
+        }
+    }
+    return nextIndex;
+}
+
+void initRequests(int *reqTracks, int numReq) {
+    requests = (Request *)malloc(numReq * sizeof(Request));
+    numRequests = numReq;
+    for (int i = 0; i < numReq; i++) {
+        requests[i].track = reqTracks[i];
+        requests[i].handled = false;
+    }
+}
+
+void initDisk(int *tracks, int numTracks) {
+    disco.tracks = tracks;
+    disco.numTracks = numTracks;
+}
+
+void handleRequest(int index) {
+    printf("Moviendo cabezal de %d a %d\n", currentTrack, requests[index].track);
+    currentTrack = requests[index].track;
+    requests[index].handled = true;
+    printf("Solicitud en pista %d atendida.\n", currentTrack);
+}
+
+int main() {
+	srand(time(0));
+	
+    int trackArray[] = {34, 62, 95, 123, 180, 499,1,12,5,2};
+    int numTracks = 500;
+    int numReq = sizeof(trackArray) / sizeof(trackArray[0]);
+
+    initDisk(NULL, numTracks);
+    initRequests(trackArray, numReq);
+
+    currentTrack = rand()%100+1;
+    direction = 1;
+    scan();
+
+    free(requests);
+    return 0;
+}
+
 
 ```
 **2.- Diseña un sistema que maneje múltiples dispositivos simulados (disco duro, impresora, teclado) y muestra cómo se realiza la comunicación entre ellos.**
+
 ```C
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <unistd.h>
+
+/****************************************
+ *              Struct's                *
+ ****************************************/
+typedef struct Disk {
+    char data[256];
+} Disk;
+
+typedef struct Printer {
+    bool status; // false -> cerrada, true -> abierta
+    char buffer[256];
+} Printer;
+
+typedef struct Keyboard {
+    char input[256];
+} Keyboard;
+
+/****************************************
+ *        Variables Globales            *
+ ****************************************/
+Disk discoDuro;
+Printer impresora;
+Keyboard teclado;
+
+/****************************************
+ *              Funciones               *
+ ****************************************/
+void openPrinter();
+void writePrinterBuffer(const char *data);
+void closePrinter();
+void readPrinterBuffer();
+void initSistema();
+void writeToDisk();
+void readFromKeyboard();
+void readFromDisk();
+
+void openPrinter() {
+    if (!impresora.status) {
+        impresora.status = true;
+        printf("Abriendo impresora...\n");
+        sleep(1);
+        printf("Impresora abierta exitosamente.\n");
+    } else {
+        printf("La impresora ya estaba abierta.\n");
+    }
+}
+
+void readPrinterBuffer() {
+    if (impresora.status) {
+        printf("Leyendo buffer de la impresora...\n");
+        sleep(1);
+        if (strlen(impresora.buffer) > 0) {
+            printf("Contenido del buffer: %s\n", impresora.buffer);
+        } else {
+            printf("El buffer está vacío.\n");
+        }
+    } else {
+        printf("La impresora está cerrada.\n");
+    }
+}
+
+void writePrinterBuffer(const char *data) {
+    if (impresora.status) {
+        printf("Escribiendo datos en el buffer de la impresora...\n");
+        sleep(1);
+        strncpy(impresora.buffer, data, 256 - 1);
+        impresora.buffer[256 - 1] = '\0';
+        printf("Datos escritos exitosamente.\n");
+    } else {
+        printf("La impresora está cerrada.\n");
+    }
+}
+
+void closePrinter() {
+    if (impresora.status) {
+        printf("Cerrando impresora...\n");
+        sleep(2);
+        impresora.status = false;
+        printf("Impresora cerrada exitosamente.\n");
+    } else {
+        printf("La impresora ya estaba cerrada.\n");
+    }
+}
+
+void readFromKeyboard() {
+    printf("Escribe algo: ");
+    fgets(teclado.input, 256, stdin);
+    
+}
+
+void writeToDisk() {
+    strcpy(discoDuro.data, teclado.input);
+    printf("Datos escritos en el disco duro: %s\n", discoDuro.data);
+}
+
+void readFromDisk() {
+    strcpy(impresora.buffer, discoDuro.data);
+    printf("Datos leídos del disco duro para impresión: %s\n", impresora.buffer);
+}
+
+void initSistema() {
+    memset(&discoDuro, 0, sizeof(discoDuro));
+    memset(&impresora, 0, sizeof(impresora));
+    memset(&teclado, 0, sizeof(teclado));
+    impresora.status = false;
+}
+
+int main() {
+    initSistema();
+    
+    openPrinter();
+    readFromKeyboard();
+    writeToDisk();
+    readFromDisk();
+    writePrinterBuffer(impresora.buffer);
+    readPrinterBuffer();
+    closePrinter();
+
+    return 0;
+}
+
 
 ```
 
@@ -2013,9 +2458,6 @@ La memoria caché es de las memorias de acceso mas rápido que una computadora t
 
 ---
 
-### Comments: Hacer esto fue una tortura 
+### Comments: Hacer esto fue una tortura mental 
 
-
-
-
-
+![Direccion Logica Paginaccion](img/pls.jpeg)
