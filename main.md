@@ -1933,6 +1933,10 @@ El rendimiento de un disco depende de varios factores que afectan el tiempo tota
 #### Flujo
 ## Proceso de Lectura de un Archivo
 
+El número de bloques que componen un archivo puede variar dependiendo de varios factores, entre ellos el tamaño del archivo y el sistema de archivos del disco. Un bloque es la unidad básica de almacenamiento en el disco, y su tamaño suele ser de 512 bytes, 1 KB, 2 KB, 4 KB, o más.
+
+Diferentes sistemas de archivos (NTFS, FAT32, ext4, etc.) manejan el almacenamiento de manera distinta.
+
 **Solicitud → Búsqueda → Posicionamiento → Lectura → Transferencia → Finalización**
 
 
@@ -1944,6 +1948,22 @@ El rendimiento de un disco depende de varios factores que afectan el tiempo tota
 | 4    | **Lectura de Datos**: Los datos del archivo se leen en bloques y se almacenan en un buffer. |
 | 5    | **Transferencia al Proceso**: Los datos leídos se transfieren al proceso que realizó la solicitud. |
 | 6    | **Finalización**: El sistema operativo actualiza los estados y libera recursos. |
+
+
+
+![Direccion Logica Paginaccion](img/disco1.jpg)
+
+![Direccion Logica Paginaccion](img/disco%202.jpg)
+
+#### Condiciones para leeer un archivo
+Las condiciones para que un disco pueda encontrar un archivo dependen de la estructura del sistema de archivos y cómo se almacenan los archivos en el disco. Pero para el ejemplo que proponemos las condiciones que tratamos de recrear son las siguientes:
+
+* Ubicación del archivo: Se sabe en qué pista o bloque está.
+* Cabezal en la posición correcta: El cabezal de lectura debe estar en la pista adecuada.
+* Retardo rotacional: Esperar que el disco gire al sector adecuado.
+* Existencia del archivo: Verificar que el archivo realmente exista.
+* Acceso a los bloques de datos: Verificar que los bloques estén accesibles.
+* Estado del disco: Asegurarse de que el disco y la cabeza de lectura no estén ocupados.
 
 
 ---
