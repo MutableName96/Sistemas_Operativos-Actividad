@@ -1916,10 +1916,39 @@ int main() {
 
 **1.- Diseña un flujo que describa el proceso de lectura de un archivo desde un disco magnético. Acompáñalo con un programa básico que simule el proceso.**
 
-#### Flujo
-```
+El rendimiento de un disco depende de varios factores que afectan el tiempo total de acceso y transferencia de datos:
 
-```
+* Tiempo de búsqueda: Es el tiempo necesario para mover la cabeza del disco a la pista requerida. Este tiempo incluye tanto el arranque inicial como el movimiento para atravesar las pistas.
+
+* Retardo rotacional: Es el tiempo que tarda el sector correcto en rotar hasta quedar bajo la cabeza de lectura/escritura. El retardo depende de la velocidad de rotación del disco (por ejemplo, entre 3600 y 15,000 revoluciones por minuto).
+
+* Tiempo de transferencia: Este es el tiempo que se tarda en leer o escribir datos una vez que la cabeza está en posición y el sector deseado está debajo de ella.
+
+
+
+![Direccion Logica Paginaccion](img/Componentes_HD_comentados.png)
+
+
+
+#### Flujo
+## Proceso de Lectura de un Archivo
+
+**Solicitud → Búsqueda → Posicionamiento → Lectura → Transferencia → Finalización**
+
+
+| Paso | Paso                                            |
+|:------:|--------------------------------------------------------|
+| 1    | **Solicitud de Lectura**: El sistema operativo recibe una solicitud para leer un archivo. |
+| 2    | **Búsqueda del Archivo**: El sistema operativo busca la ubicación del archivo en el disco. |
+| 3    | **Posicionamiento de la Cabeza**: La cabeza de lectura/escritura del disco se mueve a la pista adecuada. |
+| 4    | **Lectura de Datos**: Los datos del archivo se leen en bloques y se almacenan en un buffer. |
+| 5    | **Transferencia al Proceso**: Los datos leídos se transfieren al proceso que realizó la solicitud. |
+| 6    | **Finalización**: El sistema operativo actualiza los estados y libera recursos. |
+
+
+---
+
+
 #### Programa
 ```C
 
