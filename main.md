@@ -12,9 +12,6 @@
 </div>
 
 <!-- toc -->
-<!-- toc -->
-
-
 
 
 # Administrador de Memoria
@@ -2469,4 +2466,23 @@ La memoria caché es de las memorias de acceso mas rápido que una computadora t
 </div>
 
 ## Actividad 1: Listar dispositivos conectados
+
+### Objetivo
+Conocer los dispositivos de entrada y salida conectados al sistema.
+
+### Instrucciones
+1. Abra una terminal en su entorno Linux.
+2. Ejecute los siguientes comandos y anote sus observaciones:
+   - `lsblk`: Enumera los dispositivos de bloque.
+   - `lsusb`: Lista los dispositivos conectados a los puertos USB.
+   - `lspci`: Muestra los dispositivos conectados al bus PCI.
+   - `dmesg | grep usb`: Muestra los mensajes del kernel relacionados con dispositivos USB.
+
+### Conteste:
+
+1. **¿Qué tipos de dispositivos se muestran en la salida de `lsblk`?**
+
+2. **¿Cuál es la diferencia entre `lsusb` y `lspci`?**
+
+3. **¿Qué información adicional proporciona `dmesg | grep usb`?**
 
