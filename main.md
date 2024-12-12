@@ -1,3 +1,18 @@
+
+<div align="center">
+
+# Sistemas Operativos   ISC
+
+#### Docente: Jesus Eduardo Alacaraz Chavez
+
+#### Alumno: López Martínez Antonio
+
+#### Numero Control: 22121322
+
+</div>
+
+<!-- toc -->
+
 # Administrador de Memoria
 
 ## 3.1 Política y filosofía
@@ -2441,23 +2456,13 @@ int main() {
 
 La memoria caché es de las memorias de acceso mas rápido que una computadora tiene a su desposicion ya que es la mas cercana al microprocesador porque normalmente se encuentra dentro de este. Los sistemas operativos modernos utilizan cachés para almacenar temporalmente los datos más frecuentemente solicitados o recientemente utilizados siendo los mas comunes instrucciones de manejo de E/S, drivers, paginas de memoria virtual, proxy E/S, archivos etc... aunque  la mayoria de instrucciones estandar estan en la BIOS. Esto reduce la latencia y mejora la eficiencia de las operaciones de E/S y manejadores de hardware, ya que los datos pueden ser accedidos más rápidamente desde la caché en lugar de tener que acceder al disco duro o la memoria secundaria, que tiene tiempos de acceso más lentos. Gracias a la cache podemos evitar realizar costosos accesos a dispositivos de almacenamiento, acelerando así la ejecución de procesos.
 
-
-
 ---
+
 <div align="center">
 
-# Sistemas Operativos   ISC
-
-### Docente: Jesus Eduardo Alacaraz Chavez
-
-### Alumno: López Martínez Antonio
-
-### Numero Control: 22121322
+# Dispositivos Entradas y Salidas en Linuxs
 
 </div>
 
----
+## Actividad 1: Listar dispositivos conectados
 
-### Comments: Hacer esto fue una tortura mental 
-
-![Direccion Logica Paginaccion](img/pls.jpeg)
