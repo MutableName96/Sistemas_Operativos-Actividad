@@ -2482,7 +2482,82 @@ Conocer los dispositivos de entrada y salida conectados al sistema.
 
 1. **¿Qué tipos de dispositivos se muestran en la salida de `lsblk`?**
 
+    Se muestra los discos de mi computadora siendo estos 2 tipos el HDD y mi SDD NVMe asi como sus particiones, el tamaño de las particiones, tambien los identificadores que de usan en linux de MAJ y MIN siendo el maj el correspondiente al disco y min el de la particion en este caso pero tambien nos muestra los loops que investigando es que las aplicaciones se instalan como dispositivos de bloque que se hace para que pueda compartirse como un sistema virtual de archivos.
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ lsblk
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0         7:0    0     4K  1 loop /snap/bare/5
+loop1         7:1    0 316,5M  1 loop /snap/code/176
+loop2         7:2    0  55,4M  1 loop /snap/core18/2846
+loop3         7:3    0  63,7M  1 loop /snap/core20/2434
+loop4         7:4    0  73,9M  1 loop /snap/core22/1663
+loop5         7:5    0  73,9M  1 loop /snap/core22/1722
+loop6         7:6    0  11,1M  1 loop /snap/firmware-updater/147
+loop7         7:7    0 164,8M  1 loop /snap/gnome-3-28-1804/198
+loop8         7:8    0 349,7M  1 loop /snap/gnome-3-38-2004/143
+loop9         7:9    0 505,1M  1 loop /snap/gnome-42-2204/176
+loop10        7:10   0  91,7M  1 loop /snap/gtk-common-themes/1535
+loop11        7:11   0  10,7M  1 loop /snap/snap-store/1218
+loop12        7:12   0  10,8M  1 loop /snap/snap-store/1244
+loop13        7:13   0  44,3M  1 loop /snap/snapd/23258
+loop14        7:14   0   568K  1 loop /snap/snapd-desktop-integration/253
+loop15        7:15   0 184,8M  1 loop /snap/spotify/81
+loop16        7:16   0  85,6M  1 loop /snap/whatsapp-linux-app/2
+sda           8:0    0 931,5G  0 disk 
+├─sda1        8:1    0  94,8G  0 part 
+├─sda2        8:2    0     1G  0 part 
+└─sda3        8:3    0 835,7G  0 part 
+nvme0n1     259:0    0 119,2G  0 disk 
+├─nvme0n1p1 259:1    0   100M  0 part /boot/efi
+├─nvme0n1p2 259:2    0    16M  0 part 
+├─nvme0n1p3 259:3    0  95,3G  0 part 
+├─nvme0n1p4 259:4    0   522M  0 part 
+└─nvme0n1p5 259:5    0  23,3G  0 part /
+```
+
 2. **¿Cuál es la diferencia entre `lsusb` y `lspci`?**
+
+#### lsusb
+
+lsusb nos muestra los dispositivos que estan conectados al bus 001 que se utiliza para intercambiar datos con el sistema teniendo un ID de dispositivo para ese bus asi como tambien vemos un identificador unico del dispositivo usb de dos partes que investigando corresponde a la primera parte al ID del fabricador y la segunda parte el identificador del producto del fabricante y este asu vez nos muestra informacion del tipo de usb que es siendo detectado teniendo el controlador para usb 2.0, el de la camara web, el del blutu y el controlador para usb 3.0 y algunos de estos dispositivos siempre estaran presentes ya que son parte del hardware entonces en conclucion nos muestra dispositivos del hardware y contoladores
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 0408:a061 Quanta Computer, Inc. HD User Facing
+Bus 001 Device 003: ID 8087:0aaa Intel Corp. Bluetooth 9460/9560 Jefferson Peak (JfP)
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hu    
+```
+
+#### lspci
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ lspci
+00:00.0 Host bridge: Intel Corporation 8th Gen Core Processor Host Bridge/DRAM Registers (rev 07)
+00:01.0 PCI bridge: Intel Corporation 6th-10th Gen Core Processor PCIe Controller (x16) (rev 07)
+00:02.0 VGA compatible controller: Intel Corporation CoffeeLake-H GT2 [UHD Graphics 630]
+00:08.0 System peripheral: Intel Corporation Xeon E3-1200 v5/v6 / E3-1500 v5 / 6th/7th/8th Gen Core Processor Gaussian Mixture Model
+00:12.0 Signal processing controller: Intel Corporation Cannon Lake PCH Thermal Controller (rev 10)
+00:14.0 USB controller: Intel Corporation Cannon Lake PCH USB 3.1 xHCI Host Controller (rev 10)
+00:14.2 RAM memory: Intel Corporation Cannon Lake PCH Shared SRAM (rev 10)
+00:14.3 Network controller: Intel Corporation Cannon Lake PCH CNVi WiFi (rev 10)
+00:15.0 Serial bus controller: Intel Corporation Cannon Lake PCH Serial IO I2C Controller #0 (rev 10)
+00:15.1 Serial bus controller: Intel Corporation Cannon Lake PCH Serial IO I2C Controller #1 (rev 10)
+00:16.0 Communication controller: Intel Corporation Cannon Lake PCH HECI Controller (rev 10)
+00:17.0 SATA controller: Intel Corporation Cannon Lake Mobile PCH SATA AHCI Controller (rev 10)
+00:1d.0 PCI bridge: Intel Corporation Cannon Lake PCH PCI Express Root Port #9 (rev f0)
+00:1d.5 PCI bridge: Intel Corporation Cannon Lake PCH PCI Express Root Port #14 (rev f0)
+00:1e.0 Communication controller: Intel Corporation Cannon Lake PCH Serial IO UART Host Controller (rev 10)
+00:1f.0 ISA bridge: Intel Corporation HM470 Chipset LPC/eSPI Controller (rev 10)
+00:1f.3 Audio device: Intel Corporation Cannon Lake PCH cAVS (rev 10)
+00:1f.4 SMBus: Intel Corporation Cannon Lake PCH SMBus Controller (rev 10)
+00:1f.5 Serial bus controller: Intel Corporation Cannon Lake PCH SPI Controller (rev 10)
+01:00.0 VGA compatible controller: NVIDIA Corporation GP107M [GeForce GTX 1050 3 GB Max-Q] (rev a1)
+01:00.1 Audio device: NVIDIA Corporation GP107GL High Definition Audio Controller (rev a1)
+06:00.0 Non-Volatile memory controller: Kingston Technology Company, Inc. A1000/U-SNS8154P3 x2 NVMe SSD (rev 01)
+07:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller (rev 25)
+```
 
 3. **¿Qué información adicional proporciona `dmesg | grep usb`?**
 
+    adsasd
