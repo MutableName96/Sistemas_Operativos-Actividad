@@ -2531,6 +2531,10 @@ Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hu
 
 #### lspci
 
+
+
+Este comando muestra los dispositivos PCI peripheral Component Interconnect es decir, Interconexión de Componentes Periféricos. Se trata de un bus que permite la conexión de los mencionados componentes periféricos a la placa madre o tarjeta madre de una computadora se puede ver componentes como controladores graficos, audios, almacenamiento, red, procesador etc... . con esto comando se puede confirmar la presencia de los componentes
+
 ```
 mutablename96@mutablename96-Nitro-AN515-54:~$ lspci
 00:00.0 Host bridge: Intel Corporation 8th Gen Core Processor Host Bridge/DRAM Registers (rev 07)
@@ -2558,6 +2562,37 @@ mutablename96@mutablename96-Nitro-AN515-54:~$ lspci
 07:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller (rev 25)
 ```
 
+
+**¿Entonces cual es la diferencia?, como se vio ambos comando muestran componente del hardware pero con diferentes enfoques el lsusb muestra informacion sobre los dispositivos usb conectados a esos buses mientras qeu el lspci nos muestra informacion de los componentes conectados a un puerto PCI como buses o cualquier periferico conectado a la placa madre mediante PCI, por ende lsusb se enfoca en dispositivos conectados a los puertos USB, tanto internos como externos, mientras que lspci se enfoca en hardware interno conectado a través del PCI ambos comandos son utilez para saber nuestros componentes**
+
 3. **¿Qué información adicional proporciona `dmesg | grep usb`?**
 
-    adsasd
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ sudo dmesg | grep usb
+[sudo] contraseña para mutablename96: 
+[    0.284996] usbcore: registered new interface driver usbfs
+[    0.284996] usbcore: registered new interface driver hub
+[    0.284996] usbcore: registered new device driver usb
+[    0.767083] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.08
+[    0.767087] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.767090] usb usb1: Product: xHCI Host Controller
+[    0.767093] usb usb1: Manufacturer: Linux 6.8.0-49-generic xhci-hcd
+[    0.767095] usb usb1: SerialNumber: 0000:00:14.0
+[    0.801177] usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.08
+[    0.801181] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.801182] usb usb2: Product: xHCI Host Controller
+[    0.801184] usb usb2: Manufacturer: Linux 6.8.0-49-generic xhci-hcd
+[    0.801185] usb usb2: SerialNumber: 0000:00:14.0
+[    1.039664] usb 1-5: new high-speed USB device number 2 using xhci_hcd
+[    1.176885] usb 1-5: New USB device found, idVendor=0408, idProduct=a061, bcdDevice= 0.04
+[    1.176903] usb 1-5: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+[    1.176911] usb 1-5: Product: HD User Facing
+[    1.176917] usb 1-5: Manufacturer: SunplusIT Inc
+[    1.294617] usb 1-14: new full-speed USB device number 3 using xhci_hcd
+[    1.422661] usb 1-14: New USB device found, idVendor=8087, idProduct=0aaa, bcdDevice= 0.02
+[    1.422679] usb 1-14: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    2.739720] usbcore: registered new interface driver btusb
+[    2.749768] usb 1-5: Found UVC 1.00 device HD User Facing (0408:a061)
+[    2.776058] usbcore: registered new interface driver uvcvideo
+```
