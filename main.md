@@ -2567,6 +2567,7 @@ mutablename96@mutablename96-Nitro-AN515-54:~$ lspci
 
 3. **¿Qué información adicional proporciona `dmesg | grep usb`?**
 
+Te muestra los dispositivos USB en tu compu. Muestra mensajes del sistema del kernel sobre si conectaste o desconectaste un USB, sii los controladores se cargaron bien, si hay errores o problemas con los USB. Es como echar un vistazo al chismógrafo de tu compu, pero solo de los USB, pa ver si todo está en orden o si algo falló. Sirve un buen cuando no sabes por qué tu memoria o tu mouse no jalan chido.
 
 ```
 mutablename96@mutablename96-Nitro-AN515-54:~$ sudo dmesg | grep usb
@@ -2596,3 +2597,728 @@ mutablename96@mutablename96-Nitro-AN515-54:~$ sudo dmesg | grep usb
 [    2.749768] usb 1-5: Found UVC 1.00 device HD User Facing (0408:a061)
 [    2.776058] usbcore: registered new interface driver uvcvideo
 ```
+## Actividad 2: Verificar dispositivos de almacenamiento
+
+### Objetivo
+Aprender cómo identificar discos duros, particiones y su configuración.
+
+### Instrucciones
+
+1. Use el comando `fdisk -l` para listar todos los discos y particiones.
+2. Utilice `blkid` para ver los identificadores UUID y los tipos de sistema de archivos.
+3. Use `df -h` para listar los dispositivos montados y su espacio disponible.
+   
+### Conteste
+
+
+#### fdisk -l
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ sudo fdisk -l
+[sudo] contraseña para mutablename96: 
+Disco /dev/loop0: 4 KiB, 4096 bytes, 8 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop1: 316,46 MiB, 331837440 bytes, 648120 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop2: 55,36 MiB, 58052608 bytes, 113384 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop3: 73,88 MiB, 77463552 bytes, 151296 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop4: 63,7 MiB, 66789376 bytes, 130448 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop5: 11,11 MiB, 11649024 bytes, 22752 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop6: 73,87 MiB, 77459456 bytes, 151288 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop7: 164,82 MiB, 172830720 bytes, 337560 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/nvme0n1: 119,24 GiB, 128035676160 bytes, 250069680 sectores
+Disk model: KINGSTON RBUSNS8154P3128GJ1             
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+Tipo de etiqueta de disco: gpt
+Identificador del disco: 3E09D0E1-8918-473F-88D8-C1CACE1DF6C6
+
+Dispositivo     Comienzo     Final  Sectores Tamaño Tipo
+/dev/nvme0n1p1      2048    206847    204800   100M Sistema EFI
+/dev/nvme0n1p2    206848    239615     32768    16M Reservado para Microsoft
+/dev/nvme0n1p3    239616 200169471 199929856  95,3G Datos básicos de Microsoft
+/dev/nvme0n1p4 248997888 250066943   1069056   522M Entorno de recuperación de Windows
+/dev/nvme0n1p5 200169472 248997887  48828416  23,3G Sistema de ficheros de Linux
+
+Las entradas de la tabla de particiones no están en el orden del disco.
+
+
+Disco /dev/sda: 931,51 GiB, 1000204886016 bytes, 1953525168 sectores
+Disk model: WDC WD10SPZX-21Z
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 4096 bytes
+Tamaño de E/S (mínimo/óptimo): 4096 bytes / 4096 bytes
+Tipo de etiqueta de disco: gpt
+Identificador del disco: 32070B17-2F0E-4421-B203-4B9D55953782
+
+Dispositivo  Comienzo      Final   Sectores Tamaño Tipo
+/dev/sda1        2048  198764543  198762496  94,8G Datos básicos de Microsoft
+/dev/sda2   198764544  200966143    2201600     1G Sistema EFI
+/dev/sda3   200966144 1953521663 1752555520 835,7G Sistema de ficheros de Linux
+
+
+Disco /dev/loop8: 349,7 MiB, 366682112 bytes, 716176 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop9: 505,09 MiB, 529625088 bytes, 1034424 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop10: 91,69 MiB, 96141312 bytes, 187776 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop11: 10,67 MiB, 11186176 bytes, 21848 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop12: 10,76 MiB, 11280384 bytes, 22032 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop13: 44,3 MiB, 46448640 bytes, 90720 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop14: 568 KiB, 581632 bytes, 1136 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop15: 184,79 MiB, 193761280 bytes, 378440 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+
+
+Disco /dev/loop16: 85,57 MiB, 89731072 bytes, 175256 sectores
+Unidades: sectores de 1 * 512 = 512 bytes
+Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
+Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
+```
+
+#### blkid
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ blkid
+/dev/nvme0n1p5: UUID="fbd6c597-7674-4614-826c-6e5b953d8915" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="b56f80ec-61b2-48fb-b65f-26cdf1f9ef40"
+```
+
+#### df -h
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ df -h
+S.ficheros     Tamaño Usados  Disp Uso% Montado en
+tmpfs            1,6G    13M  1,6G   1% /run
+/dev/nvme0n1p5    23G    18G  4,6G  79% /
+tmpfs            7,8G    78M  7,7G   1% /dev/shm
+tmpfs            5,0M    12K  5,0M   1% /run/lock
+efivarfs         192K    89K   99K  48% /sys/firmware/efi/efivars
+/dev/nvme0n1p1    96M    32M   65M  33% /boot/efi
+tmpfs            1,6G   132K  1,6G   1% /run/user/1000
+
+```
+
+1. **¿Qué dispositivos de almacenamiento están conectados a su sistema?**
+   
+nvme0n1 (SSD) y sda
+
+2. **¿Qué particiones están montadas actualmente?**
+
+Como tmpfs es un sistema de archivos temporal que se almacena en la RAM y efivarfs tambien es un sistema de archvos virtuales no los consideraremos como particion fisica por lo que respondiendo la pregunta serian dos:
+
+/dev/nvme0n1p5    23G    18G  4,6G  79% /
+
+/dev/nvme0n1p1    96M    32M   65M  33% /boot/efi
+
+3. **¿Qué tipo de sistemas de archivos se usan en las particiones?**
+   
+ext4
+
+## Actividad 3: Explorar dispositivos de entrada
+
+### Objetivo
+
+Identificar dispositivos como teclados, ratones y cámaras.
+
+### Instrucciones
+
+1. Ejecute `cat /proc/bus/input/devices` para listar los dispositivos de entrada.
+2. Use `evtest` para monitorear eventos de dispositivos de entrada (requiere permisos de superusuario).
+3. Investigue los siguientes dispositivos:
+    - Teclado
+    - Mouse
+    - Controladores USB adicionales
+  
+### Conteste
+
+#### cat /proc/bus/input/devices
+
+ ```
+ mutablename96@mutablename96-Nitro-AN515-54:~$ cat /proc/bus/input/devices
+I: Bus=0019 Vendor=0000 Product=0005 Version=0000
+N: Name="Lid Switch"
+P: Phys=PNP0C0D/button/input0
+S: Sysfs=/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:18/PNP0C0D:00/input/input0
+U: Uniq=
+H: Handlers=event0 
+B: PROP=0
+B: EV=21
+B: SW=1
+
+I: Bus=0019 Vendor=0000 Product=0003 Version=0000
+N: Name="Sleep Button"
+P: Phys=PNP0C0E/button/input0
+S: Sysfs=/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0E:00/input/input1
+U: Uniq=
+H: Handlers=kbd event1 
+B: PROP=0
+B: EV=3
+B: KEY=4000 0 0
+
+I: Bus=0019 Vendor=0000 Product=0001 Version=0000
+N: Name="Power Button"
+P: Phys=PNP0C0C/button/input0
+S: Sysfs=/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0C:00/input/input2
+U: Uniq=
+H: Handlers=kbd event2 
+B: PROP=0
+B: EV=3
+B: KEY=8000 10000000000000 0
+
+I: Bus=0019 Vendor=0000 Product=0001 Version=0000
+N: Name="Power Button"
+P: Phys=LNXPWRBN/button/input0
+S: Sysfs=/devices/LNXSYSTM:00/LNXPWRBN:00/input/input3
+U: Uniq=
+H: Handlers=kbd event3 
+B: PROP=0
+B: EV=3
+B: KEY=8000 10000000000000 0
+
+I: Bus=0011 Vendor=0001 Product=0001 Version=ab83
+N: Name="AT Translated Set 2 keyboard"
+P: Phys=isa0060/serio0/input0
+S: Sysfs=/devices/platform/i8042/serio0/input/input4
+U: Uniq=
+H: Handlers=sysrq kbd event4 leds 
+B: PROP=0
+B: EV=120013
+B: KEY=10000 c020000000000 0 0 700f02000003 3802078f870f401 febfffdfffefffff fffffffffffffffe
+B: MSC=10
+B: LED=7
+
+I: Bus=0018 Vendor=06cb Product=cd41 Version=0100
+N: Name="SYNA7DB5:01 06CB:CD41 Mouse"
+P: Phys=i2c-SYNA7DB5:01
+S: Sysfs=/devices/pci0000:00/0000:00:15.1/i2c_designware.1/i2c-1/i2c-SYNA7DB5:01/0018:06CB:CD41.0001/input/input8
+U: Uniq=
+H: Handlers=mouse0 event5 
+B: PROP=0
+B: EV=17
+B: KEY=30000 0 0 0 0
+B: REL=3
+B: MSC=10
+
+I: Bus=0018 Vendor=06cb Product=cd41 Version=0100
+N: Name="SYNA7DB5:01 06CB:CD41 Touchpad"
+P: Phys=i2c-SYNA7DB5:01
+S: Sysfs=/devices/pci0000:00/0000:00:15.1/i2c_designware.1/i2c-1/i2c-SYNA7DB5:01/0018:06CB:CD41.0001/input/input9
+U: Uniq=
+H: Handlers=mouse1 event6 
+B: PROP=5
+B: EV=1b
+B: KEY=e520 10000 0 0 0 0
+B: ABS=2e0800000000003
+B: MSC=20
+
+I: Bus=0019 Vendor=1025 Product=1229 Version=0000
+N: Name="Acer Wireless Radio Control"
+P: Phys=acer-wireless/input0
+S: Sysfs=/devices/LNXSYSTM:00/10251229:00/input/input11
+U: Uniq=
+H: Handlers=rfkill kbd event7 
+B: PROP=0
+B: EV=3
+B: KEY=80000000000000 0 0 0
+
+I: Bus=0019 Vendor=0000 Product=0000 Version=0000
+N: Name="Acer WMI hotkeys"
+P: Phys=wmi/input0
+S: Sysfs=/devices/virtual/input/input12
+U: Uniq=
+H: Handlers=rfkill kbd event8 
+B: PROP=0
+B: EV=13
+B: KEY=1c0000 0 0 0 0 1600800000c00 300400 10000000000000 0
+B: MSC=10
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="HDA NVidia HDMI/DP,pcm=3"
+P: Phys=ALSA
+S: Sysfs=/devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card0/input13
+U: Uniq=
+H: Handlers=event9 
+B: PROP=0
+B: EV=21
+B: SW=140
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="HDA NVidia HDMI/DP,pcm=7"
+P: Phys=ALSA
+S: Sysfs=/devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card0/input14
+U: Uniq=
+H: Handlers=event10 
+B: PROP=0
+B: EV=21
+B: SW=140
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="HDA NVidia HDMI/DP,pcm=8"
+P: Phys=ALSA
+S: Sysfs=/devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card0/input15
+U: Uniq=
+H: Handlers=event11 
+B: PROP=0
+B: EV=21
+B: SW=140
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="HDA NVidia HDMI/DP,pcm=9"
+P: Phys=ALSA
+S: Sysfs=/devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card0/input16
+U: Uniq=
+H: Handlers=event12 
+B: PROP=0
+B: EV=21
+B: SW=140
+
+I: Bus=0019 Vendor=0000 Product=0006 Version=0000
+N: Name="Video Bus"
+P: Phys=LNXVIDEO/video/input0
+S: Sysfs=/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:00/LNXVIDEO:00/input/input17
+U: Uniq=
+H: Handlers=kbd event13 
+B: PROP=0
+B: EV=3
+B: KEY=3e000b00000000 0 0 0
+
+I: Bus=0019 Vendor=0000 Product=0006 Version=0000
+N: Name="Video Bus"
+P: Phys=LNXVIDEO/video/input0
+S: Sysfs=/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/LNXVIDEO:01/input/input18
+U: Uniq=
+H: Handlers=kbd event14 
+B: PROP=0
+B: EV=3
+B: KEY=3e000b00000000 0 0 0
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="HDA Intel PCH Front Headphone"
+P: Phys=ALSA
+S: Sysfs=/devices/pci0000:00/0000:00:1f.3/sound/card1/input19
+U: Uniq=
+H: Handlers=event15 
+B: PROP=0
+B: EV=21
+B: SW=4
+ ```
+#### evtest
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ sudo evtest
+No device specified, trying to scan all of /dev/input/event*
+Available devices:
+/dev/input/event0:	Lid Switch
+/dev/input/event1:	Sleep Button
+/dev/input/event10:	HDA NVidia HDMI/DP,pcm=7
+/dev/input/event11:	HDA NVidia HDMI/DP,pcm=8
+/dev/input/event12:	HDA NVidia HDMI/DP,pcm=9
+/dev/input/event13:	Video Bus
+/dev/input/event14:	Video Bus
+/dev/input/event15:	HDA Intel PCH Front Headphone
+/dev/input/event2:	Power Button
+/dev/input/event3:	Power Button
+/dev/input/event4:	AT Translated Set 2 keyboard
+/dev/input/event5:	SYNA7DB5:01 06CB:CD41 Mouse
+/dev/input/event6:	SYNA7DB5:01 06CB:CD41 Touchpad
+/dev/input/event7:	Acer Wireless Radio Control
+/dev/input/event8:	Acer WMI hotkeys
+/dev/input/event9:	HDA NVidia HDMI/DP,pcm=3
+Select the device event number [0-15]: 
+```
+
+##### keyboard
+```
+Input driver version is 1.0.1
+Input device ID: bus 0x11 vendor 0x1 product 0x1 version 0xab83
+Input device name: "AT Translated Set 2 keyboard"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 1 (KEY_ESC)
+    Event code 2 (KEY_1)
+    Event code 3 (KEY_2)
+    Event code 4 (KEY_3)
+    Event code 5 (KEY_4)
+    Event code 6 (KEY_5)
+    Event code 7 (KEY_6)
+    Event code 8 (KEY_7)
+    Event code 9 (KEY_8)
+    Event code 10 (KEY_9)
+    Event code 11 (KEY_0)
+    Event code 12 (KEY_MINUS)
+    Event code 13 (KEY_EQUAL)
+    Event code 14 (KEY_BACKSPACE)
+    Event code 15 (KEY_TAB)
+    Event code 16 (KEY_Q)
+    Event code 17 (KEY_W)
+    Event code 18 (KEY_E)
+    Event code 19 (KEY_R)
+    Event code 20 (KEY_T)
+    Event code 21 (KEY_Y)
+    Event code 22 (KEY_U)
+    Event code 23 (KEY_I)
+    Event code 24 (KEY_O)
+    Event code 25 (KEY_P)
+    Event code 26 (KEY_LEFTBRACE)
+    Event code 27 (KEY_RIGHTBRACE)
+    Event code 28 (KEY_ENTER)
+    Event code 29 (KEY_LEFTCTRL)
+    Event code 30 (KEY_A)
+    Event code 31 (KEY_S)
+    Event code 32 (KEY_D)
+    Event code 33 (KEY_F)
+    Event code 34 (KEY_G)
+    Event code 35 (KEY_H)
+    Event code 36 (KEY_J)
+    Event code 37 (KEY_K)
+    Event code 38 (KEY_L)
+    Event code 39 (KEY_SEMICOLON)
+    Event code 40 (KEY_APOSTROPHE)
+    Event code 41 (KEY_GRAVE)
+    Event code 42 (KEY_LEFTSHIFT)
+    Event code 43 (KEY_BACKSLASH)
+    Event code 44 (KEY_Z)
+    Event code 45 (KEY_X)
+    Event code 46 (KEY_C)
+    Event code 47 (KEY_V)
+    Event code 48 (KEY_B)
+    Event code 49 (KEY_N)
+    Event code 50 (KEY_M)
+    Event code 51 (KEY_COMMA)
+    Event code 52 (KEY_DOT)
+    Event code 53 (KEY_SLASH)
+    Event code 54 (KEY_RIGHTSHIFT)
+    Event code 55 (KEY_KPASTERISK)
+    Event code 56 (KEY_LEFTALT)
+    Event code 57 (KEY_SPACE)
+    Event code 58 (KEY_CAPSLOCK)
+    Event code 59 (KEY_F1)
+    Event code 60 (KEY_F2)
+    Event code 61 (KEY_F3)
+    Event code 62 (KEY_F4)
+    Event code 63 (KEY_F5)
+    Event code 64 (KEY_F6)
+    Event code 65 (KEY_F7)
+    Event code 66 (KEY_F8)
+    Event code 67 (KEY_F9)
+    Event code 68 (KEY_F10)
+    Event code 69 (KEY_NUMLOCK)
+    Event code 70 (KEY_SCROLLLOCK)
+    Event code 71 (KEY_KP7)
+    Event code 72 (KEY_KP8)
+    Event code 73 (KEY_KP9)
+    Event code 74 (KEY_KPMINUS)
+    Event code 75 (KEY_KP4)
+    Event code 76 (KEY_KP5)
+    Event code 77 (KEY_KP6)
+    Event code 78 (KEY_KPPLUS)
+    Event code 79 (KEY_KP1)
+    Event code 80 (KEY_KP2)
+    Event code 81 (KEY_KP3)
+    Event code 82 (KEY_KP0)
+    Event code 83 (KEY_KPDOT)
+    Event code 85 (KEY_ZENKAKUHANKAKU)
+    Event code 86 (KEY_102ND)
+    Event code 87 (KEY_F11)
+    Event code 88 (KEY_F12)
+    Event code 89 (KEY_RO)
+    Event code 90 (KEY_KATAKANA)
+    Event code 91 (KEY_HIRAGANA)
+    Event code 92 (KEY_HENKAN)
+    Event code 93 (KEY_KATAKANAHIRAGANA)
+    Event code 94 (KEY_MUHENKAN)
+    Event code 95 (KEY_KPJPCOMMA)
+    Event code 96 (KEY_KPENTER)
+    Event code 97 (KEY_RIGHTCTRL)
+    Event code 98 (KEY_KPSLASH)
+    Event code 99 (KEY_SYSRQ)
+    Event code 100 (KEY_RIGHTALT)
+    Event code 102 (KEY_HOME)
+    Event code 103 (KEY_UP)
+    Event code 104 (KEY_PAGEUP)
+    Event code 105 (KEY_LEFT)
+    Event code 106 (KEY_RIGHT)
+    Event code 107 (KEY_END)
+    Event code 108 (KEY_DOWN)
+    Event code 109 (KEY_PAGEDOWN)
+    Event code 110 (KEY_INSERT)
+    Event code 111 (KEY_DELETE)
+    Event code 112 (KEY_MACRO)
+    Event code 113 (KEY_MUTE)
+    Event code 114 (KEY_VOLUMEDOWN)
+    Event code 115 (KEY_VOLUMEUP)
+    Event code 116 (KEY_POWER)
+    Event code 117 (KEY_KPEQUAL)
+    Event code 119 (KEY_PAUSE)
+    Event code 121 (KEY_KPCOMMA)
+    Event code 122 (KEY_HANGUEL)
+    Event code 123 (KEY_HANJA)
+    Event code 124 (KEY_YEN)
+    Event code 125 (KEY_LEFTMETA)
+    Event code 126 (KEY_RIGHTMETA)
+    Event code 127 (KEY_COMPOSE)
+    Event code 128 (KEY_STOP)
+    Event code 138 (KEY_HELP)
+    Event code 140 (KEY_CALC)
+    Event code 141 (KEY_SETUP)
+    Event code 142 (KEY_SLEEP)
+    Event code 143 (KEY_WAKEUP)
+    Event code 148 (KEY_PROG1)
+    Event code 149 (KEY_PROG2)
+    Event code 150 (KEY_WWW)
+    Event code 155 (KEY_MAIL)
+    Event code 156 (KEY_BOOKMARKS)
+    Event code 157 (KEY_COMPUTER)
+    Event code 158 (KEY_BACK)
+    Event code 159 (KEY_FORWARD)
+    Event code 163 (KEY_NEXTSONG)
+    Event code 164 (KEY_PLAYPAUSE)
+    Event code 165 (KEY_PREVIOUSSONG)
+    Event code 166 (KEY_STOPCD)
+    Event code 173 (KEY_REFRESH)
+    Event code 183 (KEY_F13)
+    Event code 184 (KEY_F14)
+    Event code 185 (KEY_F15)
+    Event code 192 (KEY_F22)
+    Event code 193 (KEY_F23)
+    Event code 217 (KEY_SEARCH)
+    Event code 224 (KEY_BRIGHTNESSDOWN)
+    Event code 225 (KEY_BRIGHTNESSUP)
+    Event code 226 (KEY_MEDIA)
+    Event code 227 (KEY_SWITCHVIDEOMODE)
+    Event code 236 (KEY_BATTERY)
+    Event code 237 (KEY_BLUETOOTH)
+    Event code 238 (KEY_WLAN)
+    Event code 425 (KEY_PRESENTATION)
+    Event code 434 (KEY_DOLLAR)
+    Event code 435 (KEY_EURO)
+    Event code 464 (KEY_FN)
+  Event type 4 (EV_MSC)
+    Event code 4 (MSC_SCAN)
+  Event type 17 (EV_LED)
+    Event code 0 (LED_NUML) state 1
+    Event code 1 (LED_CAPSL) state 0
+    Event code 2 (LED_SCROLLL) state 0
+Key repeat handling:
+  Repeat type 20 (EV_REP)
+    Repeat code 0 (REP_DELAY)
+      Value    250
+    Repeat code 1 (REP_PERIOD)
+      Value     33
+Properties:
+Testing ... (interrupt to exit)
+Event: time 1734248508.841445, type 17 (EV_LED), code 0 (LED_NUML), value 0
+Event: time 1734248508.841445, type 4 (EV_MSC), code 4 (MSC_SCAN), value 1c
+Event: time 1734248508.841445, type 1 (EV_KEY), code 28 (KEY_ENTER), value 0
+Event: time 1734248508.841445, -------------- SYN_REPORT ------------
+
+```
+
+##### Mouse
+```
+Input driver version is 1.0.1
+Input device ID: bus 0x18 vendor 0x6cb product 0xcd41 version 0x100
+Input device name: "SYNA7DB5:01 06CB:CD41 Mouse"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 272 (BTN_LEFT)
+    Event code 273 (BTN_RIGHT)
+  Event type 2 (EV_REL)
+    Event code 0 (REL_X)
+    Event code 1 (REL_Y)
+  Event type 4 (EV_MSC)
+    Event code 4 (MSC_SCAN)
+Properties:
+Testing ... (interrupt to exit)
+
+```
+
+##### TouchPad
+```
+Input driver version is 1.0.1
+Input device ID: bus 0x18 vendor 0x6cb product 0xcd41 version 0x100
+Input device name: "SYNA7DB5:01 06CB:CD41 Touchpad"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 272 (BTN_LEFT)
+    Event code 325 (BTN_TOOL_FINGER)
+    Event code 328 (BTN_TOOL_QUINTTAP)
+    Event code 330 (BTN_TOUCH)
+    Event code 333 (BTN_TOOL_DOUBLETAP)
+    Event code 334 (BTN_TOOL_TRIPLETAP)
+    Event code 335 (BTN_TOOL_QUADTAP)
+  Event type 3 (EV_ABS)
+    Event code 0 (ABS_X)
+      Value    661
+      Min        0
+      Max     1236
+      Resolution      12
+    Event code 1 (ABS_Y)
+      Value    183
+      Min        0
+      Max      896
+      Resolution      12
+    Event code 47 (ABS_MT_SLOT)
+      Value      0
+      Min        0
+      Max        4
+    Event code 53 (ABS_MT_POSITION_X)
+      Value      0
+      Min        0
+      Max     1236
+      Resolution      12
+    Event code 54 (ABS_MT_POSITION_Y)
+      Value      0
+      Min        0
+      Max      896
+      Resolution      12
+    Event code 55 (ABS_MT_TOOL_TYPE)
+      Value      0
+      Min        0
+      Max        2
+    Event code 57 (ABS_MT_TRACKING_ID)
+      Value      0
+      Min        0
+      Max    65535
+  Event type 4 (EV_MSC)
+    Event code 5 (MSC_TIMESTAMP)
+Properties:
+  Property type 0 (INPUT_PROP_POINTER)
+  Property type 2 (INPUT_PROP_BUTTONPAD)
+Testing ... (interrupt to exit)
+
+```
+
+
+1. **¿Qué eventos genera cada dispositivo al interactuar con ellos?**
+   
+cada uno genera eventos especificos por ejemplo el de teclado se genera 2 eventos que se podria definir como presion y liberacion de teclas y los eventos son de tipo KEY
+
+**Teclado**
+
+```
+qEvent: time 1734248975.729162, type 4 (EV_MSC), code 4 (MSC_SCAN), value 10
+Event: time 1734248975.729162, type 1 (EV_KEY), code 16 (KEY_Q), value 0
+```
+
+asi como los de cada pereferico tiene sus eventos como el mause con BTN_LEFT, BTN_RIGHT
+
+2. **¿Cómo se identifican los dispositivos en `/proc/bus/input/devices`?**
+
+con varios identificadores que son:
+
+* I: Informacion del bus
+
+* N: Nombre del dispositivo
+
+* P: Ubicación física del dispositivo
+
+* S: La ruta en sysfs (ruta de archivos virtual)
+
+* U: Identificador único del dispositivo
+
+* H: Handlers asociados con el dispositivo (interfaces del sistema que permiten la interacción con los dispositivos de entrada en Linux.)
+
+* B: Capacidades del dispositivo
+
+  * PROP: Propiedades del dispositivo
+
+  * EV: Tipos de eventos
+
+  * KEY: Códigos de teclas soportadas.
+
+  * MSC: Eventos misceláneos
+
+  * LED: Indicadores LED
+
+aunque solo bastaria con ver la etiqueta N y I para identificarlos sencillamente
+
+## Actividad 4: Examinar dispositivos de salida
+
+### Objetivo
+Automatizar la recopilación de información de dispositivos de entrada y salida.
+### Instrucciones
+1. Cree un archivo llamado `dispositivos.sh` y agregue el siguiente contenido: ```bash #!/bin/bash echo "Dispositivos de bloque:" lsblk echo "Dispositivos USB:" lsusb echo "Dispositivos PCI:" lspci echo "Dispositivos de entrada:" cat /proc/bus/input/devices echo "Salidas de video:" xrandr echo "Tarjetas de sonido:" aplay -l ```
+2. Ejecute el script usando `bash dispositivos.sh`.
+3. Modifique el script para guardar la salida en un archivo llamado `resumendispositivos.txt`.
+4. 
+### Conteste
+
+* ¿Qué ventajas tiene usar un script para recopilar esta información?
+* ¿Qué cambios realizaría para personalizar el script?
