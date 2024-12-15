@@ -3456,7 +3456,4 @@ Analizar la importancia del manejo de dispositivos en sistemas Linux.
 
 ### Objetivo
 Aprender a montar y desmontar un dispositivo externo.
-   * Inserta una memoria USB en el sistema.
-   * Encuentra el dispositivo usando el comando:
 
-`lsblk` O `fdisk -l`
