@@ -3309,7 +3309,7 @@ con varios identificadores que son:
 
 aunque solo bastaria con ver la etiqueta N y I para identificarlos sencillamente
 
-## Actividad 4: Examinar dispositivos de salida
+## Actividad 5: Crear un script de resumen
 
 ### Objetivo
 Automatizar la recopilación de información de dispositivos de entrada y salida.
@@ -3317,8 +3317,13 @@ Automatizar la recopilación de información de dispositivos de entrada y salida
 1. Cree un archivo llamado `dispositivos.sh` y agregue el siguiente contenido: ```bash #!/bin/bash echo "Dispositivos de bloque:" lsblk echo "Dispositivos USB:" lsusb echo "Dispositivos PCI:" lspci echo "Dispositivos de entrada:" cat /proc/bus/input/devices echo "Salidas de video:" xrandr echo "Tarjetas de sonido:" aplay -l ```
 2. Ejecute el script usando `bash dispositivos.sh`.
 3. Modifique el script para guardar la salida en un archivo llamado `resumendispositivos.txt`.
-4. 
+
 ### Conteste
 
 * ¿Qué ventajas tiene usar un script para recopilar esta información?
+  
+Es mas rapido e eficiente para buscar en nuestros componenetes para asi poder realizar tareas de mantenimiento 
+
 * ¿Qué cambios realizaría para personalizar el script?
+  
+Si se pudiera me gustaria agrupar la informacion para que no sea tan un revoltijo de texto y si se ocupa una parte en especifico nomas trabajar con ella.
