@@ -3309,6 +3309,108 @@ con varios identificadores que son:
 
 aunque solo bastaria con ver la etiqueta N y I para identificarlos sencillamente
 
+## Actividad 4: Examinar dispositivos de salida
+
+### Objetivo
+Entender cómo identificar dispositivos de salida como monitores y tarjetas de sonido.
+### Instrucciones
+1. Use `xrandr` para listar las pantallas conectadas y sus resoluciones.
+2. Ejecute `aplay -l` para listar las tarjetas de sonido disponibles.
+3. Use `lsof /dev/snd/*` para ver qué procesos están utilizando la tarjeta de sonido.
+### Conteste
+* **¿Qué salidas de video están disponibles en su sistema?**
+  
+una
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ xrandr
+Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384
+eDP-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 344mm x 193mm
+   1920x1080     60.03*+  60.03  
+   1680x1050     60.03  
+   1400x1050     60.03  
+   1600x900      60.03  
+   1280x1024     60.03  
+   1400x900      60.03  
+   1280x960      60.03  
+   1440x810      60.03  
+   1368x768      60.03  
+   1280x800      60.03  
+   1280x720      60.03  
+   1024x768      60.03  
+   960x720       60.03  
+   928x696       60.03  
+   896x672       60.03  
+   1024x576      60.03  
+   960x600       60.03  
+   960x540       60.03  
+   800x600       60.03  
+   840x525       60.03  
+   864x486       60.03  
+   700x525       60.03  
+   800x450       60.03  
+   640x512       60.03  
+   700x450       60.03  
+   640x480       60.03  
+   720x405       60.03  
+   684x384       60.03  
+   640x360       60.03  
+   512x384       60.03  
+   512x288       60.03  
+   480x270       60.03  
+   400x300       60.03  
+   432x243       60.03  
+   320x240       60.03  
+   360x202       60.03  
+   320x180       60.03  
+HDMI-1-0 disconnected (normal left inverted right x axis y axis)
+
+```
+
+* **¿Qué dispositivos de sonido se detectaron?**
+
+pues parace que 2 uno correspondiente a la tarjeta de sonido integrada de intel con su codec esta investigando es la que maneja el audio analogico, pero tambien sale la de nvidia mostrando lo que parece ser los puertos HDMI de la grafica indicandonos que puede manejar audio a travez de las conexiones HDMI
+  
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ aplay -l
+**** Lista de PLAYBACK dispositivos hardware ****
+tarjeta 0: NVidia [HDA NVidia], dispositivo 3: HDMI 0 [HDMI 0]
+  Subdispositivos: 1/1
+  Subdispositivo #0: subdevice #0
+tarjeta 0: NVidia [HDA NVidia], dispositivo 7: HDMI 1 [HDMI 1]
+  Subdispositivos: 1/1
+  Subdispositivo #0: subdevice #0
+tarjeta 0: NVidia [HDA NVidia], dispositivo 8: HDMI 2 [HDMI 2]
+  Subdispositivos: 1/1
+  Subdispositivo #0: subdevice #0
+tarjeta 0: NVidia [HDA NVidia], dispositivo 9: HDMI 3 [HDMI 3]
+  Subdispositivos: 1/1
+  Subdispositivo #0: subdevice #0
+tarjeta 1: PCH [HDA Intel PCH], dispositivo 0: ALC255 Analog [ALC255 Analog]
+  Subdispositivos: 1/1
+  Subdispositivo #0: subdevice #0
+
+```
+
+
+* **¿Qué procesos están usando la tarjeta de sonido?**
+
+paracen 2 que son pipewire y wireplumb
+ 
+ ```
+mutablename96@mutablename96-Nitro-AN515-54:~$ lsof /dev/snd/*
+COMMAND    PID          USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+pipewire  2515 mutablename96  mem    CHR  116,8           980 /dev/snd/pcmC1D0p
+pipewire  2515 mutablename96   59u   CHR  116,1      0t0  514 /dev/snd/seq
+pipewire  2515 mutablename96   60u   CHR  116,1      0t0  514 /dev/snd/seq
+pipewire  2515 mutablename96   65u   CHR 116,11      0t0  984 /dev/snd/controlC1
+pipewire  2515 mutablename96   67u   CHR  116,8      0t0  980 /dev/snd/pcmC1D0p
+wireplumb 2520 mutablename96   35u   CHR 116,11      0t0  984 /dev/snd/controlC1
+wireplumb 2520 mutablename96   38u   CHR  116,7      0t0  920 /dev/snd/controlC0
+ ```
+
+
+
 ## Actividad 5: Crear un script de resumen
 
 ### Objetivo
@@ -3320,10 +3422,41 @@ Automatizar la recopilación de información de dispositivos de entrada y salida
 
 ### Conteste
 
-* ¿Qué ventajas tiene usar un script para recopilar esta información?
+* **¿Qué ventajas tiene usar un script para recopilar esta información?**
   
 Es mas rapido e eficiente para buscar en nuestros componenetes para asi poder realizar tareas de mantenimiento 
 
-* ¿Qué cambios realizaría para personalizar el script?
+* **¿Qué cambios realizaría para personalizar el script?**
   
 Si se pudiera me gustaria agrupar la informacion para que no sea tan un revoltijo de texto y si se ocupa una parte en especifico nomas trabajar con ella.
+
+## Actividad 6: Reflexión y discusión
+
+### Objetivo
+Analizar la importancia del manejo de dispositivos en sistemas Linux.
+
+### Instrucciones
+1. **Reflexione sobre lo aprendido y discuta en equipo:**
+   
+    * **¿Qué comando encontró más útil y por qué?**: En mi humilde opinion el mas util que econtre fue `df -h` y `fdisk -l` ya que es util poder administrar el espacio en nuestros discos y gestionar el espacio y nos ayuda para verificar la estructura de particiones 
+ 
+    * **¿Qué tan importante es conocer los dispositivos conectados al sistema?**: Te ayuda a resolver problemas rápidamente porque puedes ver si algo no está funcionando bien o causando conflictos. También es esencial para la seguridad, ya que puedes detectar dispositivos no autorizados y gestionar los permisos de acceso, evitando así que gente no deseada use tu hardware y saber qué dispositivos tienes conectados hace que tu sistema sea más eficiente, seguro y fácil de usar.
+  
+    * **¿Cómo podrían estos conocimientos aplicarse en la administración de sistemas?**: Se podria usar resolucion para la resolucion de problemas, optimizar recursos, seguridad, automatizacion, mantenimiento etc... .
+
+--- 
+
+<div align="center">
+
+# Comandos de Entrada y Salida, Discos y Archivos
+
+</div>
+
+## Ejercicio 1: Montar y Desmontar Discos
+
+### Objetivo
+Aprender a montar y desmontar un dispositivo externo.
+   * Inserta una memoria USB en el sistema.
+   * Encuentra el dispositivo usando el comando:
+
+`lsblk` O `fdisk -l`
