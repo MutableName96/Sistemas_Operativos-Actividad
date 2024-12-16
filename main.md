@@ -3489,3 +3489,92 @@ mutablename96@mutablename96-Nitro-AN515-54:~$ sudo umount /mnt/usb
 ### Objetivo
 Usar redirección para guardar la salida de comandos en archivos.
 
+* ls -l > listado.txt
+* cat listado.txt
+* date >> listado.txt
+* cat listado.txt
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ cat listado.txt
+total 88
+-rw-rw-r-- 1 mutablename96 mutablename96     0 dic 15 18:14 archivo.txt
+drwxr-xr-x 2 mutablename96 mutablename96  4096 dic  2 23:24 Descargas
+-rwxrwxr-x 1 mutablename96 mutablename96  1052 dic 15 15:22 dispositivos.sh
+drwxr-xr-x 4 mutablename96 mutablename96  4096 dic 15 02:07 Documentos
+drwxr-xr-x 2 mutablename96 mutablename96  4096 dic 15 17:04 Escritorio
+drwxr-xr-x 3 mutablename96 mutablename96  4096 nov 30 19:50 Imágenes
+-rw-rw-r-- 1 mutablename96 mutablename96     0 dic 15 18:53 listado.txt
+drwxr-xr-x 2 mutablename96 mutablename96  4096 nov  1 18:26 Música
+drwxr-xr-x 2 mutablename96 mutablename96  4096 nov  1 18:26 Plantillas
+-rwxrwxr-x 1 mutablename96 mutablename96 16208 dic  1 18:25 pruebaciclo
+-rw-rw-r-- 1 mutablename96 mutablename96  3291 dic  1 18:25 pruebaciclo.c
+drwxr-xr-x 2 mutablename96 mutablename96  4096 nov  1 18:26 Público
+-rw-rw-r-- 1 mutablename96 mutablename96 26770 dic 15 15:25 resumendispositivos.txt
+drwx------ 8 mutablename96 mutablename96  4096 dic  1 19:39 snap
+drwxr-xr-x 2 mutablename96 mutablename96  4096 nov  1 18:26 Vídeos
+dom 15 dic 2024 18:54:41 CST
+```
+
+## Ejercicio 3: Copiar y Mover Archivos
+
+### Objetivo
+Practicar copiar y mover archivos y directorios.
+
+* echo "Este es un archivo de prueba" > archivo1.txt
+* cp archivo1.txt /tmp/
+* mv /tmp/archivo1.txt /tmp/archivo2.txt
+* mv /tmp/archivo2.txt .
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ echo "Este es un archivo de prueba" > archivo1.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ cp archivo1.txt /tmp/
+mutablename96@mutablename96-Nitro-AN515-54:~$ mv /tmp/archivo1.txt /tmp/archivo2.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ mv /tmp/archivo2.txt .
+mutablename96@mutablename96-Nitro-AN515-54:~$ 
+
+```
+
+![Ejercicio3](img/CopiarMoverArchivos.png)
+
+## Ejercicio 4: Comprimir y Descomprimir Archivos
+
+### Objetivo
+ Aprender a trabajar con compresión de archivos.
+
+1. Crea un directorio llamado `backup` y copia algunos archivos en él.
+2. Comprime el directorio `backup` en un archivo `.tar.gz`
+
+* tar -czvf backup.tar.gz backup/
+  
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ mkdir backup
+mutablename96@mutablename96-Nitro-AN515-54:~$ cp archivo1.txt archivo2.txt listado.txt backup/
+mutablename96@mutablename96-Nitro-AN515-54:~$ tar -czvf backup.tar.gz backup/
+backup/
+backup/listado.txt
+backup/archivo1.txt
+backup/archivo2.txt
+mutablename96@mutablename96-Nitro-AN51
+```
+![Comprimido](img/Comprimido.png)
+
+1. Borra el directorio original y extrae el contenido del archivo comprimido:
+
+* tar -xzvf backup.tar.gz
+
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ rm -r backup
+mutablename96@mutablename96-Nitro-AN515-54:~$ tar -xzvf backup.tar.gz
+backup/
+backup/listado.txt
+backup/archivo1.txt
+backup/archivo2.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ ls -l backup
+total 12
+-rw-rw-r-- 1 mutablename96 mutablename96   29 dic 15 20:13 archivo1.txt
+-rw-rw-r-- 1 mutablename96 mutablename96   29 dic 15 20:13 archivo2.txt
+-rw-rw-r-- 1 mutablename96 mutablename96 1111 dic 15 20:13 listado.txt
+```
+## Ejercicio 5: Permisos y Propiedades de Archivos
+
+
+

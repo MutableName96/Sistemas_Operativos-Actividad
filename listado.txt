@@ -1,0 +1,17 @@
+total 88
+-rw-rw-r-- 1 mutablename96 mutablename96     0 dic 15 18:14 archivo.txt
+drwxr-xr-x 2 mutablename96 mutablename96  4096 dic  2 23:24 Descargas
+-rwxrwxr-x 1 mutablename96 mutablename96  1052 dic 15 15:22 dispositivos.sh
+drwxr-xr-x 4 mutablename96 mutablename96  4096 dic 15 02:07 Documentos
+drwxr-xr-x 2 mutablename96 mutablename96  4096 dic 15 17:04 Escritorio
+drwxr-xr-x 3 mutablename96 mutablename96  4096 nov 30 19:50 Imágenes
+-rw-rw-r-- 1 mutablename96 mutablename96     0 dic 15 18:53 listado.txt
+drwxr-xr-x 2 mutablename96 mutablename96  4096 nov  1 18:26 Música
+drwxr-xr-x 2 mutablename96 mutablename96  4096 nov  1 18:26 Plantillas
+-rwxrwxr-x 1 mutablename96 mutablename96 16208 dic  1 18:25 pruebaciclo
+-rw-rw-r-- 1 mutablename96 mutablename96  3291 dic  1 18:25 pruebaciclo.c
+drwxr-xr-x 2 mutablename96 mutablename96  4096 nov  1 18:26 Público
+-rw-rw-r-- 1 mutablename96 mutablename96 26770 dic 15 15:25 resumendispositivos.txt
+drwx------ 8 mutablename96 mutablename96  4096 dic  1 19:39 snap
+drwxr-xr-x 2 mutablename96 mutablename96  4096 nov  1 18:26 Vídeos
+dom 15 dic 2024 18:54:41 CST
