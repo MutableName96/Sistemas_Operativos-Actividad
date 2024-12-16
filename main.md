@@ -3457,3 +3457,35 @@ Analizar la importancia del manejo de dispositivos en sistemas Linux.
 ### Objetivo
 Aprender a montar y desmontar un dispositivo externo.
 
+### Resultado
+
+Directorio montado
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ df -h
+S.ficheros     Tamaño Usados  Disp Uso% Montado en
+tmpfs            1,6G    11M  1,6G   1% /run
+/dev/nvme0n1p5    23G    18G  4,3G  81% /
+tmpfs            7,8G    92M  7,7G   2% /dev/shm
+tmpfs            5,0M    12K  5,0M   1% /run/lock
+efivarfs         192K    91K   97K  49% /sys/firmware/efi/efivars
+/dev/nvme0n1p1    96M    32M   65M  33% /boot/efi
+tmpfs            1,6G   148K  1,6G   1% /run/user/1000
+/dev/nvme0n1p3    96G    54G   43G  56% /media/mutablename96/BAEED6DCEED68FCD
+/dev/sda1         95G    99M   95G   1% /media/mutablename96/Disco Duro
+/dev/sda3        822G    12G  769G   2% /media/mutablename96/8a77c684-db16-4591-8afa-ab23489a2935
+/dev/sdb1        255M   8,5M  247M   4% /mnt/usb
+/dev/sdb3        512M    24K  512M   1% /media/mutablename96/62FC-C68B
+```
+
+Archivo creado, copiado y desmontando el directorio
+```
+mutablename96@mutablename96-Nitro-AN515-54:~$ nano archivo.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ cp archivo.txt /mnt/usb/
+mutablename96@mutablename96-Nitro-AN515-54:~$ sudo umount /mnt/usb
+```
+
+## Ejercicio 2: Redirección de Entrada y Salida
+
+### Objetivo
+Usar redirección para guardar la salida de comandos en archivos.
+
