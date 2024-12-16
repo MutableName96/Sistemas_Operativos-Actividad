@@ -3633,3 +3633,82 @@ Crear y formatear una nueva partición (Usar disco de práctica o máquina virtu
 sudo mount /dev/sdX1 /mnt/nueva_particion
 echo "Prueba de escritura" > /mnt/nueva_particion/test.txt
 ```
+
+viendo las particiones actuales de mi usb identifico 3 que son
+
+```bash
+/dev/sdb1: 255 MiB
+/dev/sdb2: 256 MiB
+/dev/sdb3: 512 MiB
+```
+entonces creamos una nueva particion usando fdisk y con ello asignamos el nombre de valor determinado de 4 y los sectores por defecto creandonos la particion
+
+```bash
+mutablename96@mutablename96-Nitro-AN515-54:~$ sudo fdisk /dev/sdb
+[sudo] contraseña para mutablename96: 
+
+Bienvenido a fdisk (util-linux 2.39.3).
+Los cambios solo permanecerán en la memoria, hasta que decida escribirlos.
+Tenga cuidado antes de utilizar la orden de escritura.
+
+GPT PMBR size mismatch (2097151 != 60481535) will be corrected by write.
+This disk is currently in use - repartitioning is probably a bad idea.
+It's recommended to umount all file systems, and swapoff all swap
+partitions on this disk.
+
+Orden (m para obtener ayuda): n
+Número de partición (4-128, valor predeterminado 4): 4
+Primer sector (2097119-60481502, valor predeterminado 2097152): 
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (2097152-60481502, valor predeterminado 60479487): 
+
+Crea una nueva partición 4 de tipo 'Linux filesystem' y de tamaño 27,8 GiB.
+
+Orden (m para obtener ayuda):
+
+```
+
+procedemos a formatearla como ext4
+
+```bash
+mutablename96@mutablename96-Nitro-AN515-54:~$ sudo mkfs.ext4 /dev/sdb4
+mke2fs 1.47.0 (5-Feb-2023)
+Se está creando un sistema de ficheros con 7297792 bloques de 4k y 1826816 nodos-i
+UUID del sistema de ficheros: c40f4d59-a587-4235-97d5-58a40dc9663a
+Respaldos del superbloque guardados en los bloques: 
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+	4096000
+
+Reservando las tablas de grupo: hecho                            
+Escribiendo las tablas de nodos-i: hecho                            
+Creando el fichero de transacciones (32768 bloques): 
+hecho
+Escribiendo superbloques y la información contable del sistema de archivos:   0/hecho  
+
+mutablename96@mutablename96-Nitro-AN515-54:~$ 
+
+```
+y por ultimo montamos un directorio en la particion y creamos un archivo
+
+```bash
+mutablename96@mutablename96-Nitro-AN515-54:~$ df -h
+S.ficheros     Tamaño Usados  Disp Uso% Montado en
+tmpfs            1,6G    11M  1,6G   1% /run
+/dev/nvme0n1p5    23G    18G  4,3G  81% /
+tmpfs            7,8G    90M  7,7G   2% /dev/shm
+tmpfs            5,0M    12K  5,0M   1% /run/lock
+efivarfs         192K    91K   97K  49% /sys/firmware/efi/efivars
+/dev/nvme0n1p1    96M    32M   65M  33% /boot/efi
+tmpfs            1,6G   144K  1,6G   1% /run/user/1000
+/dev/nvme0n1p3    96G    54G   43G  56% /media/mutablename96/BAEED6DCEED68FCD
+/dev/sda1         95G    99M   95G   1% /media/mutablename96/Disco Duro
+/dev/sda3        822G    12G  769G   2% /media/mutablename96/8a77c684-db16-4591-8afa-ab23489a2935
+/dev/sdb3        512M    24K  512M   1% /media/mutablename96/62FC-C68B
+/dev/sdb1        255M   8,5M  247M   4% /media/mutablename96/391C-45FA
+/dev/sdb4         28G    24K   26G   1% /mnt/holaProfe
+
+mutablename96@mutablename96-Nitro-AN515-54:~$ echo "Prueba de escritura" > /mnt/holaProfe/test.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ cat /mnt/holaProfe/test.txt
+Prueba de escritura
+
+```
+Y con esto acabamos 
