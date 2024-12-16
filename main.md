@@ -2521,7 +2521,7 @@ nvme0n1     259:0    0 119,2G  0 disk
 
 lsusb nos muestra los dispositivos que estan conectados al bus 001 que se utiliza para intercambiar datos con el sistema teniendo un ID de dispositivo para ese bus asi como tambien vemos un identificador unico del dispositivo usb de dos partes que investigando corresponde a la primera parte al ID del fabricador y la segunda parte el identificador del producto del fabricante y este asu vez nos muestra informacion del tipo de usb que es siendo detectado teniendo el controlador para usb 2.0, el de la camara web, el del blutu y el controlador para usb 3.0 y algunos de estos dispositivos siempre estaran presentes ya que son parte del hardware entonces en conclucion nos muestra dispositivos del hardware y contoladores
 
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ lsusb
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 Bus 001 Device 002: ID 0408:a061 Quanta Computer, Inc. HD User Facing
@@ -2535,7 +2535,7 @@ Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hu
 
 Este comando muestra los dispositivos PCI peripheral Component Interconnect es decir, Interconexión de Componentes Periféricos. Se trata de un bus que permite la conexión de los mencionados componentes periféricos a la placa madre o tarjeta madre de una computadora se puede ver componentes como controladores graficos, audios, almacenamiento, red, procesador etc... . con esto comando se puede confirmar la presencia de los componentes
 
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ lspci
 00:00.0 Host bridge: Intel Corporation 8th Gen Core Processor Host Bridge/DRAM Registers (rev 07)
 00:01.0 PCI bridge: Intel Corporation 6th-10th Gen Core Processor PCIe Controller (x16) (rev 07)
@@ -2569,7 +2569,7 @@ mutablename96@mutablename96-Nitro-AN515-54:~$ lspci
 
 Te muestra los dispositivos USB en tu compu. Muestra mensajes del sistema del kernel sobre si conectaste o desconectaste un USB, sii los controladores se cargaron bien, si hay errores o problemas con los USB. Es como echar un vistazo al chismógrafo de tu compu, pero solo de los USB, pa ver si todo está en orden o si algo falló. Sirve un buen cuando no sabes por qué tu memoria o tu mouse no jalan chido.
 
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ sudo dmesg | grep usb
 [sudo] contraseña para mutablename96: 
 [    0.284996] usbcore: registered new interface driver usbfs
@@ -2612,7 +2612,7 @@ Aprender cómo identificar discos duros, particiones y su configuración.
 
 
 #### fdisk -l
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ sudo fdisk -l
 [sudo] contraseña para mutablename96: 
 Disco /dev/loop0: 4 KiB, 4096 bytes, 8 sectores
@@ -2751,14 +2751,14 @@ Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
 
 #### blkid
 
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ blkid
 /dev/nvme0n1p5: UUID="fbd6c597-7674-4614-826c-6e5b953d8915" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="b56f80ec-61b2-48fb-b65f-26cdf1f9ef40"
 ```
 
 #### df -h
 
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ df -h
 S.ficheros     Tamaño Usados  Disp Uso% Montado en
 tmpfs            1,6G    13M  1,6G   1% /run
@@ -3322,7 +3322,7 @@ Entender cómo identificar dispositivos de salida como monitores y tarjetas de s
   
 una
 
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ xrandr
 Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384
 eDP-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 344mm x 193mm
@@ -3371,7 +3371,7 @@ HDMI-1-0 disconnected (normal left inverted right x axis y axis)
 
 pues parace que 2 uno correspondiente a la tarjeta de sonido integrada de intel con su codec esta investigando es la que maneja el audio analogico, pero tambien sale la de nvidia mostrando lo que parece ser los puertos HDMI de la grafica indicandonos que puede manejar audio a travez de las conexiones HDMI
   
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ aplay -l
 **** Lista de PLAYBACK dispositivos hardware ****
 tarjeta 0: NVidia [HDA NVidia], dispositivo 3: HDMI 0 [HDMI 0]
@@ -3397,7 +3397,7 @@ tarjeta 1: PCH [HDA Intel PCH], dispositivo 0: ALC255 Analog [ALC255 Analog]
 
 paracen 2 que son pipewire y wireplumb
  
- ```
+ ```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ lsof /dev/snd/*
 COMMAND    PID          USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 pipewire  2515 mutablename96  mem    CHR  116,8           980 /dev/snd/pcmC1D0p
@@ -3460,7 +3460,7 @@ Aprender a montar y desmontar un dispositivo externo.
 ### Resultado
 
 Directorio montado
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ df -h
 S.ficheros     Tamaño Usados  Disp Uso% Montado en
 tmpfs            1,6G    11M  1,6G   1% /run
@@ -3478,7 +3478,7 @@ tmpfs            1,6G   148K  1,6G   1% /run/user/1000
 ```
 
 Archivo creado, copiado y desmontando el directorio
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ nano archivo.txt
 mutablename96@mutablename96-Nitro-AN515-54:~$ cp archivo.txt /mnt/usb/
 mutablename96@mutablename96-Nitro-AN515-54:~$ sudo umount /mnt/usb
@@ -3494,7 +3494,7 @@ Usar redirección para guardar la salida de comandos en archivos.
 * date >> listado.txt
 * cat listado.txt
 
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ cat listado.txt
 total 88
 -rw-rw-r-- 1 mutablename96 mutablename96     0 dic 15 18:14 archivo.txt
@@ -3524,7 +3524,8 @@ Practicar copiar y mover archivos y directorios.
 * cp archivo1.txt /tmp/
 * mv /tmp/archivo1.txt /tmp/archivo2.txt
 * mv /tmp/archivo2.txt .
-```
+
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ echo "Este es un archivo de prueba" > archivo1.txt
 mutablename96@mutablename96-Nitro-AN515-54:~$ cp archivo1.txt /tmp/
 mutablename96@mutablename96-Nitro-AN515-54:~$ mv /tmp/archivo1.txt /tmp/archivo2.txt
@@ -3545,7 +3546,7 @@ mutablename96@mutablename96-Nitro-AN515-54:~$
 
 * tar -czvf backup.tar.gz backup/
   
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ mkdir backup
 mutablename96@mutablename96-Nitro-AN515-54:~$ cp archivo1.txt archivo2.txt listado.txt backup/
 mutablename96@mutablename96-Nitro-AN515-54:~$ tar -czvf backup.tar.gz backup/
@@ -3561,7 +3562,7 @@ mutablename96@mutablename96-Nitro-AN51
 
 * tar -xzvf backup.tar.gz
 
-```
+```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ rm -r backup
 mutablename96@mutablename96-Nitro-AN515-54:~$ tar -xzvf backup.tar.gz
 backup/
@@ -3576,5 +3577,59 @@ total 12
 ```
 ## Ejercicio 5: Permisos y Propiedades de Archivos
 
+### Objetivo
+Aprender a modificar permisos y propietarios de archivos.
+1. Crea un archivo llamado `privado.txt`:
+    * `touch privado.txt`
+2. Cambia los permisos del archivo para que solo el propietario pueda leer y escribir
+    * `chmod 600 privado.txt`
+```bash
+mutablename96@mutablename96-Nitro-AN515-54:~$ touch privado.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ chmod 600 privado.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ ls -l privado.txt
+-rw------- 1 mutablename96 mutablename96 0 dic 15 21:15 privado.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ 
+```
+3. Cambia el propietario del archivo a otro usuario (si tienes privilegios)
+    * `sudo chown usuario privado.txt`
+```bash
+mutablename96@mutablename96-Nitro-AN515-54:~$ sudo chown pepe privado.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ ls -l privado.txt
+-rw------- 1 pepe mutablename96 0 dic 15 21:15 privado.txt
+mutablename96@mutablename96-Nitro-AN515-54:~$ 
+```
+## Ejercicio 6: Exploración de Dispositivos
 
+### Objetivo
+Identificar discos y particiones en el sistema
 
+1. Usa `lsblk` para listar los discos y particiones:
+
+2. Usa `du -sh` para ver el tamaño del contenido en un directorio de tu elección:
+
+    `du -sh /ruta/directorio`
+```bash
+mutablename96@mutablename96-Nitro-AN515-54:~$ du -sh /media/mutablename96/Disco\ Duro
+6,2M	/media/mutablename96/Disco Duro
+
+```
+
+4. Verifica el uso de disco con `df -h`:
+
+## Ejercicio 7: Crear y Formatear Particiones
+
+### Objetivo
+Crear y formatear una nueva partición (Usar disco de práctica o máquina virtual).
+
+1. Identifica un disco no particionado:
+    `sudo fdisk -l`
+2. Usa `fdisk` para crear una nueva partición:
+    `sudo fdisk /dev/sdX`
+3. Formatea la partición como `ext4`:
+    `sudo mkfs.ext4 /dev/sdX1`
+4. Monta la partición en un directorio y prueba escribiendo archivos en ella:
+
+```bash
+sudo mount /dev/sdX1 /mnt/nueva_particion
+echo "Prueba de escritura" > /mnt/nueva_particion/test.txt
+```
