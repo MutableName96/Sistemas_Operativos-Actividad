@@ -3769,24 +3769,115 @@ Define los conceptos de archivo real y archivo virtual y explica sus diferencias
 Investiga los componentes principales de un sistema de archivos y compáralos entre dos sistemas operativos, como Linux y Windows.  
 
 **Tareas:**  
-- **Identifica los componentes clave de un sistema de archivos (por ejemplo, metadatos, tablas de asignación, etc.).**  
+- **Identifica los componentes clave de un sistema de archivos (por ejemplo, metadatos, tablas de asignación, etc.).** 
+
+  * **Metadatos**: Información sobre los archivos, como nombres, tamaños, fechas de creación/modificación, permisos, etc.
+
+  * **Tablas de Asignación**: Mapean los nombres de los archivos a sus ubicaciones físicas en el dispositivo de almacenamiento.
+
+  * **Archivos**:
+  Son las unidades fundamentales de almacenamiento en un sistema de archivos, utilizados para guardar datos del usuario o del sistema. Pueden contener texto, imágenes, programas ejecutables u otros tipos de datos
+
+  * **Directorios**: Estructuras jerárquicas que organizan los archivos y subdirectorios.
+  
+  ![Directorio](img/directorios.jpg)
+
+
+  * **Bloques de Datos**: Pequeñas unidades de almacenamiento que contienen los datos reales de los archivos.
+
+  * **Journaling**: Registra cambios antes de que se realicen, para recuperar el sistema en caso de fallos.
+
+  * **Caché**: Almacena temporalmente datos frecuentemente accedidos para mejorar el rendimiento.
+
+  * **Controladores**: Software que permite al sistema operativo interactuar con el hardware de almacenamiento.
+
+  * **Snapshots o Copias de Seguridad**:
+  Algunos sistemas de archivos modernos, como ZFS o APFS, permiten crear instantáneas de datos. Esto facilita la recuperación en caso de fallos o errores y es esencial para sistemas que requieren alta disponibilidad.
+
 - **Crea un cuadro comparativo de cómo estos componentes funcionan en sistemas como EXT4 y NTFS.**  
+
+    | **Componente**                 | **EXT4 (Linux)**                                                                                      | **NTFS (Windows)**                                                                                        |
+    |---------------------------------|------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+    | **Metadatos**                   | Los metadatos en EXT4 se almacenan en los inodos, donde se incluye el nombre, tamaño, permisos, fechas de creación y modificación, y la ubicación de los bloques de datos. | NTFS almacena los metadatos en la Master File Table (MFT), que incluye detalles como tamaño, fecha de modificación, permisos y atributos avanzados como compresión y cifrado. |
+    | **Tablas de Asignación**        | EXT4 usa un sistema de bitmap para gestionar los bloques de datos. Registra qué bloques están ocupados y cuáles libres, ayudando a asignar espacio eficientemente. | En NTFS, la MFT no solo guarda los metadatos, sino que también maneja la asignación de bloques a través de registros detallados para cada archivo, lo que facilita la gestión del espacio. |
+    | **Archivos**                    | En EXT4, los archivos se componen de bloques, con cada uno apuntando a su ubicación en el disco mediante inodos. Son unidades fundamentales para almacenar datos del usuario o del sistema. | En NTFS, los archivos se gestionan mediante registros en la MFT. Estos registros incluyen información detallada sobre el archivo, como su nombre, ubicación y atributos. |
+    | **Directorios**                 | Los directorios en EXT4 son estructuras simples que apuntan a los archivos mediante inodos. Son fáciles de gestionar y permiten organizar los archivos de manera jerárquica. | En NTFS, los directorios permiten crear enlaces simbólicos y duros, lo que proporciona una gran flexibilidad al organizar y gestionar los archivos dentro del sistema. |
+    | **Bloques de Datos**            | En EXT4, los datos se almacenan en bloques de tamaño fijo, lo que facilita la organización y gestión del espacio de almacenamiento. | En NTFS, los archivos se almacenan en clústeres, que son unidades de almacenamiento más grandes y flexibles, lo que permite una mayor eficiencia al manejar diferentes tamaños de archivo. |
+    | **Journaling**                  | EXT4 utiliza un sistema de journaling que registra las transacciones de archivos antes de ejecutarlas, lo que ayuda a restaurar el sistema en caso de un fallo inesperado. | NTFS también utiliza journaling, pero de manera más limitada, enfocándose principalmente en los metadatos. Esto ayuda a garantizar la integridad del sistema de archivos en caso de caídas del sistema. |
+    | **Caché**                       | EXT4 usa caché para almacenar inodos y mejorar la velocidad de acceso a los archivos, especialmente cuando se accede a ellos de manera frecuente. | NTFS emplea una caché de clústeres para mejorar el rendimiento, almacenando bloques de datos que se usan a menudo, lo que acelera el acceso a los archivos almacenados en disco. |
+    | **Controladores**               | EXT4 es compatible con una variedad de controladores de dispositivos para interactuar con discos y otros dispositivos de almacenamiento. | NTFS depende de controladores específicos de Windows, optimizados para trabajar con el sistema de archivos NTFS y garantizar su correcto funcionamiento en entornos de Windows. |
+    | **Snapshots o Copias de Seguridad** | Aunque EXT4 no tiene soporte nativo para snapshots, algunas soluciones de backup en Linux pueden implementarlo utilizando herramientas como LVM. | NTFS no tiene soporte nativo para snapshots, pero Windows incluye herramientas como "VSS" (Volume Shadow Copy Service), que permite crear copias de seguridad de los datos sin interrumpir el acceso a los archivos. |
+
 - **Describe las ventajas y desventajas de cada sistema basado en sus componentes.**
+
+    EXT4 (Linux):
+
+    El sistema de archivos EXT4 ofrece un rendimiento robusto, con alta velocidad de lectura y escritura. Es altamente escalable, soportando grandes volúmenes de datos, lo que lo hace ideal para servidores y entornos empresariales. Su sistema de journaling extendido proporciona una excelente fiabilidad, permitiendo la recuperación de fallos de manera efectiva. Sin embargo, su compatibilidad con otros sistemas operativos es limitada, lo que puede ser un inconveniente en entornos mixtos. Además, aunque ofrece soporte para atributos de archivos, no es tan avanzado como el de NTFS.
+
+    NTFS (Windows):
+
+    Por otro lado, NTFS es ampliamente compatible con diferentes sistemas operativos, lo que facilita su uso en entornos diversos. Soporta atributos avanzados como permisos detallados y etiquetas, y ofrece robustas características de seguridad, incluyendo cifrado de archivos y volúmenes. No obstante, NTFS puede ser más lento en sistemas grandes debido a su complejidad. Además, el uso de clústeres de tamaño fijo puede resultar en un desperdicio de espacio de almacenamiento, lo que lo hace menos eficiente en términos de utilización de espacio.
+
+    No hay un claro ganador en general. La elección del mejor sistema de archivos depende del entorno y las necesidades específicas. Para Linux y situaciones donde el rendimiento es crucial, EXT4 es probablemente la mejor opción. Sin embargo, para usuarios de Windows que valoran la compatibilidad y la seguridad, NTFS se presenta como la opción más robusta
 
 ---
 
 ## Ejercicio 3: Organización lógica y física de archivos
 **Descripción:**  
 Crea un esquema que muestre la organización lógica y física de un sistema de archivos. Explica cómo se relacionan las estructuras lógicas con las físicas en el disco.  
+ 
 
 **Tareas:**  
 - **Diseña un árbol jerárquico que represente la organización lógica de directorios y subdirectorios.**
 
+ ![arbolJerarquico](img/ArbolJerar.svg)
 
 - **Explica cómo se traduce la dirección lógica a la dirección física en el disco.**
 
+    La dirección lógica es inteligible para los humanos, ya que sigue una estructura jerárquica de directorios y subdirectorios. El disco duro (Dirección física) está dividido en sectores, pistas y bloques que almacenan los datos en pequeñas unidades de tamaño fijo (por ejemplo, bloques de 4 KB). Esta información es inteligible solo para el sistema operativo y el hardware.
+
+    Cuando el usuario accede a un archivo usando su dirección lógica, el sistema operativo realiza los siguientes pasos para encontrar la ubicación física en el disco:
+
+  1. **Interpretación del sistema de archivos**
+
+        El sistema de archivos (como NTFS, FAT32, EXT4) organiza y mantiene la información de los archivos.
+        Para cada archivo, el sistema de archivos guarda:
+        
+        * Metadatos: Contienen información sobre el archivo (tamaño, permisos, punteros).
+        * Tabla de asignación de bloques: Mapas que indican qué bloques físicos del disco contienen partes del archivo.
+
+   2. **Búsqueda en la tabla de asignación**
+        La traducción de una dirección lógica a una dirección física en un sistema de archivos implica varias capas de abstracción que manejan cómo los datos se almacenan y recuperan del almacenamiento físico. Por ejemplo usando la imagen anterior la direccion abstracta seria `C:\Users\Tonin\OneDrive\Semestre 5\docker\archivo.txt`.
+        
+        El sistema de archivos busca en la estructura de metadatos y localiza la carpeta docker y el archivo archivo.txt. Luego, verifica qué bloques físicos del disco contienen los datos del archivo.
+
+   3. **Traducción a nivel de bloques**
+  
+        El sistema encuentra en la tabla de asignación que el archivo ocupa la tabla indica la relación entre los bloques lógicos del archivo y sus bloques físicos en el disco.
+
+        Bloque lógico 1 → Bloque físico 5  
+        Bloque lógico 2 → Bloque físico 10  
+        Bloque lógico 3 → Bloque físico 12  
+        Bloque lógico 4 → Bloque físico 13      
+
+   4. **Acceso físico al disco**
+
+        El sistema operativo envía comandos al controlador del disco. El disco se mueve a las posiciones físicas correspondientes. Los datos de esos bloques se recuperan, se ensamblan en orden lógico y se muestran al usuario como un archivo completo
+
 
 - **Proporciona un ejemplo práctico de cómo un archivo se almacena físicamente.**
+
+    Imaginemos que estás jugando Minecraft y decides instalar un nuevo shader llamado ultraShader.zip. Este archivo se guarda en la carpeta
+    `D:\minecraft\Shaders\ultraShader.zip`, el archivo ultraShader.zip tiene un tamaño de 10 KB.
+    * Desde el punto de vista lógico, la estructura sería 
+```
+D:\minecraft
+│
+└── Shaders
+    └── ultraShader.zip (10 KB)
+```
+
+Entonces en resumen cuando instalas un shader en Minecraft, el archivo ultraShader.zip se guarda en tu carpeta de Shaders. El sistema operativo lo divide en partes (bloques) y los guarda en distintas ubicaciones del disco duro. La información sobre dónde se encuentran esas partes se guarda en una tabla especial del sistema de archivos llamada MFT (en NTFS). Cuando vuelves a abrir el juego, el sistema busca el archivo, junta las partes y lo carga en el juego para que puedas disfrutarlo.
 
 ---
 
@@ -3795,12 +3886,21 @@ Crea un esquema que muestre la organización lógica y física de un sistema de 
 Simula diferentes mecanismos de acceso a archivos (secuencial, directo e indexado) en un entorno práctico.  
 
 **Tareas:**  
-1. Define los diferentes mecanismos de acceso.  
-2. Escribe un pseudocódigo que muestre cómo acceder a:  
-   - Un archivo secuencialmente.  
+
+1. **Define los diferentes mecanismos de acceso.**
+   
+    * **Acceso Secuencial**: En este mecanismo, los datos se leen o escriben de forma ordenada, desde el inicio del archivo hasta el final. El proceso no puede saltarse ninguna parte del archivo, ya que debe recorrer cada byte o registro de manera secuencial.
+  
+    * **Acceso Directo**: En el acceso directo, es posible acceder a cualquier posición específica del archivo sin necesidad de leerlo desde el principio. Este método es eficiente cuando se conocen las posiciones exactas de los datos.
+
+    * **Acceso Indexado**: Este mecanismo utiliza una estructura adicional (índice) que actúa como una "tabla de contenidos" y contiene punteros que indican dónde se encuentran los datos dentro del archivo. El índice permite localizar rápidamente la información sin recorrer todo el archivo.
+   
+2. **Escribe un pseudocódigo que muestre cómo acceder a:**  
+   - Un archivo secuencialmente.
    - Un archivo directamente mediante su posición.  
    - Un archivo utilizando un índice.  
-3. Compara las ventajas de cada mecanismo dependiendo del caso de uso.  
+  
+3. **Compara las ventajas de cada mecanismo dependiendo del caso de uso.**  
 
 ---
 
