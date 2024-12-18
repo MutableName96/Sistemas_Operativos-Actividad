@@ -3896,11 +3896,46 @@ Simula diferentes mecanismos de acceso a archivos (secuencial, directo e indexad
     * **Acceso Indexado**: Este mecanismo utiliza una estructura adicional (índice) que actúa como una "tabla de contenidos" y contiene punteros que indican dónde se encuentran los datos dentro del archivo. El índice permite localizar rápidamente la información sin recorrer todo el archivo.
    
 2. **Escribe un pseudocódigo que muestre cómo acceder a:**  
-   - Un archivo secuencialmente.
-   - Un archivo directamente mediante su posición.  
-   - Un archivo utilizando un índice.  
+
+    - **Un archivo secuencialmente.**
+```
+abrir archivo "datos.txt" en modo lectura  
+mientras no fin del archivo:  
+    leer registro  
+    mostrar registro  
+cerrar archivo  
+        
+```
+   - **Un archivo directamente mediante su posición.**
+
+```
+abrir archivo "datos.txt" en modo lectura  
+ir a la posición 1000  
+leer datos  
+mostrar datos  
+cerrar archivo  
+
+```
+
+   - **Un archivo utilizando un índice.**
+
+```
+abrir archivo "datos.txt" en modo lectura  
+buscar posición en el índice  
+ir a la posición encontrada  
+leer datos  
+mostrar datos  
+cerrar archivo  
+
+```
   
 3. **Compara las ventajas de cada mecanismo dependiendo del caso de uso.**  
+
+| Mecanismo de Acceso | Ventajas | Casos de Uso |
+|---------------------|----------|--------------|
+| Secuencial          | - Simple de implementar y usar. <br> - Eficiente en términos de recursos. | - Procesamiento de archivos pequeños o lectura completa de archivos grandes. <br> - Lectura y escritura secuencial de logs o registros de actividades. |
+| Directo             | - Acceso rápido a cualquier parte del archivo. <br> - Ideal para acceso frecuente a registros específicos. | - Acceso a partes específicas de archivos grandes, como archivos binarios o bases de datos. <br> - Aplicaciones que requieren acceso rápido a datos específicos, como sistemas de archivos de bases de datos. |
+| Indexado            | - Búsqueda rápida utilizando índices. <br> - Mejora el rendimiento en búsquedas. | - Archivos grandes o bases de datos que requieren búsquedas rápidas. |
 
 ---
 
@@ -3909,89 +3944,134 @@ Simula diferentes mecanismos de acceso a archivos (secuencial, directo e indexad
 Diseña una estructura jerárquica para un sistema de archivos y simula un escenario de falla en el sistema. Describe cómo recuperar los datos utilizando mecanismos de recuperación.  
 
 **Tareas:**  
-- Diseña un modelo jerárquico para un sistema de archivos con al menos tres niveles de directorios.  
-- Simula una falla en un directorio específico y describe los pasos necesarios para recuperarlo.  
-- Explica qué herramientas o técnicas de respaldo (backup) utilizarías para evitar pérdida de datos.  
+- **Diseña un modelo jerárquico para un sistema de archivos con al menos tres niveles de directorios** 
+
+ ![arbolJerarquico](img/modeloJerarSystemArchiv.svg)
+
+
+
+- **Simula una falla en un directorio específico y describe los pasos necesarios para recuperarlo**
+    1. **Verifico el daño en el directorio**
+
+        Si el directorio está dañado, verifico la integridad de los archivos. Esto puede implicar comprobar si los archivos están corruptos o si el sistema de archivos tiene errores. Si el daño es irreparable, procederé con la restauración desde un backup.
+
+    2. **Comprobar los backups disponibles**
+        
+        Reviso si tengo un respaldo reciente del directorio en un sistema de backup local o en la nube. Para ello, examino los directorios de backups para encontrar el archivo correspondiente
+
+    3. **Restaurar desde un backup**:
+        
+        Si encuentro un backup reciente, lo restauro al directorio afectado. Dependiendo del formato del backup, utilizo comandos como tar o rsync para copiar los archivos de vuelta al directorio original
+
+    4. **Verifico la restauración**
+        
+        Después de restaurar los archivos, confirmo que todo esté en su lugar y que los archivos sean accesibles. Para esto, uso comandos como ls para revisar el contenido del directorio.
+    
+  
+- **Explica qué herramientas o técnicas de respaldo (backup) utilizarías para evitar pérdida de datos**
+    
+    Cuando los archivos son muy pesados o muy importantes, suelo optar por la nube, ya que ofrece una gran capacidad de almacenamiento y la ventaja de acceder a mis archivos desde cualquier lugar, sin preocuparme por el espacio físico. La nube también es más segura en términos de redundancia de datos, lo que reduce el riesgo de pérdida. En cambio, cuando estoy trabajando en un lugar fijamente o los datos son mas del tipo cosas menos ecenciales, video, imagenes, juegos utilizo discos duros externos ya que pues son una opcion bastante barata a diferencia de estar pagando por un sitema de almacenamoento en la nube 
+    
+    aunque si nos ponemos muy tecnicos estan los tres clasico de backups
+
+    * **Backups completos**
+  
+        Un backup completo es una copia de todo el contenido que deseas respaldar: archivos, carpetas, y todo lo que esté en tu dispositivo o sistema. Cada vez que haces un backup completo, se guarda toda la información, sin importar si ha cambiado o no.
+    * **Backups diferenciales**
+  
+        Un backup diferencial copia todos los archivos que han cambiado desde el último backup completo. Por ejemplo, si haces un backup completo el lunes y un diferencial el martes, solo se guardarán los archivos modificados desde el lunes.
+    * **Backups incrementales**
+  
+        Un backup incremental copia solo los archivos que han cambiado desde el último backup completo o incremental. Si haces un backup completo el lunes y luego incrementales el martes, solo se copiarán los cambios del martes. El miércoles, el backup solo copiará los cambios del miércoles, y así sucesivamente.
+
+| **Aspecto**               | **Backup Completo**                         | **Backup Diferencial**                        | **Backup Incremental**                         |
+|---------------------------|---------------------------------------------|-----------------------------------------------|------------------------------------------------|
+| **¿Qué respalda?**         | Todo el contenido seleccionado              | Archivos modificados desde el último backup completo | Archivos modificados desde el último backup (completo o incremental) |
+| **Frecuencia recomendada**| Puede ser realizado con menos frecuencia    | Realizado entre los backups completos         | Realizado con mayor frecuencia para eficiencia  |
+| **Espacio necesario**      | Requiere más espacio (copias completas)     | Requiere menos espacio que el completo, pero más que el incremental | Requiere menos espacio (solo cambios recientes) |
+| **Tiempo de ejecución**    | Lento, ya que copia todo                    | Más rápido que el completo, pero puede tardar más con el tiempo | Muy rápido, ya que solo copia los cambios recientes |
+| **Facilidad de restauración**| Fácil de restaurar (todo está en un solo archivo) | Más fácil de restaurar que los incrementales, pero necesita el último backup completo | Requiere restaurar el backup completo y todos los incrementales sucesivos |
+| **Riesgo de pérdida de datos** | Bajo, ya que se guarda todo en cada respaldo | Moderado, ya que depende del último backup completo | Alto, ya que si falta un backup incremental, los datos no pueden ser restaurados |
+| **Ejemplo de uso**         | Archivos importantes que no cambian con frecuencia | Archivos que cambian con frecuencia pero no tanto como para hacer un backup completo diario | Archivos que cambian a diario o con mucha frecuencia y necesitan respaldo frecuente |
+
+El que mas usaria seria el backup incremental
+
 
 ---
 
 # Protección y Seguridad
 
-## Ejercicio 1: Concepto y objetivos de protección y seguridad
+## Ejercicio 1: Concepto y objetivos de protección y seguridad  
 **Descripción:**  
 Investiga los conceptos de protección y seguridad en sistemas operativos. Analiza los objetivos principales que deben cumplir estos mecanismos.  
 
 **Tareas:**  
-- Define los conceptos de protección y seguridad en el contexto de sistemas operativos.  
-- Identifica los objetivos principales de un sistema de protección y seguridad, como confidencialidad, integridad y disponibilidad.  
-- Da un ejemplo práctico de cómo se aplican estos objetivos en un sistema operativo.  
-
-
-
-
+- **Define los conceptos de protección y seguridad en el contexto de sistemas operativos.**  
+- **Identifica los objetivos principales de un sistema de protección y seguridad, como confidencialidad, integridad y disponibilidad.**  
+- **Da un ejemplo práctico de cómo se aplican estos objetivos en un sistema operativo.**  
 
 ---
 
-## Ejercicio 2: Clasificación aplicada a la seguridad
+## Ejercicio 2: Clasificación aplicada a la seguridad  
 **Descripción:**  
 Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo cada tipo contribuye a la protección del sistema.  
 
 **Tareas:**  
-- Investiga las clasificaciones comunes de la seguridad, como física, lógica y de red.  
-- Explica el papel de cada clasificación en la protección de un sistema operativo.  
-- Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación.  
+- **Investiga las clasificaciones comunes de la seguridad, como física, lógica y de red.**  
+- **Explica el papel de cada clasificación en la protección de un sistema operativo.**  
+- **Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación.**  
 
 ---
 
-## Ejercicio 3: Funciones del sistema de protección
+## Ejercicio 3: Funciones del sistema de protección  
 **Descripción:**  
 Analiza las funciones que cumple un sistema de protección en un entorno multiusuario.  
 
 **Tareas:**  
-- Describe cómo un sistema de protección controla el acceso a los recursos.  
-- Explica las funciones principales como autenticación, autorización y auditoría.  
-- Diseña un caso práctico donde se muestren las funciones de un sistema de protección en acción.  
+- **Describe cómo un sistema de protección controla el acceso a los recursos.**  
+- **Explica las funciones principales como autenticación, autorización y auditoría.**  
+- **Diseña un caso práctico donde se muestren las funciones de un sistema de protección en acción.**  
 
 ---
 
-## Ejercicio 4: Implantación de matrices de acceso
+## Ejercicio 4: Implantación de matrices de acceso  
 **Descripción:**  
 Crea e implementa una matriz de acceso para un sistema que contiene usuarios y recursos con diferentes niveles de permisos.  
 
 **Tareas:**  
-- Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos.  
-- Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo.  
-- Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea.  
+- **Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos.**  
+- **Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo.**  
+- **Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea.**  
 
 ---
 
-## Ejercicio 5: Protección basada en el lenguaje
+## Ejercicio 5: Protección basada en el lenguaje  
 **Descripción:**  
 Investiga cómo los lenguajes de programación pueden implementar mecanismos de protección.  
 
 **Tareas:**  
-- Explica el concepto de protección basada en el lenguaje.  
-- Proporciona un ejemplo de cómo un lenguaje como Java o Rust asegura la memoria y evita accesos no autorizados.  
-- Compara este enfoque con otros mecanismos de protección en sistemas operativos.  
+- **Explica el concepto de protección basada en el lenguaje.**  
+- **Proporciona un ejemplo de cómo un lenguaje como Java o Rust asegura la memoria y evita accesos no autorizados.**  
+- **Compara este enfoque con otros mecanismos de protección en sistemas operativos.**  
 
 ---
 
-## Ejercicio 6: Validación y amenazas al sistema
+## Ejercicio 6: Validación y amenazas al sistema  
 **Descripción:**  
 Analiza las principales amenazas a un sistema operativo y los mecanismos de validación utilizados para prevenirlas.  
 
 **Tareas:**  
-- Investiga y describe al menos tres tipos de amenazas comunes (por ejemplo, malware, ataques de fuerza bruta, inyección de código).  
-- Explica los mecanismos de validación como autenticación multifactor y control de integridad.  
-- Diseña un esquema de validación para un sistema operativo con múltiples usuarios.  
+- **Investiga y describe al menos tres tipos de amenazas comunes (por ejemplo, malware, ataques de fuerza bruta, inyección de código).**  
+- **Explica los mecanismos de validación como autenticación multifactor y control de integridad.**  
+- **Diseña un esquema de validación para un sistema operativo con múltiples usuarios.**  
 
 ---
 
-## Ejercicio 7: Cifrado
+## Ejercicio 7: Cifrado  
 **Descripción:**  
 Explora cómo los mecanismos de cifrado protegen la información en un sistema operativo.  
 
 **Tareas:**  
-- Define los conceptos de cifrado simétrico y asimétrico.  
-- Proporciona un ejemplo práctico de cada tipo de cifrado aplicado en sistemas operativos.  
-- Simula el proceso de cifrado y descifrado de un archivo con una clave dada.  
+- **Define los conceptos de cifrado simétrico y asimétrico.**  
+- **Proporciona un ejemplo práctico de cada tipo de cifrado aplicado en sistemas operativos.**  
+- **Simula el proceso de cifrado y descifrado de un archivo con una clave dada.**  
