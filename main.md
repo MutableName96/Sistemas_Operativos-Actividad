@@ -3598,6 +3598,11 @@ mutablename96@mutablename96-Nitro-AN515-54:~$ ls -l privado.txt
 -rw------- 1 pepe mutablename96 0 dic 15 21:15 privado.txt
 mutablename96@mutablename96-Nitro-AN515-54:~$ 
 ```
+
+![Priv](img/Priv.png)
+![Priv2](img/priv2.png)
+
+
 ## Ejercicio 6: Exploración de Dispositivos
 
 ### Objetivo
@@ -3608,6 +3613,7 @@ Identificar discos y particiones en el sistema
 2. Usa `du -sh` para ver el tamaño del contenido en un directorio de tu elección:
 
     `du -sh /ruta/directorio`
+
 ```bash
 mutablename96@mutablename96-Nitro-AN515-54:~$ du -sh /media/mutablename96/Disco\ Duro
 6,2M	/media/mutablename96/Disco Duro
@@ -3711,4 +3717,181 @@ mutablename96@mutablename96-Nitro-AN515-54:~$ cat /mnt/holaProfe/test.txt
 Prueba de escritura
 
 ```
-Y con esto acabamos 
+Y con esto acabamos
+
+---
+
+<div align="center">
+
+# Actividad Final
+
+</div>
+
+# Sistemas de Archivos
+
+## Ejercicio 1: Concepto y noción de archivo real y virtual
+**Descripción:**  
+Define los conceptos de archivo real y archivo virtual y explica sus diferencias. Identifica ejemplos prácticos de cada tipo en sistemas operativos actuales.  
+
+**Tareas:**  
+1. **Define el concepto de archivo real y archivo virtual**  
+    * **Archvio Real**: Un archivo real es un archivo físico que se almacena directamente en un dispositivo de almacenamiento, como un disco duro, SSD, memoria USB, etc. Estos archivos tienen una ubicación fija en el sistema de archivos y ocupan espacio en el almacenamiento físico
+
+   * **Archvio Virtual**: Un archivo virtual es un archivo que no existe físicamente en el almacenamiento, sino que es generado dinámicamente por el sistema operativo o software cuando se accede a él. Estos archivos pueden representar datos en memoria, dispositivos virtuales, o recursos que no están directamente almacenados en el disco y son eliminados cuando ya no los estan usando.Este proceso no ocupa espacio de algun dispositivo de almacenamiento y es por eso que se les dice virtual.
+
+
+2. **Proporciona ejemplos de cómo los sistemas operativos manejan archivos reales y virtuales.** 
+    * /dev en Linux: Directorio con archivos que representan dispositivos del sistema (como discos, memoria, etc.), muchos de los cuales son virtuales.
+
+    * Archivos Swap: Memoria virtual que se usa cuando la RAM física se llena.
+    
+    Cuando conecto una unidad USB en mi computadora con Linux, el sistema operativo representa este dispositivo físico como un archivo en el directorio /dev. Por ejemplo, podría aparecer como /dev/sdb. Este archivo no es como los archivos tradicionales que contienen datos de texto o imágenes, sino que representa al dispositivo en sí. Si quisiera formatear la unidad o acceder a sus datos, los comandos interactúan con este archivo especial para realizar operaciones en la unidad real.
+
+    Linux utiliza el directorio /dev no solo para dispositivos físicos sino también para dispositivos virtuales. Por ejemplo, /dev/null es un archivo especial que no corresponde a ningún dispositivo físico, sino que actúa como un "sumidero" para datos. Si redirijo la salida de un comando a /dev/null, el sistema operativo simplemente descarta esos datos. Esto es útil cuando quiero ignorar salidas innecesarias de ciertos procesos o comandos.
+
+    En el caso de Windows gestiona recursos como dispositivos o servicios del sistema a través de directorios y archivos simulados. Por ejemplo, en el sistema se encuentra el archivo especial CON, que representa la consola o entrada de texto estándar. Si abro CON, cualquier dato que escriba en él será tratado como entrada directa, pero este archivo no existe físicamente en el disco duro.
+
+3. **Explica un caso práctico donde un archivo virtual sea más útil que un archivo real.**  
+
+    Supongamos que deseas monitorear el uso de memoria y CPU en tiempo real. En lugar de escribir datos a un archivo real repetidamente , lo que ocuparía espacio innecesario. Además, como los datos del sistema cambian todo el tiempo, no tiene sentido almacenar estados anteriores porque lo único que importa es el estado actual, puedes acceder a los archivos virtuales en /proc para obtener esta información.
+
+    Con los archivos virtuales, el sistema puede generar esta información al momento, sin usar espacio en disco ni dejar basura después. Es rápido, práctico y eficiente.
+
+
+    
+  
+
+
+---
+
+## Ejercicio 2: Componentes de un sistema de archivos
+**Descripción:**  
+Investiga los componentes principales de un sistema de archivos y compáralos entre dos sistemas operativos, como Linux y Windows.  
+
+**Tareas:**  
+- **Identifica los componentes clave de un sistema de archivos (por ejemplo, metadatos, tablas de asignación, etc.).**  
+- **Crea un cuadro comparativo de cómo estos componentes funcionan en sistemas como EXT4 y NTFS.**  
+- **Describe las ventajas y desventajas de cada sistema basado en sus componentes.**
+
+---
+
+## Ejercicio 3: Organización lógica y física de archivos
+**Descripción:**  
+Crea un esquema que muestre la organización lógica y física de un sistema de archivos. Explica cómo se relacionan las estructuras lógicas con las físicas en el disco.  
+
+**Tareas:**  
+- **Diseña un árbol jerárquico que represente la organización lógica de directorios y subdirectorios.**
+
+
+- **Explica cómo se traduce la dirección lógica a la dirección física en el disco.**
+
+
+- **Proporciona un ejemplo práctico de cómo un archivo se almacena físicamente.**
+
+---
+
+## Ejercicio 4: Mecanismos de acceso a los archivos
+**Descripción:**  
+Simula diferentes mecanismos de acceso a archivos (secuencial, directo e indexado) en un entorno práctico.  
+
+**Tareas:**  
+1. Define los diferentes mecanismos de acceso.  
+2. Escribe un pseudocódigo que muestre cómo acceder a:  
+   - Un archivo secuencialmente.  
+   - Un archivo directamente mediante su posición.  
+   - Un archivo utilizando un índice.  
+3. Compara las ventajas de cada mecanismo dependiendo del caso de uso.  
+
+---
+
+## Ejercicio 5: Modelo jerárquico y mecanismos de recuperación en caso de falla
+**Descripción:**  
+Diseña una estructura jerárquica para un sistema de archivos y simula un escenario de falla en el sistema. Describe cómo recuperar los datos utilizando mecanismos de recuperación.  
+
+**Tareas:**  
+- Diseña un modelo jerárquico para un sistema de archivos con al menos tres niveles de directorios.  
+- Simula una falla en un directorio específico y describe los pasos necesarios para recuperarlo.  
+- Explica qué herramientas o técnicas de respaldo (backup) utilizarías para evitar pérdida de datos.  
+
+---
+
+# Protección y Seguridad
+
+## Ejercicio 1: Concepto y objetivos de protección y seguridad
+**Descripción:**  
+Investiga los conceptos de protección y seguridad en sistemas operativos. Analiza los objetivos principales que deben cumplir estos mecanismos.  
+
+**Tareas:**  
+- Define los conceptos de protección y seguridad en el contexto de sistemas operativos.  
+- Identifica los objetivos principales de un sistema de protección y seguridad, como confidencialidad, integridad y disponibilidad.  
+- Da un ejemplo práctico de cómo se aplican estos objetivos en un sistema operativo.  
+
+
+
+
+
+---
+
+## Ejercicio 2: Clasificación aplicada a la seguridad
+**Descripción:**  
+Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo cada tipo contribuye a la protección del sistema.  
+
+**Tareas:**  
+- Investiga las clasificaciones comunes de la seguridad, como física, lógica y de red.  
+- Explica el papel de cada clasificación en la protección de un sistema operativo.  
+- Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación.  
+
+---
+
+## Ejercicio 3: Funciones del sistema de protección
+**Descripción:**  
+Analiza las funciones que cumple un sistema de protección en un entorno multiusuario.  
+
+**Tareas:**  
+- Describe cómo un sistema de protección controla el acceso a los recursos.  
+- Explica las funciones principales como autenticación, autorización y auditoría.  
+- Diseña un caso práctico donde se muestren las funciones de un sistema de protección en acción.  
+
+---
+
+## Ejercicio 4: Implantación de matrices de acceso
+**Descripción:**  
+Crea e implementa una matriz de acceso para un sistema que contiene usuarios y recursos con diferentes niveles de permisos.  
+
+**Tareas:**  
+- Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos.  
+- Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo.  
+- Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea.  
+
+---
+
+## Ejercicio 5: Protección basada en el lenguaje
+**Descripción:**  
+Investiga cómo los lenguajes de programación pueden implementar mecanismos de protección.  
+
+**Tareas:**  
+- Explica el concepto de protección basada en el lenguaje.  
+- Proporciona un ejemplo de cómo un lenguaje como Java o Rust asegura la memoria y evita accesos no autorizados.  
+- Compara este enfoque con otros mecanismos de protección en sistemas operativos.  
+
+---
+
+## Ejercicio 6: Validación y amenazas al sistema
+**Descripción:**  
+Analiza las principales amenazas a un sistema operativo y los mecanismos de validación utilizados para prevenirlas.  
+
+**Tareas:**  
+- Investiga y describe al menos tres tipos de amenazas comunes (por ejemplo, malware, ataques de fuerza bruta, inyección de código).  
+- Explica los mecanismos de validación como autenticación multifactor y control de integridad.  
+- Diseña un esquema de validación para un sistema operativo con múltiples usuarios.  
+
+---
+
+## Ejercicio 7: Cifrado
+**Descripción:**  
+Explora cómo los mecanismos de cifrado protegen la información en un sistema operativo.  
+
+**Tareas:**  
+- Define los conceptos de cifrado simétrico y asimétrico.  
+- Proporciona un ejemplo práctico de cada tipo de cifrado aplicado en sistemas operativos.  
+- Simula el proceso de cifrado y descifrado de un archivo con una clave dada.  
