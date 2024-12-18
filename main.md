@@ -4007,8 +4007,32 @@ Investiga los conceptos de protección y seguridad en sistemas operativos. Anali
 
 **Tareas:**  
 - **Define los conceptos de protección y seguridad en el contexto de sistemas operativos.**  
+    Las computadoras contienen grandes cantidades de información que los usuarios comúnmente de-
+    sean proteger y mantener de manera confidencial. Esta información puede incluir mensajes de co-
+    rreo electrónico, planes de negocios, declaraciones fiscales y mucho más. Es responsabilidad del
+    sistema operativo administrar la seguridad del sistema de manera que los archivos, por ejemplo, só-
+    lo sean accesibles para los usuarios autorizados.
+
+  * **Proteccion**: Se refiere a los mecanismos implementados en un sistema operativo para controlar el acceso a los recursos del sistema, asegurando que solo los usuarios autorizados puedan acceder y modificar los datos. La protección previene que procesos o usuarios no autorizados realicen operaciones perjudiciales, como alterar, eliminar o acceder in debidamente a los datos.
+  
+  * **Seguridad**: Se centra en la defensa contra amenazas externas e internas que pueden comprometer la integridad, confidencialidad y disponibilidad de los datos y recursos del sistema. Esto incluye la protección contra malware, accesos no autorizados, y otros tipos de ataques que buscan explotar vulnerabilidades del sistema en resumen se refiere a la capacidad de un sistema para proteger sus recursos y datos y funcionalidades contra amenazas internas y externas.
+
+    
 - **Identifica los objetivos principales de un sistema de protección y seguridad, como confidencialidad, integridad y disponibilidad.**  
+
+    Confidencialidad: Garantizar que la información solo sea accesible para aquellos con permisos de acceso adecuados
+
+    Integridad: Asegurar que la información y los recursos del sistema no sean alterados de manera no autorizada. Esto incluye la protección contra la modificación, corrupción o eliminación de datos.
+
+    Disponibilidad: Garantizar que los recursos del sistema estén accesibles para los usuarios y procesos autorizados cuando los necesiten. Esto incluye la protección contra ataques de denegación de servicio (DoS) y la capacidad de recuperación rápida de fallos
+
 - **Da un ejemplo práctico de cómo se aplican estos objetivos en un sistema operativo.**  
+
+    Imaginemos que un usuario deja su lap abierta en una cafeteria mientras se va al baño y una persona no autorizada trata de robar la informacion de esa lap un sistema operativo puede implementar el cifrado de archivos para proteger la confidencialidad de los datos. Solo los usuarios con la clave adecuada podrán descifrar y acceder a los archivos asi manteniendo la confidencialidad
+
+   Supóngamos que tenemos un archivo importante en tu sistema, como un archivo de configuración o un documento sensible. Para asegurarte de que no ha sido alterado accidentalmente o maliciosamente, puedes generar una suma de verificación al momento de su creación por ejemplo y en caso de ser alterado el sistema puede restaurar el archivo desde un backup, alertar al administrador del sistema o iniciar un proceso de auditoría para determinar el origen de la alteración.
+
+    Ahora que pasaria si un servidor que mantiene la informacion de miles de personas falla y se pierde todo en este server para solucionar este problema deberiamos de hacer uso de tecnicas de backup para poder asegurar la disponibilidad de los datos es decir si un disco duro falla, los datos pueden ser recuperados desde el backup sin comprometer la operatividad del sistema.
 
 ---
 
