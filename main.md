@@ -4191,7 +4191,7 @@ Explora cómo los mecanismos de cifrado protegen la información en un sistema o
 - **Simula el proceso de cifrado y descifrado de un archivo con una clave dada.**
 
     Primero, para proteger un archivo, usé una herramienta llamada OpenSSL en la terminal de Linux. Básicamente, este programa me deja encriptar cosas usando una clave. Es como ponerle un candado al archivo, y ese candado solo lo puedes abrir con la llave correcta.
-    `mutablename96@mutablename96-Nitro-AN515-54:~$ openssl enc -aes-256-cbc -salt -in contraseñas.txt -out contraseñas_cifrado.txt -k cont` y la contraseña es cont y nadie puede abrirlo si no sabe mi clave.
+    `mutablename96@mutablename96-Nitro-AN515-54:~$ openssl enc -aes-256-cbc -salt -in contraseñas.txt -out contraseñas_cifrado.txt -k cont` y la contraseña es `cont` y nadie puede abrirlo si no sabe mi clave.
 
 ![archivoCifrad](img/cifrado.png)
 
