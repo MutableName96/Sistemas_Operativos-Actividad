@@ -4041,9 +4041,37 @@ Investiga los conceptos de protección y seguridad en sistemas operativos. Anali
 Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo cada tipo contribuye a la protección del sistema.  
 
 **Tareas:**  
-- **Investiga las clasificaciones comunes de la seguridad, como física, lógica y de red.**  
-- **Explica el papel de cada clasificación en la protección de un sistema operativo.**  
+- **Investiga las clasificaciones comunes de la seguridad, como física, lógica y de red.**
+  
+  * **Seguridad Física**: Es la protección del hardware y las instalaciones físicas donde se almacenan los sistemas informáticos. Esto incluye medidas para prevenir el acceso no autorizado, daños físicos y robos.
+
+  * **Seguridad Lógica**: Consiste en proteger los sistemas operativos y las aplicaciones mediante controles de acceso, autenticación, autorización y auditoría.
+
+  * **Seguridad de Red**: Se enfoca en la protección de los datos que se transmiten a través de redes, incluyendo Internetpara evitar amenazas como virus, troyanos, etc.
+
+
+- **Explica el papel de cada clasificación en la protección de un sistema operativo.**
+    La seguridad en un sistema operativo se clasifica en tres áreas principales: física, lógica y de red, cada una desempeñando un papel crucial en la protección del sistema. La **seguridad física** se encarga de proteger los componentes hardware contra accesos no autorizados, robos o daños, garantizando la integridad del entorno donde opera el sistema operativo; ejemplos incluyen cerraduras electrónicas y acceso restringido a las salas de servidores. La **seguridad lógica** asegura la integridad, confidencialidad y disponibilidad de los datos mediante herramientas como autenticación, permisos y cifrado, además de proteger contra amenazas como malware y accesos no autorizados. Por último, la **seguridad de red** se enfoca en proteger los datos transmitidos entre dispositivos, evitando su interceptación o modificación mediante el uso de firewalls, sistemas de detección de intrusiones y redes privadas virtuales. Estas áreas trabajan de manera complementaria para garantizar un entorno seguro y confiable para el sistema operativo
+
 - **Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación.**  
+
+    * **Seguridad física**
+
+        En la seguridad física se utilizan herramientas como cerraduras electrónicas y tarjetas de acceso para proteger los servidores y dispositivos de intrusos. Esto ayuda a que personas no autorizadas no tengan acceso a los equipos donde está el sistema operativo.
+
+        También es común el uso de cámaras de seguridad que, con tecnologías modernas, pueden detectar movimientos sospechosos y enviar alertas en tiempo real. Esto reduce el riesgo de robo o daños físicos al hardware.
+
+    * **Seguridad lógica**
+
+        En esta seguridad se emplean programas como antivirus y antimalware que ayudan a identificar y eliminar amenazas en el sistema operativo. Estas herramientas permiten mantener el sistema protegido contra virus y software malicioso.
+
+        Otra técnica importante es el uso de cifrado para proteger los datos almacenados. Por ejemplo, herramientas como BitLocker aseguran que los archivos no sean accesibles si un dispositivo es robado. Además, los sistemas de autenticación multifactor añaden una capa adicional de seguridad al acceso de usuarios.
+
+    * **Seguridad de red**
+
+        En la seguridad de red se utilizan firewalls para controlar el tráfico de datos y bloquear accesos no autorizados. Por ejemplo, pfSense es una herramienta que permite gestionar la seguridad de una red empresarial o personal.
+
+        Además, las VPNs ayudan a que la comunicación entre dispositivos sea más segura, especialmente cuando se usan redes públicas. También se emplean protocolos como HTTPS para proteger la información que enviamos y recibimos al navegar por internet.
 
 ---
 
@@ -4053,8 +4081,26 @@ Analiza las funciones que cumple un sistema de protección en un entorno multius
 
 **Tareas:**  
 - **Describe cómo un sistema de protección controla el acceso a los recursos.**  
+
+    Solo los usuarios autorizados puedan acceder a ellos. Esto se hace mediante permisos y controles que determinan quién puede ver, modificar o ejecutar ciertos archivos y programas. Por ejemplo, en muchos sistemas operativos, los archivos tienen permisos que pueden ser leídos, escritos o ejecutados solo por ciertos usuarios o grupos de usuarios.
+
+    Otra forma que tienen el SO para controlar estos recursos es mediante el control de acceso o ACL en el cual se determina que usuarios o que procesos tienen acceso a recursos del sistema
+
+
+
 - **Explica las funciones principales como autenticación, autorización y auditoría.**  
+  
+  * **Autenticación**: Es el proceso de verificar la identidad de un usuario antes de permitirle el acceso al sistema. Esto se hace normalmente usando contraseñas y usuarios, pero también puede incluir métodos más seguros como huellas dactilares, reconocimiento facial, o autenticación de dos factores
+
+  * **Autorización**: Una vez que un usuario ha sido autenticado, el sistema determina a qué recursos puede acceder y qué acciones puede realizar. Esto se basa en perisos y políticas que definen qué usuarios o grupos tienen acceso a qué recursos
+
+  * **Auditoría**: Consiste en registrar y revisar las actividades de los   usuarios para asegurar que no se hagan cosas no autorizadas. Los logs de auditoría pueden ser útiles para detectar y responder a intentos de acceso no autorizados y para asegurar que los recursos se usan de manera adecuada
+
 - **Diseña un caso práctico donde se muestren las funciones de un sistema de protección en acción.**  
+
+    En el caso de un servidor, el sistema verifica que la clave privada del usuario coincida con la clave pública almacenada en el servidor. Además, si está configurada la autenticación de dos factores, al iniciar sesión, el sistema también solicita un código generado por una aplicación como Google Authenticator, garantizando que solo el usuario autorizado pueda entrar esto es un ejemplo de autenticación. Una vez dentro, si el usuario intenta acceder a un archivo protegido en la carpeta /datos, el sistema revisa los permisos y ACLs. Por ejemplo, si el usuario pertenece al grupo empleados, puede leer y modificar los archivos; pero si no tiene los permisos asignados, el acceso será denegado, mostrando un mensaje como "Permiso denegado". esto seria un ejemplo de autorizacion. Todas las acciones realizadas en /datos, como crear, eliminar o modificar archivos, quedan registradas en los logs de auditoría gracias a auditd. Esto permite que un administrador pueda revisar qué usuarios accedieron a la carpeta y qué cambios realizaron, facilitando la detección de actividades sospechosas.
+
+
 
 ---
 
@@ -4063,11 +4109,13 @@ Analiza las funciones que cumple un sistema de protección en un entorno multius
 Crea e implementa una matriz de acceso para un sistema que contiene usuarios y recursos con diferentes niveles de permisos.  
 
 **Tareas:**  
-- **Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos.**  
-- **Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo.**  
-- **Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea.**  
+- **Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos**
 
----
+
+- **Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo**
+
+
+- **Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea**
 
 ## Ejercicio 5: Protección basada en el lenguaje  
 **Descripción:**  
@@ -4075,9 +4123,19 @@ Investiga cómo los lenguajes de programación pueden implementar mecanismos de 
 
 **Tareas:**  
 - **Explica el concepto de protección basada en el lenguaje.**  
-- **Proporciona un ejemplo de cómo un lenguaje como Java o Rust asegura la memoria y evita accesos no autorizados.**  
-- **Compara este enfoque con otros mecanismos de protección en sistemas operativos.**  
+    Son las características integradas en los lenguajes de programación diseñadas para garantizar la seguridad y la integridad del código durante su ejecución. Estos mecanismos ayudan a prevenir errores comunes como el acceso a memoria no autorizada, desbordamiento de búferes, y otros tipos de vulnerabilidades de seguridad. Los lenguajes de programación modernos a menudo incluyen características de seguridad que facilitan la escritura de código seguro y reducen el riesgo de ataques.
 
+- **Proporciona un ejemplo de cómo un lenguaje como Java o Rust asegura la memoria y evita accesos no autorizados.**  
+
+    En Java, la seguridad de la memoria se logra gracias a la gestión automática de memoria mediante el Garbage Collector, que libera la memoria no utilizada de forma automática, evitando fugas. Además, Java realiza chequeos de límites en los arreglos, lo que significa que si intentas acceder a una posición fuera del rango permitido, el programa generará una excepción como "ArrayIndexOutOfBoundsException". También, su sistema de tipado fuerte asegura que no puedas realizar operaciones inseguras entre diferentes tipos de datos.
+
+    En Rust, la seguridad de memoria se maneja mediante su sistema de propiedad y préstamo, el cual asegura que cada dato tiene un único dueño, evitando que dos partes del programa modifiquen la misma memoria al mismo tiempo. Esto se verifica en tiempo de compilación, por lo que se detectan errores como referencias inválidas antes de ejecutar el programa, asegurando un uso seguro y eficiente de la memoria sin necesidad de un recolector de basura.
+
+- **Compara este enfoque con otros mecanismos de protección en sistemas operativos.**
+
+    Los sistemas operativos protegen recursos como la memoria, los procesos y los archivos mediante políticas de seguridad en tiempo de ejecución. Por ejemplo, sistemas como Linux y Windows aplican políticas de control de acceso, asignación de privilegios y gestión de memoria para evitar que los programas accedan a áreas no autorizadas de la memoria o interfieran entre sí.
+
+    A diferencia de la protección basada en el lenguaje, que se enfoca en garantizar la seguridad del código antes de la ejecución, los sistemas operativos también proporcionan una capa de protección adicional durante la ejecución, como el uso de sandboxing, control de acceso basado en roles y la prevención de ejecución de código no autorizado.
 ---
 
 ## Ejercicio 6: Validación y amenazas al sistema  
@@ -4086,7 +4144,28 @@ Analiza las principales amenazas a un sistema operativo y los mecanismos de vali
 
 **Tareas:**  
 - **Investiga y describe al menos tres tipos de amenazas comunes (por ejemplo, malware, ataques de fuerza bruta, inyección de código).**  
+
+    * **Virus**: Se propaga insertando su código en otros archivos o programas, dañando datos o interrumpiendo el funcionamiento del sistema.
+  
+    * **Troyanos**: Se disfrazan de software legítimo y, una vez instalados, pueden otorgar acceso remoto al atacante para robar información o controlar el sistema.
+  
+    * **Ransomware**: Encripta los archivos del sistema y exige un pago (rescate) para liberar los archivos secuestrados. Este tipo de malware se dirige a archivos esenciales para el funcionamiento del sistema, como bases de datos o documentos importantes.
+  
+    * **Spyware**: Se instala para recopilar información sobre el usuario, como contraseñas, historial de navegación y datos personales, sin su conocimiento.
+    
+    * **Adware**: Aunque no necesariamente malicioso, el adware inyecta anuncios no deseados en las aplicaciones o sitios web, lo que puede ralentizar el sistema y, a veces, redirigir a sitios fraudulentos.
+  
+    * **Ataques de fuerza bruta**: Este es un ataque que los hackers usan para conseguir contraseñas. Se les dice de fuerza bruta porque lo que hacen es realizar varios intentos de ensayo y error para decifrar la contraseña a la que quieren acceder hasta que lo logran. 
+
+
 - **Explica los mecanismos de validación como autenticación multifactor y control de integridad.**  
+    * **Autenticación multifactor**: Este mecanismo requiere que los usuarios proporcionen dos o más formas de autenticación antes de acceder a un sistema. Esto puede incluir algo que saben (contraseña), algo que tienen (un teléfono o tarjeta), y algo que son (biometría, como huellas dactilares)
+
+    * **Control de integridad**: Utiliza técnicas para asegurar que los datos no se han alterado sin autorización. Esto puede incluir sumas de verificación (checksums), firmas digitales y monitoreo de cambios en archivos críticos. Esto ayuda a prevenir ataques como la inyección de código o modificaciones maliciosas a los archivos del sistema.
+
+
+
+
 - **Diseña un esquema de validación para un sistema operativo con múltiples usuarios.**  
 
 ---
@@ -4096,6 +4175,25 @@ Analiza las principales amenazas a un sistema operativo y los mecanismos de vali
 Explora cómo los mecanismos de cifrado protegen la información en un sistema operativo.  
 
 **Tareas:**  
+
 - **Define los conceptos de cifrado simétrico y asimétrico.**  
+    * **Cifrado Simétrico**: Es un método de cifrado donde la misma clave se utiliza tanto para cifrar como para descifrar los datos. Esto significa que tanto el emisor como el receptor deben tener acceso a la misma clave secret
+    
+    
+    * **Cifrado Asimétrico**: Utiliza un par de claves una clave pública para cifrar los datos y una clave privada para descifrarlos. La clave pública es accesible a cualquiera, mientras que la clave privada se mantiene en secreto.
+    
+
 - **Proporciona un ejemplo práctico de cada tipo de cifrado aplicado en sistemas operativos.**  
-- **Simula el proceso de cifrado y descifrado de un archivo con una clave dada.**  
+    El cifrado simétrico se usa en herramientas como BitLocker en Windows o LUKS en Linux para proteger discos completos. Este tipo de cifrado funciona con una sola clave la misma se usa tanto para bloquear como para desbloquear la información. Si alguien no tiene esa clave, no puede acceder a los datos.
+
+    Por otro lado, el cifrado asimétrico se usa mucho en conexiones remotas seguras. Un ejemplo común es cuando usamos SSH en Linux para controlar otra computadora. Aquí se usan dos claves una pública que cualquiera puede ver y una privada que solo tú conoces. Esto asegura que aunque la información viaje por internet, nadie más la pueda leer. Este tipo de cifrado es útil para enviar datos sensibles sin preocupaciones.
+
+- **Simula el proceso de cifrado y descifrado de un archivo con una clave dada.**
+
+    Primero, para proteger un archivo, usé una herramienta llamada OpenSSL en la terminal de Linux. Básicamente, este programa me deja encriptar cosas usando una clave. Es como ponerle un candado al archivo, y ese candado solo lo puedes abrir con la llave correcta.
+    `mutablename96@mutablename96-Nitro-AN515-54:~$ openssl enc -aes-256-cbc -salt -in contraseñas.txt -out contraseñas_cifrado.txt -k cont` y la contraseña es cont y nadie puede abrirlo si no sabe mi clave.
+
+![archivoCifrad](img/cifrado.png)
+
+y podemos decifrarlo utilizando `openssl enc -aes-256-cbc -d -in contraseñas_cifrado.txt -out contraseñas_descifrado.txt -k cont`
+
