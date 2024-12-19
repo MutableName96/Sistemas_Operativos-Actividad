@@ -4110,12 +4110,33 @@ Crea e implementa una matriz de acceso para un sistema que contiene usuarios y r
 
 **Tareas:**  
 - **Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos**
+   
+Los usuarios son personajes, y los recursos son artefactos mágicos, con permisos como utilizar, inspeccionar, o destruir.
+
+| Personaje\Artefacto   | Varita Mágica (VM) | Cristal Encantado (CE) | Dragón Guardian (DG) | Libro Prohibido (LP) |
+|-----------------------|---------------------|-------------------------|-----------------------|-----------------------|
+| Mago                  | Usar, Inspeccionar | Inspeccionar            | -                    | Leer                 |
+| Hechicero Oscuro      | Usar               | Usar, Destruir          | Convocar             | Leer, Destruir       |
+| Caballero de la Luz   | -                  | Inspeccionar            | Domar                | -                    |
+
+
 
 
 - **Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo**
 
+    La matriz de acceso que diseñamos es de un sistema en un reino mágico que tiene 3 personajes (usuarios) y 4 artefactos mágicos (recursos). Los usuarios son: Mago, Hechicero Oscuro, y Caballero de la Luz, y los recursos son: Varita Mágica, Cristal Encantado, Dragón Guardian y Libro Prohibido.
+
+    La forma en que funciona la matriz es que cada personaje tiene permisos específicos sobre los artefactos. 
+    Por ejemplo:
+
+    El Mago tiene acceso para usar y inspeccionar la Varita Mágica, puede inspeccionar el Cristal Encantado, y puede leer el Libro Prohibido, pero no tiene acceso al Dragón Guardian. El Hechicero Oscuro tiene permisos más amplios: puede usar la Varita Mágica, destruir el Cristal Encantado, puede convocar al Dragón Guardian, y puede leer y destruir el Libro Prohibido. El Caballero de la Luz tiene acceso limitado: solo puede inspeccionar el Cristal Encantado y domar al Dragón Guardian, pero no puede hacer nada con la Varita Mágica ni con el Libro Prohibido
 
 - **Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea**
+
+    Imaginemos que el Caballero de la Luz intenta usar la Varita Mágica. Según la matriz, el Caballero de la Luz no tiene ningún permiso relacionado con la Varita Mágica, por lo que el sistema verifica la matriz y deniega el acceso.
+
+    El sistema podría mostrar un mensaje como "Acceso Denegado: El Caballero de la Luz no tiene permiso para usar la Varita Mágica."
+    De esta forma, la matriz controla el acceso de manera eficiente, bloqueando cualquier intento de un usuario que no tenga los permisos adecuados.
 
 ## Ejercicio 5: Protección basada en el lenguaje  
 **Descripción:**  
@@ -4167,6 +4188,47 @@ Analiza las principales amenazas a un sistema operativo y los mecanismos de vali
 
 
 - **Diseña un esquema de validación para un sistema operativo con múltiples usuarios.**  
+
+# Esquema de Validación para un Sistema Operativo con Múltiples Usuarios
+
+
+##### 1. Registro de Usuarios
+
+Los nuevos usuarios deben registrarse proporcionando información básica (nombre, correo electrónico) y creando una contraseña segura.
+
+##### 2. Autenticación
+El usuario ingresa su nombre de usuario y contraseña. Se envía un código de verificación a su teléfono móvil o correo electrónico, que el usuario debe ingresar para completar la autenticación.
+
+```
+1. Usuario ingresa nombre de usuario y contraseña.
+2. Sistema verifica las credenciales.
+3. Sistema envía un código de verificación al teléfono del usuario.
+4. Usuario ingresa el código de verificación.
+5. Sistema valida el código y otorga acceso.
+```
+##### 3. Autorización
+
+El sistema asigna permisos a los usuarios basados en roles (por ejemplo, Administrador, Usuario Estándar, Invitado). Cada rol tiene un conjunto definido de permisos para acceder a diferentes recursos.
+
+
+##### 4. Control de Integridad  
+Cada vez que se accede o modifica un archivo crítico, el sistema calcula una suma de verificación (checksum) y la compara con el valor original para asegurar que no ha sido alterado sin autorización.
+
+```
+1. Usuario accede a un archivo crítico.
+2. Sistema calcula la suma de verificación actual.
+3. Compara la suma de verificación con el valor original.
+4. Si hay una discrepancia, se genera una alerta y se bloquea el acceso/modificación.
+```
+##### 5. Auditoría 
+Todas las acciones de los usuarios son registradas en logs de auditoría, que incluyen detalles como quién accedió a qué recurso y cuándo. El sistema monitorea continuamente las actividades en busca de comportamientos sospechosos y genera alertas para los administradores.
+```
+1. Usuario realiza una acción (por ejemplo, accede a un archivo).
+2. Sistema registra la acción en los logs de auditoría.
+3. Monitoreo continuo para detectar comportamientos inusuales.
+4. Generación de alertas en caso de actividades sospechosas.
+```
+
 
 ---
 
