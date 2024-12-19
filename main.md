@@ -4189,9 +4189,6 @@ Analiza las principales amenazas a un sistema operativo y los mecanismos de vali
 
 - **Diseña un esquema de validación para un sistema operativo con múltiples usuarios.**  
 
-# Esquema de Validación para un Sistema Operativo con Múltiples Usuarios
-
-
 ##### 1. Registro de Usuarios
 
 Los nuevos usuarios deben registrarse proporcionando información básica (nombre, correo electrónico) y creando una contraseña segura.
